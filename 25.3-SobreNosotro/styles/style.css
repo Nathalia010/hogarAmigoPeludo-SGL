@@ -36,3 +36,10 @@ nav a {
     color: #ffff;
     text-decoration: none;
 }
+
+/* footer */
+
+footer{
+    min-height: 40vh;
+    background-color: #FC9E37;
+}
