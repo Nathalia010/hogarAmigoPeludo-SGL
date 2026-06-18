@@ -75,3 +75,80 @@
     font-size: 14px;
   }
 }
+/*carrucel integrantes*/
+body {
+  background-color: #ff8c42;
+}
+
+
+.team-carousel {
+  max-width: 900px;
+  margin: 0 auto;
+  
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(255, 140, 66, 0.15);
+    transition: all 0.3s ease;
+}
+
+.team-slide {
+  min-height: 500px;
+  background-color: #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  color: white;
+  
+
+}
+.team-carousel h2{
+    color: white;
+}
+
+.team-card {
+  max-width: 420px;
+  
+}
+
+.team-photo {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid white;
+  margin-bottom: 25px;
+}
+
+.team-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.team-role {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  color: #f1f1f1;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 576px) {
+  .team-slide {
+    min-height: 420px;
+    padding: 25px;
+  }
+
+  .team-photo {
+    width: 140px;
+    height: 140px;
+  }
+
+  .team-name {
+    font-size: 1.5rem;
+  }
+
+  .team-role {
+    font-size: 1rem;
+  }
+}
