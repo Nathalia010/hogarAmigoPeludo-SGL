@@ -1,0 +1,77 @@
+.story-header {
+    background: linear-gradient(135deg, #ff8c42, #ffb347);
+    color: white;
+    padding: 80px 20px;
+}
+
+.story-header h1 {
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.story-header p {
+    max-width: 700px;
+}
+
+.card {
+    border: 2px solid #ffb347;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(255, 140, 66, 0.15);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(255, 140, 66, 0.25);
+}
+
+.card h2 {
+    color: #ff8c42;
+    font-weight: 700;
+}
+
+.value-item {
+    padding: 15px;
+    border: 1px solid #ffd2a6;
+    border-radius: 12px;
+    background-color: #fffaf5;
+    transition: all 0.3s ease;
+}
+
+.value-item:hover {
+    background-color: #fff1e3;
+    border-color: #ff8c42;
+    transform: translateX(5px);
+}
+
+.value-title {
+    color: #ff8c42;
+    font-size: 1.05rem;
+}
+
+/*Botones flotantes*/
+.botones-flotantes {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.botones-flotantes .btn {
+  min-width: 140px;
+}
+
+@media (max-width: 768px) {
+  .botones-flotantes {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .botones-flotantes .btn {
+    min-width: 120px;
+    font-size: 14px;
+  }
+}
