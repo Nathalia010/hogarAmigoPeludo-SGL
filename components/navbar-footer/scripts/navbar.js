@@ -14,11 +14,11 @@ export class navbar extends HTMLElement {
                 </label>
 
                 <ul id="ul-navbar">
-                    <li><a href="#">Inicio</a> </li>
+                    <li><a href="../../../index.html">Inicio</a> </li>
                     <li><a href="#">adoptar</a> </li>
                     <li><a href="#">donaciones</a> </li>
-                    <li><a href="#">Sobre Nosotros</a></li>
-                    <li><a href="#">Contactenos</a></li>
+                    <li><a href="../../../25.3SobreNosotro/sobre-nosotros-index.html">Sobre Nosotros</a></li>
+                    <li><a href="../../../26.2Contactenos/contactenos.html">Contactenos</a></li>
                     <li><a href="#">login</a> </li>
                 </ul>
             </nav>`
