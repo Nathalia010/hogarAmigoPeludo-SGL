@@ -1,9 +1,13 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nosotros</title>
+    <!-- navbar-footer style -->
+    <link rel="stylesheet" href="../components/navbar-footer/navbar-footer.css">
+
     <link rel="stylesheet" href="styles/style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -20,7 +24,7 @@
     />
   </head>
   <body>
-    <div id="navbar"></div>
+    <nav-bar></nav-bar>
     <header class="story-header text-center">
       <div class="container">
         <h1>Sobre Nosotros</h1>
@@ -106,14 +110,15 @@
       </div>
     </section>
 
-    <section class="container my-5">
+  <section class="container my-5">
     <h2 class="text-center mb-4">Equipo del Proyecto</h2>
 
     <div id="teamCarousel" class="carousel slide team-carousel" data-bs-ride="carousel">
 
       <!-- Indicadores -->
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Persona 1"></button>
+        <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+          aria-label="Persona 1"></button>
         <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="1" aria-label="Persona 2"></button>
         <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="2" aria-label="Persona 3"></button>
         <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="3" aria-label="Persona 4"></button>
@@ -121,63 +126,71 @@
       </div>
 
       <!-- Slides -->
-       
-      <div class="card p-4" id="card-carrucel">      
-      <div class="carousel-inner">
-        
-        <div class="carousel-item active">
-          <div class="team-slide">
-            <div class="team-card">
-              <img src="https://media.licdn.com/dms/image/v2/D4E03AQGY2z8NiG7lCg/profile-displayphoto-crop_800_800/B4EZ6Kf7KqIUAQ-/0/1780440089553?e=1783555200&v=beta&t=njtbVXuKKfoQ62vwFhjkU9L4h-MYHogvwOX8S7nPkfI" class="team-photo" alt="Foto de Persona 1">
-              <h2 class="team-name">Karen Nathalia Martinez Biscunda</h2>
-              <p class="team-role">Scrum Master</p>
+
+      <div class="card p-4" id="card-carrucel">
+        <div class="carousel-inner">
+
+          <div class="carousel-item active">
+            <div class="team-slide">
+              <div class="team-card">
+                <img
+                  src="https://media.licdn.com/dms/image/v2/D4E03AQGY2z8NiG7lCg/profile-displayphoto-crop_800_800/B4EZ6Kf7KqIUAQ-/0/1780440089553?e=1783555200&v=beta&t=njtbVXuKKfoQ62vwFhjkU9L4h-MYHogvwOX8S7nPkfI"
+                  class="team-photo" alt="Foto de Persona 1">
+                <h2 class="team-name">Karen Nathalia Martinez Biscunda</h2>
+                <p class="team-role">Scrum Master</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="carousel-item">
-          <div class="team-slide">
-            <div class="team-card">
-              <img src="https://media.licdn.com/dms/image/v2/D4E03AQFRUBcqeyqQ_g/profile-displayphoto-crop_800_800/B4EZ5rXU9cHQAI-/0/1779917740124?e=1783555200&v=beta&t=_rgEj4zBub7AsUvZEdIfTPN2WR9KITm-NU4PIznt_Q8" class="team-photo" alt="Foto de Persona 2">
-              <h2 class="team-name">Juan Sebastian Ruiz Devia</h2>
-              <p class="team-role">Cargo en el proyecto</p>
+          <div class="carousel-item">
+            <div class="team-slide">
+              <div class="team-card">
+                <img
+                  src="https://media.licdn.com/dms/image/v2/D4E03AQFRUBcqeyqQ_g/profile-displayphoto-crop_800_800/B4EZ5rXU9cHQAI-/0/1779917740124?e=1783555200&v=beta&t=_rgEj4zBub7AsUvZEdIfTPN2WR9KITm-NU4PIznt_Q8"
+                  class="team-photo" alt="Foto de Persona 2">
+                <h2 class="team-name">Juan Sebastian Ruiz Devia</h2>
+                <p class="team-role">Cargo en el proyecto</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="carousel-item">
-          <div class="team-slide">
-            <div class="team-card">
-              <img src="https://media.licdn.com/dms/image/v2/D4E03AQEsj5HLW_BlGQ/profile-displayphoto-shrink_800_800/B4EZQYIU_zGwAc-/0/1735571624301?e=1783555200&v=beta&t=t-8YkqQQts1zqSEZfr6Qh2gSdjCbpyxuOWcrRjN-qT4" class="team-photo" alt="Foto de Persona 3">
-              <h2 class="team-name">Armando Javier Mora Bastidas</h2>
-              <p class="team-role">Cargo en el proyecto</p>
+          <div class="carousel-item">
+            <div class="team-slide">
+              <div class="team-card">
+                <img
+                  src="https://media.licdn.com/dms/image/v2/D4E03AQEsj5HLW_BlGQ/profile-displayphoto-shrink_800_800/B4EZQYIU_zGwAc-/0/1735571624301?e=1783555200&v=beta&t=t-8YkqQQts1zqSEZfr6Qh2gSdjCbpyxuOWcrRjN-qT4"
+                  class="team-photo" alt="Foto de Persona 3">
+                <h2 class="team-name">Armando Javier Mora Bastidas</h2>
+                <p class="team-role">Cargo en el proyecto</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="carousel-item">
-          <div class="team-slide">
-            <div class="team-card">
-              <img src="https://media.licdn.com/dms/image/v2/D4E03AQH7Xhuw1_sqSw/profile-displayphoto-crop_800_800/B4EZ5vb297IkAI-/0/1779986035384?e=1783555200&v=beta&t=R-TMHPAZ3kSz1Gy6uZfWJZQpTPkIrGvdpiv9ZTg9NhU" class="team-photo" alt="Foto de Persona 4">
-              <h2 class="team-name">Juan Felipe Cardona</h2>
-              <p class="team-role">Cargo en el proyecto</p>
+          <div class="carousel-item">
+            <div class="team-slide">
+              <div class="team-card">
+                <img
+                  src="https://media.licdn.com/dms/image/v2/D4E03AQH7Xhuw1_sqSw/profile-displayphoto-crop_800_800/B4EZ5vb297IkAI-/0/1779986035384?e=1783555200&v=beta&t=R-TMHPAZ3kSz1Gy6uZfWJZQpTPkIrGvdpiv9ZTg9NhU"
+                  class="team-photo" alt="Foto de Persona 4">
+                <h2 class="team-name">Juan Felipe Cardona</h2>
+                <p class="team-role">Cargo en el proyecto</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="carousel-item">
-          <div class="team-slide">
-            <div class="team-card">
-              <img src="img/persona5.jpg" class="team-photo" alt="Foto de Persona 5">
-              <h2 class="team-name">Stefany Lopez Correa</h2>
-              <p class="team-role">Cargo en el proyecto</p>
+          <div class="carousel-item">
+            <div class="team-slide">
+              <div class="team-card">
+                <img src="img/persona5.jpg" class="team-photo" alt="Foto de Persona 5">
+                <h2 class="team-name">Stefany Lopez Correa</h2>
+                <p class="team-role">Cargo en el proyecto</p>
+              </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
-       </div>
-        
+
 
       <!-- Botón anterior -->
       <button class="carousel-control-prev" type="button" data-bs-target="#teamCarousel" data-bs-slide="prev">
@@ -194,24 +207,21 @@
     </div>
   </section>
 
-    <section class="botones-flotantes">
-      <div class="botones-flotantes">
-        <a
-          href="https://wa.me/573001112233?text=Hola,%20quiero%20más%20información"
-          target="_blank"
-          class="btn btn-success rounded-pill shadow"
-        >
-          WhatsApp
-        </a>
+  <section class="botones-flotantes">
+    <div class="botones-flotantes">
+      <a href="https://wa.me/573001112233?text=Hola,%20quiero%20más%20información" target="_blank"
+        class="btn btn-success rounded-pill shadow">
+        WhatsApp
+      </a>
 
-        <a href="adoptar.html" class="btn btn-warning rounded-pill shadow">
-          Adoptar
-        </a>
-      </div>
-    </section>
+      <a href="adoptar.html" class="btn btn-warning rounded-pill shadow">
+        Adoptar
+      </a>
+    </div>
+  </section>
 
     <br />
-    <div id="footer"></div>
+    <page-footer></page-footer>
     <script src="index-scripts/colorNavbar.js"></script>
     <script src="index-scripts/cargarComponentes.js"></script>
     <script
@@ -234,5 +244,7 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <!-- navbar-footer script -->
+     <script src="../components/navbar-footer/navbar-footer.js" type="module"></script>
   </body>
 </html>
