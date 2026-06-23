@@ -107,7 +107,10 @@ body {
 }
 
 .team-card {
-  max-width: 420px;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px;
   
 }
 
@@ -121,15 +124,39 @@ body {
 }
 
 .team-name {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 20px 0 10px;
 }
 
 .team-role {
   font-size: 1.2rem;
-  margin-bottom: 0;
-  color: #f1f1f1;
+  font-weight: 600;
+  color: #0A66C2;
+  margin-bottom: 25px;
+}
+.team-bio {
+  max-width: 600px;
+  margin: 0 auto 25px;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #f0f0f0;
+  text-align: center;
+}
+.btn-linkedin {
+  background: #0A66C2;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-linkedin:hover {
+  background-color: #084d92;
+  color: white;
 }
 
 /* Ajuste para móviles */
