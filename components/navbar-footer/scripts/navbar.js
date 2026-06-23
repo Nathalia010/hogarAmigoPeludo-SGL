@@ -2,10 +2,9 @@
 export class navbar extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
-            <nav class="custom-navbar">
+            <nav class="nav-bar">
                 <p class="navbar-logo">logo aqui</p>
 
-                <!-- Controladores exclusivos para el comportamiento responsive -->
                 <input type="checkbox" id="navbar-menu-toggle" class="navbar-hidden-checkbox">
                 <label for="navbar-menu-toggle" class="navbar-hamburger-icon">
                     <span></span>
@@ -21,7 +20,8 @@ export class navbar extends HTMLElement {
                     <li><a href="../../../26.2Contactenos/contactenos.html">Contactenos</a></li>
                     <li><a href="#">login</a> </li>
                 </ul>
-            </nav>`
+            </nav>
+        `
     }
 
 }

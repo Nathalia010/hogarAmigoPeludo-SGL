@@ -1,18 +1,14 @@
-/* nav-bar */
-
-/*
-Fuente: Boogalo, no mas de dos o tres fuentes en todo el proyecto.
-*/
-
 /* ESTILOS DE LA NAV BAR */
 
-/* VARIABLES EXCLUSIVAS DE LA NAVBAR */
-nav.custom-navbar {
+@import url('https://fonts.googleapis.com/css2?family=Boogaloo&display=swap');
+
+nav.nav-bar {
     --nav-bg: #ffffff;
     --nav-text: #555555;
     --nav-logo-color: #2c3e50;
     --nav-hover: #e67e22;
-    --nav-font: 'Segoe UI', Roboto, sans-serif;
+    --nav-font: 'Boogaloo', sans-serif;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,76 +22,69 @@ nav.custom-navbar {
     box-sizing: border-box;
 }
 
-/* Asegura el box-sizing y resetea márgenes solo dentro del componente */
-nav.custom-navbar *, 
-nav.custom-navbar *::before, 
-nav.custom-navbar *::after {
+nav.nav-bar *,
+nav.nav-bar *::before,
+nav.nav-bar *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* LOGO */
-nav.custom-navbar p.navbar-logo {
-    font-size: 1.4rem;
-    font-weight: bold;
+nav.nav-bar p.navbar-logo {
+    font-size: 1.8rem;
     color: var(--nav-logo-color);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* MENÚ DE ENLACES (ESCRITORIO) */
-nav.custom-navbar #ul-navbar {
+nav.nav-bar #ul-navbar {
     display: flex;
     list-style: none;
     align-items: center;
     gap: 1.5rem;
 }
 
-nav.custom-navbar #ul-navbar li a {
+nav.nav-bar #ul-navbar li a {
     text-decoration: none;
     color: var(--nav-text);
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.3rem;
     text-transform: capitalize;
     transition: color 0.3s ease;
     padding: 0.5rem 0.2rem;
     display: inline-block;
+    letter-spacing: 0.5px;
 }
 
-/* EFECTO HOVER */
-nav.custom-navbar #ul-navbar li a:hover {
+nav.nav-bar #ul-navbar li a:hover {
     color: var(--nav-hover);
 }
 
-/* BOTÓN LOGIN EN ESCRITORIO */
-nav.custom-navbar #ul-navbar li:last-child a {
+nav.nav-bar #ul-navbar li:last-child a {
     background-color: var(--nav-hover);
     color: #ffffff;
-    padding: 0.5rem 1.2rem;
+    padding: 0.4rem 1.4rem;
     border-radius: 20px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-nav.custom-navbar #ul-navbar li:last-child a:hover {
+nav.nav-bar #ul-navbar li:last-child a:hover {
     background-color: #d35400;
     color: #ffffff;
     transform: scale(1.05);
 }
 
-/* ELEMENTOS DEL MENÚ RESPONSIVE */
-nav.custom-navbar .navbar-hidden-checkbox {
+nav.nav-bar .navbar-hidden-checkbox {
     display: none;
 }
 
-nav.custom-navbar .navbar-hamburger-icon {
+nav.nav-bar .navbar-hamburger-icon {
     display: none;
     cursor: pointer;
     flex-direction: column;
     gap: 0.35rem;
 }
 
-nav.custom-navbar .navbar-hamburger-icon span {
+nav.nav-bar .navbar-hamburger-icon span {
     display: block;
     width: 25px;
     height: 3px;
@@ -104,13 +93,12 @@ nav.custom-navbar .navbar-hamburger-icon span {
     transition: all 0.3s ease;
 }
 
-/* MEDIA QUERY ENCAPSULADA PARA DISPOSITIVOS MÓVILES */
 @media screen and (max-width: 768px) {
-    nav.custom-navbar .navbar-hamburger-icon {
+    nav.nav-bar .navbar-hamburger-icon {
         display: flex;
     }
 
-    nav.custom-navbar #ul-navbar {
+    nav.nav-bar #ul-navbar {
         position: absolute;
         top: 100%;
         left: 0;
@@ -124,43 +112,40 @@ nav.custom-navbar .navbar-hamburger-icon span {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
 
-    nav.custom-navbar #ul-navbar li {
+    nav.nav-bar #ul-navbar li {
         width: 100%;
         text-align: center;
         border-bottom: 1px solid #f5f5f5;
     }
 
-    nav.custom-navbar #ul-navbar li a {
+    nav.nav-bar #ul-navbar li a {
         display: block;
-        padding: 1.2rem;
+        padding: 1rem;
         width: 100%;
     }
 
-    /* Ajuste de diseño del botón Login en Móvil */
-    nav.custom-navbar #ul-navbar li:last-child {
+    nav.nav-bar #ul-navbar li:last-child {
         padding: 1rem 2rem;
         border-bottom: none;
     }
 
-    nav.custom-navbar #ul-navbar li:last-child a {
+    nav.nav-bar #ul-navbar li:last-child a {
         border-radius: 8px;
     }
 
-    /* ACCIÓN DE APERTURA AL ACTIVAR EL CHECKBOX */
-    nav.custom-navbar .navbar-hidden-checkbox:checked ~ #ul-navbar {
+    nav.nav-bar .navbar-hidden-checkbox:checked~#ul-navbar {
         max-height: 450px;
     }
 
-    /* ANIMACIÓN DEL ICONO HAMBURGUESA A UNA "X" */
-    nav.custom-navbar .navbar-hidden-checkbox:checked ~ .navbar-hamburger-icon span:nth-child(1) {
+    nav.nav-bar .navbar-hidden-checkbox:checked~.navbar-hamburger-icon span:nth-child(1) {
         transform: translateY(7px) rotate(45deg);
     }
 
-    nav.custom-navbar .navbar-hidden-checkbox:checked ~ .navbar-hamburger-icon span:nth-child(2) {
+    nav.nav-bar .navbar-hidden-checkbox:checked~.navbar-hamburger-icon span:nth-child(2) {
         opacity: 0;
     }
 
-    nav.custom-navbar .navbar-hidden-checkbox:checked ~ .navbar-hamburger-icon span:nth-child(3) {
+    nav.nav-bar .navbar-hidden-checkbox:checked~.navbar-hamburger-icon span:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg);
     }
 }
