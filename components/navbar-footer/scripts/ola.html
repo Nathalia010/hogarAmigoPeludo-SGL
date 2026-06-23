@@ -1,8 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    0
 
-export class navbar extends HTMLElement {
-    connectedCallback() {
-        this.innerHTML = `
-            <nav class="nav-bar">
+    <nav class="nav-bar">
                 <a class="brand" href="../../../index.html">
                     <img src="../../../assets/logos/logo.png" alt="Logo Hogar Amigo Peludo">
                     <p class="navbar-logo">Hogar <span>Amigo</span> Peludo</p>
@@ -23,9 +29,5 @@ export class navbar extends HTMLElement {
                     <li><a href="#">login</a> </li>
                 </ul>
             </nav>
-        `
-    }
-
-}
-
-customElements.define('nav-bar', navbar);
+</body>
+</html>
