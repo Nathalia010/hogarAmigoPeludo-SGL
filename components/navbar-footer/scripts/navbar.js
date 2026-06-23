@@ -3,8 +3,10 @@ export class navbar extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
             <nav class="nav-bar">
-                <p class="navbar-logo">logo aqui</p>
-
+                <a class="brand" href="../../../index.html">
+                    <img src="../logo.png" alt="Logo Hogar Amigo Peludo">
+                    <p class="navbar-logo">Hogar <span>Amigo</span> Peludo</p>
+                    </a>
                 <input type="checkbox" id="navbar-menu-toggle" class="navbar-hidden-checkbox">
                 <label for="navbar-menu-toggle" class="navbar-hamburger-icon">
                     <span></span>
