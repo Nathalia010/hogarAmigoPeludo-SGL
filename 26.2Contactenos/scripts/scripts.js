@@ -5,7 +5,10 @@ form.addEventListener("submit", async function (event) {
 event.preventDefault();
 
 const nombre = document.getElementById("nombre").value.trim();
+const apellidos = document.getElementById("apellidos").value.trim();
 const email = document.getElementById("email").value.trim();
+const pais = document.getElementById("pais").value.trim();
+const estado = document.getElementById("estado").value.trim();
 const telefono = document.getElementById("telefono").value.trim();
 const mensaje = document.getElementById("mensaje").value.trim();
 
@@ -32,7 +35,10 @@ if (mensaje.length < 10) {
 
 const datos = {
     nombre: nombre,
+    apellidos: apellidos,
     email: email,
+    pais: pais,
+    estado: estado,
     telefono: telefono,
     mensaje: mensaje
 };
