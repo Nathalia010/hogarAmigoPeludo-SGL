@@ -64,6 +64,8 @@
  
   .field input[type="text"],
   .field input[type="email"],
+  .field input[type="tel"],
+  .field textarea,
   .field select{
     width: 100%;
     padding: 10px 12px;
