@@ -70,7 +70,8 @@ footer #ul-navbar a:hover {
 .social-media img {
     width: 32px;
     height: 32px;
-    filter: brightness(0) invert(1);
+    object-fit: cover;
+    border-radius: 50%;  
 }
 
 .social-media img:hover {
