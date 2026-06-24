@@ -3,7 +3,7 @@ export class navbar extends HTMLElement {
     this.innerHTML = `
             <nav class="nav-bar">
                 <a class="brand" href="../../../index.html">
-                    <src="../../assets/logo.png" alt="Logo Hogar Amigo Peludo">
+                    <img src="../../assets/logo.png" alt="Logo Hogar Amigo Peludo">
                     <p class="navbar-logo">Hogar <span>Amigo</span> Peludo</p>
                     </a>
                 <input type="checkbox" id="navbar-menu-toggle" class="navbar-hidden-checkbox">
