@@ -1,10 +1,9 @@
-
 export class navbar extends HTMLElement {
-    connectedCallback() {
-        this.innerHTML = `
+  connectedCallback() {
+    this.innerHTML = `
             <nav class="nav-bar">
                 <a class="brand" href="../../../index.html">
-                    <img src="../../assets/logo.png" alt="Logo Hogar Amigo Peludo">
+                    <src="../../assets/logo.png" alt="Logo Hogar Amigo Peludo">
                     <p class="navbar-logo">Hogar <span>Amigo</span> Peludo</p>
                     </a>
                 <input type="checkbox" id="navbar-menu-toggle" class="navbar-hidden-checkbox">
@@ -23,9 +22,24 @@ export class navbar extends HTMLElement {
                     <li><a href="#">login</a> </li>
                 </ul>
             </nav>
-        `
-    }
-
+            <section class="botones-flotantes">
+                <div class="botones-flotantes">
+                    <a href="https://wa.me/573001112233?text=Hola,%20quiero%20más%20información"
+                        target="_blank"
+                        class="btn btn-success btn-flotante rounded-pill shadow">
+                        <img src="../../assets/icons/icono-WhatsApp.jpg"
+                        alt="WhatsApp"
+                        class="icono-WhatsApp">
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="adoptar.html" class="btn btn-warning btn-flotante rounded-pill shadow">
+                        <img src="../../assets/icons/adoptame.png" alt="Adoptar" class="icono-adoptar">
+                        <span>Adoptar</span>
+                    </a>
+                </div>
+            </section>        
+            `;
+  }
 }
-
-customElements.define('nav-bar', navbar);
+// ../../assets/icons/adoptame.png
+customElements.define("nav-bar", navbar);
