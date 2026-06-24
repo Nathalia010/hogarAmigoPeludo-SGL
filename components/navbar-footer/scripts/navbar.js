@@ -30,7 +30,8 @@ export class navbar extends HTMLElement {
                         <img src="../../assets/icons/icono-WhatsApp.jpg"
                         alt="WhatsApp"
                         class="icono-WhatsApp">
-                        <span>WhatsApp</span>
+                        <span>Nuestro 
+                        <br> Contacto</span>
                     </a>
                     <a href="adoptar.html" class="btn btn-warning btn-flotante rounded-pill shadow">
                         <img src="../../assets/icons/adoptame.png" alt="Adoptar" class="icono-adoptar">
