@@ -306,7 +306,7 @@ nav.nav-bar .navbar-hamburger-icon span {
 .botones-flotantes .btn-flotante {
   width: 70px;
   height: 70px;
-  padding: 0 9px;
+  padding: 0 6px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -320,8 +320,8 @@ nav.nav-bar .navbar-hamburger-icon span {
 }
 
 .botones-flotantes .btn-flotante:hover {
-  width: 170px;
-  transform: translateX(-4px);
+  width: 180px;
+  transform: translateX(-3px);
 }
 
 .botones-flotantes .btn-flotante span {
@@ -339,7 +339,7 @@ nav.nav-bar .navbar-hamburger-icon span {
 }
 
 .btn-whatsapp {
-  background-color: #25D366;
+  background-color: #00ff5e;
 }
 
 .btn-adoptar {
@@ -347,16 +347,16 @@ nav.nav-bar .navbar-hamburger-icon span {
 }
 
 .icono-WhatsApp {
-  width: 52px;
-  height: 52px;
+  width: 58px;
+  height: 58px;
   object-fit: cover;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
 .icono-adoptar {
-  width: 52px;
-  height: 52px;
+  width: 58px;
+  height: 58px;
   object-fit: contain;
   flex-shrink: 0;
 }
