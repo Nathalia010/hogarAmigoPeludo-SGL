@@ -31,9 +31,9 @@ export class footer extends HTMLElement {
                     <div class="social-media">
                         <h3>Síguenos</h3>
                         <div class="social-media-icons">
-                            <a href="#"><img src="ruta-facebook.png" alt="facebook-ico"></a>
-                            <a href="#"><img src="ruta-instagram.png" alt="instagram-ico"></a>
-                            <a href="#"><img src="ruta-youtube.png" alt="youtube-ico"></a>
+                            <a href="#"><img src="../../assets/icons/icono-facebook.jpg" alt="facebook-ico"></a>
+                            <a href="#"><img src="../../assets/icons/icono-instagram.jpg" alt="instagram-ico"></a>
+                            <a href="#"><img src="../../assets/icons/icono-tiktok.jpg" alt="tiktok-ico"></a>
                         </div>
                     </div>
                 </div>

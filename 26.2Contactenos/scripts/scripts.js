@@ -3,77 +3,68 @@ const form = document.getElementById("contactForm");
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  limpiarErrores();
+const nombre = document.getElementById("nombre").value.trim();
+const apellidos = document.getElementById("apellidos").value.trim();
+const email = document.getElementById("email").value.trim();
+const pais = document.getElementById("pais").value.trim();
+const estado = document.getElementById("estado").value.trim();
+const telefono = document.getElementById("telefono").value.trim();
+const mensaje = document.getElementById("mensaje").value.trim();
 
-  const nombre = document.getElementById("nombre");
-  const correo = document.getElementById("correo");
-  const telefono = document.getElementById("telefono");
-  const mensaje = document.getElementById("mensaje");
+respuesta.textContent = "";
 
-  let valido = true;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (nombre.value.trim() === "") {
-    mostrarError(nombre, "errorNombre", "El nombre es obligatorio");
-    valido = false;
-  }
+if (!emailRegex.test(email)) {
+    respuesta.textContent = "Ingresa un correo electrónico válido.";
+    return;
+}
 
-  if (correo.value.trim() === "") {
-    mostrarError(correo, "errorCorreo", "El correo es obligatorio");
-    valido = false;
-  } else if (!validarCorreo(correo.value.trim())) {
-    mostrarError(correo, "errorCorreo", "Ingrese un correo válido");
-    valido = false;
-  }
+const telefonoRegex = /^[0-9]{7,15}$/;
+if (!telefonoRegex.test(telefono)) {
+    respuesta.textContent = "El teléfono debe contener únicamente números (7 a 15 dígitos).";
+    return;
+}
 
-  if (telefono.value.trim() === "") {
-    mostrarError(telefono, "errorTelefono", "El teléfono es obligatorio");
-    valido = false;
-  } else if (!validarTelefono(telefono.value.trim())) {
-    mostrarError(telefono, "errorTelefono", "Ingrese un teléfono válido");
-    valido = false;
-  }
+// Validar mensaje
+if (mensaje.length < 10) {
+    respuesta.textContent = "El mensaje debe contener al menos 10 caracteres.";
+    return;
+}
 
-  if (mensaje.value.trim() === "") {
-    mostrarError(mensaje, "errorMensaje", "El mensaje es obligatorio");
-    valido = false;
-  } else if (mensaje.value.trim().length < 10) {
-    mostrarError(
-      mensaje,
-      "errorMensaje",
-      "El mensaje debe tener mínimo 10 caracteres",
+const datos = {
+    nombre: nombre,
+    apellidos: apellidos,
+    email: email,
+    pais: pais,
+    estado: estado,
+    telefono: telefono,
+    mensaje: mensaje
+};
+
+try {
+
+    const response = await fetch(
+        "https://formspree.io/f/xeebqjpv",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(datos)
+        }
     );
-    valido = false;
-  }
 
-  if (valido) {
-    form.submit();
-  }
-});
+    if (response.ok) {
+        respuesta.textContent = "Mensaje enviado correctamente.";
 
-function mostrarError(campo, idError, mensaje) {
-  campo.classList.add("error-input");
-  document.getElementById(idError).textContent = mensaje;
-}
+        form.reset();
+    } else {
+        respuesta.textContent = "No se pudo enviar el mensaje. Intenta nuevamente.";
+    }
 
-function limpiarErrores() {
-  const errores = document.querySelectorAll(".error");
-  const campos = document.querySelectorAll("input, textarea");
-
-  errores.forEach(function (error) {
-    error.textContent = "";
-  });
-
-  campos.forEach(function (campo) {
-    campo.classList.remove("error-input");
-  });
-}
-
-function validarCorreo(correo) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(correo);
-}
-
-function validarTelefono(telefono) {
-  const regex = /^[0-9]{7,15}$/;
-  return regex.test(telefono);
+} catch (error) {
+    console.error(error);
+    respuesta.textContent = "Error de conexión. Intenta nuevamente.";
 }

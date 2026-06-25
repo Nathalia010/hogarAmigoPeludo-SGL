@@ -1,44 +1,46 @@
 export class navbar extends HTMLElement {
   connectedCallback() {
-    const currentDir = window.location.pathname
-      .replace(/\\/g, "/")
-      .split("/")
-      .slice(-2, -1)[0];
-    const isContentFolder =
-      currentDir === "25.3SobreNosotro" || currentDir === "26.2Contactenos";
-
-    const links = {
-      inicio: isContentFolder ? "../index.html" : "index.html",
-      adoptar: isContentFolder ? "../adoptar.html" : "adoptar.html",
-      donaciones: isContentFolder ? "../donaciones.html" : "donaciones.html",
-      sobre:
-        currentDir === "25.3SobreNosotro"
-          ? "sobre-nosotros-index.html"
-          : isContentFolder
-            ? "../25.3SobreNosotro/sobre-nosotros-index.html"
-            : "25.3SobreNosotro/sobre-nosotros-index.html",
-      contacto:
-        currentDir === "26.2Contactenos"
-          ? "contactenos.html"
-          : isContentFolder
-            ? "../26.2Contactenos/contactenos.html"
-            : "26.2Contactenos/contactenos.html",
-      login: isContentFolder ? "../login.html" : "login.html",
-    };
-
     this.innerHTML = `
-            <nav>
-                <p>logo aqui</p>
+            <nav class="nav-bar">
+                <a class="brand" href="../../../index.html">
+                    <img src="../../assets/logo.png" alt="Logo Hogar Amigo Peludo">
+                    <p class="navbar-logo">Hogar <span>Amigo</span> Peludo</p>
+                    </a>
+                <input type="checkbox" id="navbar-menu-toggle" class="navbar-hidden-checkbox">
+                <label for="navbar-menu-toggle" class="navbar-hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+
                 <ul id="ul-navbar">
-                    <li><a href="${links.inicio}">Inicio</a></li>
-                    <li><a href="${links.adoptar}">adoptar</a></li>
-                    <li><a href="${links.donaciones}">donaciones</a></li>
-                    <li><a href="${links.sobre}">Sobre Nosotros</a></li>
-                    <li><a href="${links.contacto}">Contactenos</a></li>
-                    <li><a href="${links.login}">login</a></li>
+                    <li><a href="../../../index.html">Inicio</a> </li>
+                    <li><a href="#">adoptar</a> </li>
+                    <li><a href="#">donaciones</a> </li>
+                    <li><a href="../../../25.3SobreNosotro/sobre-nosotros-index.html">Sobre Nosotros</a></li>
+                    <li><a href="../../../26.2Contactenos/contactenos.html">Contactenos</a></li>
+                    <li><a href="#">login</a> </li>
                 </ul>
-            </nav>`;
+            </nav>
+            <section class="botones-flotantes">
+                <div class="botones-flotantes">
+                    <a href="https://wa.me/573001112233?text=Hola,%20quiero%20más%20información"
+                        target="_blank"
+                        class="btn btn-success btn-flotante rounded-pill shadow">
+                        <img src="../../assets/icons/icono-WhatsApp.jpg"
+                        alt="WhatsApp"
+                        class="icono-WhatsApp">
+                        <span>Nuestro 
+                        <br> Contacto</span>
+                    </a>
+                    <a href="adoptar.html" class="btn btn-warning btn-flotante rounded-pill shadow">
+                        <img src="../../assets/icons/adoptame.png" alt="Adoptar" class="icono-adoptar">
+                        <span>Adoptar</span>
+                    </a>
+                </div>
+            </section>        
+            `;
   }
 }
-
+// ../../assets/icons/adoptame.png
 customElements.define("nav-bar", navbar);
