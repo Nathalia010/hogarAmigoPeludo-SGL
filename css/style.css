@@ -582,6 +582,36 @@ textarea.form-control {
   margin-bottom: 16px;
 }
 
+/*Dashboard admin*/
+.admin-page {
+  font-family: "Poppins", sans-serif;
+  background: var(--pink-soft);
+  min-height: 100vh;
+}
+
+.admin-section {
+  padding: 80px 0;
+}
+
+.admin-card {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(43, 43, 51, 0.07);
+}
+
+.admin-card:hover {
+  box-shadow: 0 12px 28px rgba(255, 140, 66, 0.18);
+}
+
+.table img {
+  width: 70px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .contact-section {
