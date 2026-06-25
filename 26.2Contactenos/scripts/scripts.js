@@ -1,7 +1,8 @@
-const form = document.getElementById("contactForm");
+const form = document.getElementById("formContacto");
+const respuesta = document.getElementById("respuesta");
 
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
+form.addEventListener("submit", async function (event) {
+event.preventDefault();
 
 const nombre = document.getElementById("nombre").value.trim();
 const apellidos = document.getElementById("apellidos").value.trim();
@@ -68,3 +69,4 @@ try {
     console.error(error);
     respuesta.textContent = "Error de conexión. Intenta nuevamente.";
 }
+});
