@@ -69,7 +69,7 @@
             <div class="col-lg-6">
               <div class="hero-image-card">
                 <img
-                  src="https://images.unsplash.com/photo-1601758123927-196a5f2e5f76?auto=format&fit=crop&w=900&q=80"
+                  src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80"
                   alt="Perro en adopción"
                 />
                 <div class="hero-floating-card">
@@ -82,7 +82,6 @@
         </div>
       </section>
 
-      <!-- MENSAJES -->
       <section class="home-message-section">
         <div class="container">
           <div class="row g-4">
@@ -131,81 +130,7 @@
             <p>Conoce algunos peluditos disponibles para adopción.</p>
           </div>
 
-          <div class="row g-4">
-            <div class="col-md-6 col-lg-4">
-              <div class="pet-card">
-                <img
-                  src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80"
-                  alt="Max"
-                />
-                <div class="pet-content">
-                  <span class="pet-status">Disponible</span>
-                  <h3>Max</h3>
-                  <p>
-                    Perro noble, juguetón y muy cariñoso. Ideal para una familia
-                    activa.
-                  </p>
-                  <ul>
-                    <li><strong>Edad:</strong> 2 años</li>
-                    <li><strong>Tamaño:</strong> Mediano</li>
-                    <li><strong>Personalidad:</strong> Juguetón</li>
-                  </ul>
-                  <button class="btn-pet" onclick="mostrarMensaje('Max')">
-                    Me interesa
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-              <div class="pet-card">
-                <img
-                  src="https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&q=80"
-                  alt="Luna"
-                />
-                <div class="pet-content">
-                  <span class="pet-status">Disponible</span>
-                  <h3>Luna</h3>
-                  <p>
-                    Gatita tranquila, tierna y perfecta para hogares calmados.
-                  </p>
-                  <ul>
-                    <li><strong>Edad:</strong> 1 año</li>
-                    <li><strong>Tamaño:</strong> Pequeño</li>
-                    <li><strong>Personalidad:</strong> Dulce</li>
-                  </ul>
-                  <button class="btn-pet" onclick="mostrarMensaje('Luna')">
-                    Me interesa
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-              <div class="pet-card">
-                <img
-                  src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80"
-                  alt="Rocky"
-                />
-                <div class="pet-content">
-                  <span class="pet-status">Disponible</span>
-                  <h3>Rocky</h3>
-                  <p>
-                    Muy fiel, protector y amoroso. Busca una familia que le dé
-                    estabilidad.
-                  </p>
-                  <ul>
-                    <li><strong>Edad:</strong> 3 años</li>
-                    <li><strong>Tamaño:</strong> Grande</li>
-                    <li><strong>Personalidad:</strong> Protector</li>
-                  </ul>
-                  <button class="btn-pet" onclick="mostrarMensaje('Rocky')">
-                    Me interesa
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="row g-4" id="contenedorMascotas"></div>
         </div>
       </section>
 
@@ -281,5 +206,6 @@
       src="./components/navbar-footer/navbar-footer.js"
       type="module"
     ></script>
+    <script src="./script.js" type="module"></script>
   </body>
 </html>
