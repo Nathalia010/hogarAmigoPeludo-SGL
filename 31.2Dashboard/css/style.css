@@ -1,0 +1,148 @@
+
+/*Dashboard admin*/
+.admin-page {
+  font-family: "Poppins", sans-serif;
+  background: var(--pink-soft);
+  min-height: 100vh;
+}
+
+.admin-section {
+  padding: 80px 0;
+}
+
+.admin-card {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(43, 43, 51, 0.07);
+}
+
+.admin-card:hover {
+  box-shadow: 0 12px 28px rgba(255, 140, 66, 0.18);
+}
+
+.table img {
+  width: 70px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Encabezado */
+
+.section-badge {
+  display: inline-block;
+  background: rgba(255, 106, 28, 0.12);
+  color: var(--orange);
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase; /*mayus*/
+  padding: 8px 18px;
+
+  border-radius: 18px;
+  margin-bottom: 15px;
+}
+.section-header h1 {
+  color: var(--text-dark);
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  color: var(--orange);
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 25px;
+}
+
+/* Formularios */
+.form-label {
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  color: var(--text-dark);
+  font-size: 15px;
+  padding: 10px 14px;
+  box-shadow: none;
+}
+
+textarea.form-control {
+  height: auto;
+  resize: none;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--orange) !important;
+  box-shadow: 0 0 0 4px rgba(255, 106, 28, 0.12) !important;
+  outline: none !important;
+}
+
+/* Botón */
+.btn-submit {
+  background-color: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 32px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 18px rgba(255, 106, 28, 0.25);
+}
+
+.btn-submit:hover {
+  background-color: #e85d14;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(255, 106, 28, 0.35);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(255, 106, 28, 0.25);
+}
+@media (max-width: 768px) {
+  .admin-section {
+    padding: 50px 0;
+  }
+  .section-header h1 {
+    font-size: 28px;
+  }
+  .section-header p {
+    font-size: 14px;
+    padding: 0 15px;
+  }
+  .admin-card {
+    padding: 20px;
+  }
+  .section-title {
+    font-size: 18px;
+  }
+  .btn-submit {
+    width: 100%;
+  }
+  .table-responsive {
+    font-size: 14px;
+  }
+  .table img {
+    width: 55px;
+    height: 45px;
+  }
+}
+
+
+
