@@ -1,4 +1,4 @@
-import { obtenerMascotas } from "../../31.2Dashboard/scripts/mascotas";
+import { obtenerMascotas } from "../../31.2Dashboard/scripts/mascotas.js";
 
 const contenedorCatalogo = document.getElementById("contenedorCatalogo");
 
