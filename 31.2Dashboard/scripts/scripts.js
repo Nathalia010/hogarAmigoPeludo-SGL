@@ -1,4 +1,9 @@
-let publicaciones = [];
+import {
+  obtenerMascotas,
+  guardarMascotas,
+} from "./mascotas.js";
+
+let publicaciones = obtenerMascotas();
 let idEditando = null;
 
 const formPublicacion = document.getElementById("formPublicacion");
@@ -22,7 +27,7 @@ formPublicacion.addEventListener("submit", function (event) {
 
   if (idEditando) {
     publicaciones = publicaciones.map((item) =>
-      item.id === idEditando ? publicacion : item,
+      item.id === idEditando ? publicacion : item
     );
 
     idEditando = null;
@@ -31,6 +36,7 @@ formPublicacion.addEventListener("submit", function (event) {
     publicaciones.push(publicacion);
   }
 
+  guardarMascotas(publicaciones);
   renderPublicaciones();
   mostrarJsonConsola();
   formPublicacion.reset();
@@ -83,6 +89,7 @@ function editarPublicacion(id) {
 function eliminarPublicacion(id) {
   publicaciones = publicaciones.filter((item) => item.id !== id);
 
+  guardarMascotas(publicaciones);
   renderPublicaciones();
   mostrarJsonConsola();
 }
@@ -95,3 +102,5 @@ function mostrarJsonConsola() {
 
 window.editarPublicacion = editarPublicacion;
 window.eliminarPublicacion = eliminarPublicacion;
+
+document.addEventListener("DOMContentLoaded", renderPublicaciones);
