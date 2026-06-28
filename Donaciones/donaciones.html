@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>contactenos</title>
+    <title>donaciones</title>
     <!-- navbar-footer style -->
     <link
       rel="stylesheet"
@@ -11,6 +11,7 @@
     />
 
     <link rel="stylesheet" href="css/style.css" />
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -33,8 +34,224 @@
   <body>
     <nav-bar></nav-bar>
 
+    <section class="donation-section">
+      <div class="container">
+        <div class="donation-header">
+          <h2 class="fw-bold">Apoya nuestra causa</h2>
+          <p>
+            Ellos solo necesitan una oportunidad. Tú puedes dársela. Con tu
+            ayuda podemos alimentarlos, cuidarlos y acercarlos al hogar que
+            tanto merecen. Hoy, tú puedes cambiar una vida.
+          </p>
+        </div>
+
+        <!-- Tarjetas -->
+        <ul
+          class="nav nav-pills justify-content-center mb-4"
+          id="donaciones-tab"
+          role="tablist"
+        >
+          <li class="nav-item mx-2 mb-3" role="presentation">
+            <button
+              class="nav-link active p-0 border-0 bg-transparent"
+              id="economica-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#economica"
+              type="button"
+              role="tab"
+            >
+              <div class="card shadow-sm h-100 text-center p-4">
+                <h4>💰</h4>
+                <h5>APORTACIONES ECONÓMICAS</h5>
+                <p class="text-muted small">
+                  Dona mediante transferencia bancaria o PayPal.
+                </p>
+              </div>
+            </button>
+          </li>
+
+          <li class="nav-item mx-2 mb-3" role="presentation">
+            <button
+              class="nav-link p-0 border-0 bg-transparent"
+              id="casa-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#casa"
+              type="button"
+              role="tab"
+            >
+              <div class="card shadow-sm h-100 text-center p-4">
+                <h4>🏠</h4>
+                <h5>CASA DE ACOGIDA</h5>
+                <p class="text-muted small">
+                  Abre las puertas de tu hogar y salva una vida.
+                </p>
+              </div>
+            </button>
+          </li>
+
+          <li class="nav-item mx-2 mb-3" role="presentation">
+            <button
+              class="nav-link p-0 border-0 bg-transparent"
+              id="refugio-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#refugio"
+              type="button"
+              role="tab"
+            >
+              <div class="card shadow-sm h-100 text-center p-4">
+                <h4>🐾</h4>
+                <h5>AYÚDANOS A CONSTRUIRLES UN LUGAR ACOGEDOR</h5>
+                <p class="text-muted small">
+                  Contribuye a crear un lugar seguro para ellos.
+                </p>
+              </div>
+            </button>
+          </li>
+        </ul>
+
+        <!-- Contenido -->
+        <div class="tab-content mt-5">
+          <!-- Económicas -->
+          <div class="tab-pane fade show active" id="economica" role="tabpanel">
+            <div class="card border-0 shadow p-4">
+              <h3 class="mb-3">💰 Aportaciones Económicas</h3>
+
+              <p>
+                Tu donación nos ayuda a cubrir alimentación, medicamentos,
+                esterilizaciones y rescates.
+              </p>
+
+              <hr />
+
+              <div class="info-box">
+                <h5>🏦 Cuenta Bancaria</h5>
+
+                <p><strong>Banco:</strong> Bancolombia</p>
+
+                <p><strong>Cuenta:</strong> 1234567890</p>
+
+                <p><strong>Titular:</strong> Fundación Huellitas</p>
+              </div>
+
+              <div class="info-box">
+                <h5>💳 PayPal</h5>
+
+                <p>
+                  Realiza tu donación de forma rápida y segura mediante PayPal.
+                </p>
+
+                <a
+                  href="https://paypal.me"
+                  target="_blank"
+                  class="btn-donate btn-paypal"
+                >
+                  Donar con PayPal
+                </a>
+              </div>
+
+              <div class="info-box">
+                <h5>📱 Llave Bre-B</h5>
+
+                <p><strong>3001234567</strong></p>
+
+                <button id="copiarBreb" class="btn-donate btn-breb">Copiar Llave</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Casa -->
+          <div class="tab-pane fade" id="casa" role="tabpanel">
+            <div class="card border-0 shadow p-4">
+              <h3>🏡 Conviértete en Casa de Acogida</h3>
+
+              <p class="lead">
+                Si puedes brindar un espacio temporal, estarás ayudando a un
+                perro o gato mientras encuentra una familia definitiva.
+              </p>
+<div class="info-box">
+              <ul>
+            <li> Brindas un hogar seguro de forma temporal.</li>
+            <li> Nosotros apoyamos con orientación durante el proceso.</li>
+            <li> Ayudas a que el animal se adapte a la vida en familia.</li>
+            <li> Tu ayuda permite rescatar a otro animal que lo necesita.</li>
+        </ul>
+              </div>
+              <div class="text-center mt-4">
+                <h4 class="mb-3" style="color: #ff8c42">
+                  ¿Quieres cambiar una vida?
+                </h4>
+
+                <p>
+                  Escríbenos y conoce cómo puedes convertirte en un hogar
+                  temporal.
+                </p>
+
+                <a href="https://api.whatsapp.com/send/?phone=573001112233&text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n&type=phone_number&app_absent=0" class="btn-donate btn-breb">
+                  🏠 Quiero ser Casa de Acogida
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Refugio -->
+          <div class="tab-pane fade" id="refugio" role="tabpanel">
+            <div class="card border-0 shadow p-4">
+              <h3>🐾 Ayúdanos a Construirles un Lugar Acogedor</h3>
+
+              <p class="lead">
+                Cada donación nos acerca a crear un espacio seguro, limpio y
+                lleno de amor para los perros y gatos que esperan una segunda
+                oportunidad. No solo puedes ayudar con dinero, también puedes
+                donar artículos que hagan su día a día más cómodo.
+              </p>
+
+              <div class="info-box">
+                <h5>🎁 ¿Qué puedes donar?</h5>
+
+                <ul>
+                  <li>🐶 Purina y alimento seco para perros y gatos.</li>
+                  <li>🥫 Comida húmeda o enlatada.</li>
+                  <li>🧸 Juguetes para perros y gatos.</li>
+                  <li>🛏️ Camas, colchones y muebles para mascotas.</li>
+                  <li>🥣 Comederos y bebederos.</li>
+                  <li>🦴 Snacks y premios.</li>
+                  <li>
+                    🧼 Elementos de aseo (escobas, trapeadores, baldes, shampoo para mascotas).
+                  </li>
+                  <li>
+                    🧴 Desinfectantes, jabón, detergente y bolsas para residuos.
+                  </li>
+                  <li>🧺 Cobijas, toallas y sábanas en buen estado.</li>
+                  <li>🐕 Correas, collares, arneses y guacales.</li>
+                  <li>
+                    🏠 Materiales para mejorar o construir espacios del refugio.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="info-box text-center">
+                <h2 style="color: #ff8c42">🐾 Todo suma</h2>
+
+                <p>
+                  Una bolsa de alimento, una cobija o un juguete pueden marcar
+                  la diferencia para un animal rescatado. Cada aporte nos ayuda
+                  a brindarles un lugar más seguro, limpio y lleno de cariño
+                  mientras encuentran una familia.
+                </p>
+
+                <a href="https://api.whatsapp.com/send/?phone=573001112233&text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n&type=phone_number&app_absent=0" class="btn-donate btn-breb">
+                  🎁 Quiero Donar Artículos
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <page-footer> </page-footer>
+
+    <script src="script.js"></script>
     <!-- navbar-footer script -->
     <footer></footer>
     <script

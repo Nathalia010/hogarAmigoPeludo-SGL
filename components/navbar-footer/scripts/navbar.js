@@ -16,7 +16,7 @@ export class navbar extends HTMLElement {
                 <ul id="ul-navbar">
                     <li><a href="../../../index.html">Inicio</a> </li>
                     <li><a href="../../../32.4Catalogo/catalogo.html">adoptar</a> </li>
-                    <li><a href="#">donaciones</a> </li>
+                    <li><a href="../../../Donaciones/donaciones.html">donaciones</a> </li>
                     <li><a href="../../../25.3SobreNosotro/sobre-nosotros-index.html">Sobre Nosotros</a></li>
                     <li><a href="../../../26.2Contactenos/contactenos.html">Contactenos</a></li>
                     <li><a href="#">login</a> </li>

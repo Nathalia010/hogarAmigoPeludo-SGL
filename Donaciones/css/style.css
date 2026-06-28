@@ -1,0 +1,283 @@
+/*==================================================
+                    DONACIONES
+==================================================*/
+
+.donation-section{
+    padding:60px 0;
+    background:#fffaf5;
+}
+
+/*-----------------------
+      Encabezado
+------------------------*/
+
+
+.donation-header{
+
+    max-width:760px;
+    margin:auto;
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.donation-header h2{
+
+    color:#ff8c42;
+    font-size:3rem;
+    font-weight:700;
+}
+
+.donation-header p{
+
+    color:#666;
+    line-height:1.9;
+}
+
+
+/*==================================
+        BOTONES / TARJETAS
+===================================*/
+
+#donaciones-tab {
+  gap: 25px;
+}
+
+.nav-pills .nav-link {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+/* Tarjetas */
+
+#donaciones-tab .card {
+  width: 320px;
+  height: 190px;
+  
+  border: 2px  #ffb347;
+  border-radius: 18px;
+
+  box-shadow: 0 8px 20px rgba(255, 140, 66, 0.15);
+
+  transition: all 0.3s ease;
+
+  display: flow-root;
+  justify-content: center;
+  align-items: center;
+}
+
+#donaciones-tab .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(255, 140, 66, 0.25);
+}
+
+.nav-pills .nav-link.active .card {
+  background: #fff1e3;
+  border-color: #ff8c42;
+}
+
+#donaciones-tab h4 {
+  font-size: 55px;
+  margin-bottom: 15px;
+}
+
+#donaciones-tab h5 {
+  color: #ff8c42;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+#donaciones-tab p {
+  display: none;
+}
+
+
+/*==================================================
+            INFORMACIÓN
+==================================================*/
+
+.tab-content{
+
+    margin-top:70px;
+}
+
+.tab-content .card{
+
+    border:none;
+
+    border-radius:22px;
+
+    padding:45px;
+
+    background:white;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+}
+
+.tab-content h3{
+
+    color:#eb8a46;
+
+    font-size:3rem;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+}
+
+.tab-content>div>.card>p{
+
+    color:#666;
+
+    font-size:1.15rem;
+
+    margin-bottom:30px;
+}
+
+.tab-content hr{
+
+    margin:35px 0;
+
+    opacity:.15;
+}
+
+/*==================================================
+        BLOQUES DE INFORMACIÓN
+==================================================*/
+
+.info-box{
+
+    background:#fffaf5;
+
+    border:2px solid #ffe0c2;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    margin-bottom:25px;
+
+    transition:.3s;
+}
+
+.info-box:hover{
+
+    transform:translateX(8px);
+
+    border-color:#ff8c42;
+
+    box-shadow:0 8px 20px rgba(255,140,66,.12);
+}
+
+.info-box h5{
+
+    color:#eb8a46;
+
+    font-size:1.6rem;
+
+    margin-bottom:18px;
+
+    font-weight:700;
+}
+
+.info-box p{
+
+    margin-bottom:10px;
+
+    font-size:1.05rem;
+
+    color:#555;
+}
+
+.info-box strong{
+
+    color:#333;
+}
+
+/*==================================================
+            BOTONES
+==================================================*/
+
+.btn-donate{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 28px;
+
+    border-radius:50px;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:.3s;
+}
+
+.btn-paypal{
+
+    background:#0070ba;
+
+    color:white;
+}
+
+.btn-paypal:hover{
+
+    background:#005ea6;
+
+    color:white;
+
+    transform:translateY(-3px);
+}
+
+.btn-breb{
+
+    background:#ff8c42;
+
+    color:white;
+}
+
+.btn-breb:hover{
+
+    background:#e6782c;
+
+    color:white;
+
+    transform:translateY(-3px);
+}
+
+.btn-copy{
+
+    border:2px solid #ff8c42;
+
+    color:#ff8c42;
+
+    background:white;
+}
+
+.btn-copy:hover{
+
+    background:#ff8c42;
+
+    color:white;
+}
+
+/*==================================================
+        LISTAS
+==================================================*/
+
+.tab-content ul{
+
+    padding-left:22px;
+}
+
+.tab-content li{
+
+    margin-bottom:12px;
+
+    color:#555;
+}
