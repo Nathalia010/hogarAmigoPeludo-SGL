@@ -38,7 +38,7 @@ function renderCatalogo() {
 }
 
 function irAdopcion(id) {
-  window.location.href = `adopcion.html?id=${id}`;
+  window.location.href = `../333formularioAdoptar/adoptar-form.html?id=${id}`;
 }
 
 window.irAdopcion = irAdopcion;

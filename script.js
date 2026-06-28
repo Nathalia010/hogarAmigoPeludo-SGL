@@ -31,6 +31,7 @@ function crearCardMascota(mascota) {
           </ul>
 
           <button class="btn-pet" onclick="verMascota(${mascota.id})">
+
             Quiero adoptarlo
           </button>
         </div>
@@ -40,7 +41,7 @@ function crearCardMascota(mascota) {
 }
 
 function verMascota(id) {
-  window.location.href = `adopcion.html?id=${id}`;
+  window.location.href = `333formularioAdoptar/adoptar-form.html?id=${id}`;
 }
 
 window.verMascota = verMascota;
