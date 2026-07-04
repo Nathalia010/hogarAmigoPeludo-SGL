@@ -1,0 +1,149 @@
+/* ===========================
+   Encabezado
+=========================== */
+
+.section-badge {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(255, 106, 28, 0.12);
+  color: var(--orange);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+
+main h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+main .text-muted {
+  font-size: 1.1rem;
+}
+
+/* ===========================
+   Tarjetas
+=========================== */
+.card {
+  background: #fff;
+  border: 2px solid rgba(255, 107, 28, 0.71);
+  border-radius: 22px;
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 22px rgba(255, 140, 0, 0.895),
+    0 0 0 2px rgba(255, 107, 28, 0.703);
+
+  transition: all .35s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+/* ===========================
+   Información
+=========================== */
+
+.card-body {
+  padding: 1.6rem;
+}
+
+.card-body h4 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.card-body p {
+  margin-bottom: .55rem;
+  color: var(--text-muted);
+}
+
+.card-body strong {
+  color: var(--text-dark);
+}
+
+/* ===========================
+   Estados
+=========================== */
+
+.badge {
+  padding: .6rem 1rem;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+/* ===========================
+   Botones
+=========================== */
+
+.btn-outline-primary,
+.btn-success {
+
+  border-radius: 50px;
+  padding: .6rem 1.3rem;
+  font-weight: 600;
+  transition: .3s;
+  
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-2px);
+  
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   Información desplegable
+=========================== */
+
+.collapse {
+
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #ececec;
+
+}
+
+.collapse h5 {
+
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 15px;
+
+}
+
+.collapse p {
+
+  margin-bottom: .7rem;
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width:768px){
+
+    main h1{
+
+        font-size:2.2rem;
+
+    }
+
+    .card-body{
+      
+
+        padding:1.2rem;
+
+    }
+
+}
+ 

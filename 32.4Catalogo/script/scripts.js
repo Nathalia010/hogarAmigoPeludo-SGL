@@ -1,4 +1,5 @@
 import { obtenerMascotas } from "../../31.2Dashboard/scripts/mascotas.js";
+import { agregarSolicitud } from "../../31.2Dashboard/scripts/solicitudes.js";
 
 const contenedorCatalogo = document.getElementById("contenedorCatalogo");
 
@@ -44,3 +45,5 @@ function irAdopcion(id) {
 window.irAdopcion = irAdopcion;
 
 document.addEventListener("DOMContentLoaded", renderCatalogo);
+
+
