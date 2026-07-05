@@ -5,14 +5,12 @@ const contenedor = document.getElementById("contenedorSolicitudes");
 mostrarSolicitudes();
 
 function mostrarSolicitudes() {
+  const solicitudes = obtenerSolicitudes();
 
-    const solicitudes = obtenerSolicitudes();
+  contenedor.innerHTML = "";
 
-    contenedor.innerHTML = "";
-
-    if (solicitudes.length === 0) {
-
-        contenedor.innerHTML = `
+  if (solicitudes.length === 0) {
+    contenedor.innerHTML = `
             <div class="col-12 text-center py-5">
                 <i class="fa-solid fa-paw fa-4x text-secondary mb-3"></i>
                 <h3>No tienes solicitudes de adopción.</h3>
@@ -22,40 +20,39 @@ function mostrarSolicitudes() {
             </div>
         `;
 
-        return;
+    return;
+  }
+
+  solicitudes.forEach((solicitud, index) => {
+    let colorEstado = "secondary";
+
+    switch (solicitud.estadoSolicitud) {
+      case "Solicitud llenada":
+        colorEstado = "primary";
+        break;
+
+      case "En revisión":
+        colorEstado = "warning";
+        break;
+
+      case "Aceptada":
+        colorEstado = "success";
+        break;
+
+      case "Negada":
+        colorEstado = "danger";
+        break;
+
+      case "Coordinando entrega":
+        colorEstado = "info";
+        break;
     }
 
-    solicitudes.forEach((solicitud, index) => {
-
-        let colorEstado = "secondary";
-
-        switch (solicitud.estadoSolicitud) {
-
-            case "Solicitud llenada":
-                colorEstado = "primary";
-                break;
-
-            case "En revisión":
-                colorEstado = "warning";
-                break;
-
-            case "Aceptada":
-                colorEstado = "success";
-                break;
-
-            case "Negada":
-                colorEstado = "danger";
-                break;
-
-            case "Coordinando entrega":
-                colorEstado = "info";
-                break;
-
-        }
-
-        contenedor.innerHTML += `
-
-        <div class="col-lg-6">
+    contenedor.innerHTML += `
+<div class="row g-4" id="contenedorMascotas">
+      <div class="col-md-6 col-lg-4">
+      
+        <div class="pet-card">
 
             <div class="card shadow-sm h-100">
 
@@ -119,22 +116,15 @@ function mostrarSolicitudes() {
                     </button>
 
                     ${
-                        solicitud.estadoSolicitud === "Coordinando entrega"
-
-                        ?
-
-                        `<a
+                      solicitud.estadoSolicitud === "Coordinando entrega"
+                        ? `<a
                             href="../Proceso-Entrega/proceso-entrega.html?id=${solicitud.idSolicitud}"
                             class="btn btn-success mt-2">
 
                             Ver envío
 
                         </a>`
-
-                        :
-
-                        ""
-
+                        : ""
                     }
 
                     <div
@@ -189,11 +179,10 @@ function mostrarSolicitudes() {
                 </div>
 
             </div>
+            </div>
 
         </div>
 
         `;
-
-    });
-
+  });
 }
