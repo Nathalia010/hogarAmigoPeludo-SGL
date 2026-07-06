@@ -20,13 +20,16 @@ export function guardarSolicitudes(solicitudes) {
 export function agregarSolicitud(solicitud) {
 
     const solicitudes = obtenerSolicitudes();
+    const existe = solicitudes.find(
+        item => item.mascota.id == solicitud.mascota.id
+    );
+    if (existe){
+        return false;
+    }
 
     solicitud.idSolicitud = Date.now();
-
     solicitud.fechaSolicitud = new Date().toLocaleDateString();
-
     solicitud.estadoSolicitud = "Solicitud llenada";
-
     solicitud.envio = {
         modalidad: "Recoger en fundación",
         direccion: "",
@@ -38,6 +41,7 @@ export function agregarSolicitud(solicitud) {
     solicitudes.push(solicitud);
 
     guardarSolicitudes(solicitudes);
+    return true;
 
 }
 

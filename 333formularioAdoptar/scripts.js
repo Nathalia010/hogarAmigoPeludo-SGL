@@ -80,13 +80,14 @@ formulario.addEventListener("submit", (e) => {
 
     };
 
-    agregarSolicitud(nuevaSolicitud);
+    const guardado = agregarSolicitud(nuevaSolicitud);
 
+    if (!guardado) {
+        alert(`Ya tienes una solicitud registrada para adoptar a ${mascota.nombre}.`);
+        return;
+    }
     alert(`La solicitud para adoptar a ${mascota.nombre} fue enviada correctamente.`);
-
     formulario.reset();
-
-    // Redirigir a Mis Solicitudes
-    window.location.href = "../Usuario/solicitudes/solicitudes.html";
+    window.location.href = "../33333PerfilUsuario/perfil.html";
 
 });

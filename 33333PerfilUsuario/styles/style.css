@@ -1,0 +1,231 @@
+/*----------------------------------------*/
+/* PERFIL USUARIO */
+/*----------------------------------------*/
+
+.profile-page{
+    background-color: #f8f9fa;
+}
+
+.profile-section{
+    padding: 70px 0;
+}
+.profile-section .text-start p{
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.profile-section .text-start span{
+    color: var(--text-muted);
+    display: block;
+    margin-left: 28px;
+}
+
+.profile-section .text-start i{
+    color: #ff6a1c;
+    margin-right: 10px;
+}
+
+.perfil-header{
+    margin-bottom: 50px;
+}
+
+.perfil-badge{
+    display: inline-block;
+    background: rgba(255, 106, 28, 0.12);
+    color: #ff6a1c;
+    font-weight: 900;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase; /*mayus*/
+    padding: 8px 18px;
+
+    border-radius: 18px;
+    margin-bottom: 15px;
+}
+
+.perfil-header h1{
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.perfil-header p{
+    color: var(--text-muted);
+    font-size: 17px;
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* Tarjetas */
+
+.profile-section .card{
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+
+}
+
+.profile-image{
+
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff3e8;
+    margin-bottom: 15px;
+}
+
+#nombreUsuario{
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+#miembroDesde{
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 25px;
+}
+
+.card-body hr{
+    margin: 25px 0;
+    opacity: .15;
+}
+/* Imagen del usuario */
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid rgba(255, 106, 28, .15);
+    margin-bottom: 20px;
+}
+
+/* Datos usuario */
+
+.card-body p {
+    margin-bottom: 5px;
+}
+
+.card-body span {
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+/* Botón editar */
+
+#btnEditarPerfil{
+
+    background: #ff6a1c;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 50px;
+
+    font-weight: 600;
+
+    padding: 12px;
+
+    transition: .3s;
+
+}
+
+#btnEditarPerfil:hover{
+
+    background: #e85d14;
+
+    transform: translateY(-2px);
+
+}
+
+/* Encabezado Mis Adopciones */
+.estado-solicitud{
+    display: inline-block;
+    background: #fff3e8;
+    color: #ff6a1c !important;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#totalMascotas {
+    background: var(--orange) !important;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 30px;
+}
+
+/* Mensaje cuando no existen mascotas */
+
+#sinAdopciones {
+    padding: 50px 20px;
+}
+
+#sinAdopciones i {
+    font-size: 70px;
+    color: var(--orange);
+    margin-bottom: 20px;
+}
+
+#sinAdopciones h4 {
+    font-weight: 700;
+}
+
+#sinAdopciones p {
+    color: var(--text-muted);
+}
+
+/* Resumen */
+
+.resume-card strong {
+    color: var(--orange);
+    font-size: 18px;
+}
+
+/* Botón continuar */
+
+#btnContinuar{
+    background: #ff6a1c;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 12px;
+    transition: .3s;
+}
+
+#btnContinuar:hover{
+
+    background: #e85d14;
+    color: white;
+    transform: translateY(-2px);
+}
+#btnCancelar{
+    background: #520209;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 12px;
+    transition: .3s;
+}
+
+/* Responsive */
+
+@media(max-width:991px){
+    .profile-image{
+        width:120px;
+        height:120px;
+    }
+    .section-header h1{
+        font-size:34px;
+    }
+}
