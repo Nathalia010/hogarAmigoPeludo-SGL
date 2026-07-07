@@ -1,0 +1,275 @@
+ *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:     #F97316;
+      --orange-dk:  #ea6c0a;
+      --orange-lt:  #fff4ed;
+      --text:       #1a1a1a;
+      --text-muted: #6b7280;
+      --border:     #a5aab3;
+      --bg:         #fafafa;
+      --white:      #ffffff;
+      --radius:     14px;
+      --font:       "Poppins", sans-serif;
+    }
+
+    body {
+      font-weight: 700;
+      font-family: var(--font);
+      background: var(--bg);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+
+
+    .panel-left {
+      background: var(--orange);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative circles */
+    .panel-left::before,
+    .panel-left::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+    .panel-left::before { width: 340px; height: 340px; top: -80px; left: -80px; }
+    .panel-left::after  { width: 260px; height: 260px; bottom: -60px; right: -60px; }
+
+    .panel-left .paw {
+      font-size: 5rem;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-left h2 {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.2;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .panel-left p {
+      color: rgba(255,255,255,0.85);
+      font-size: 0.95rem;
+      text-align: center;
+      line-height: 1.6;
+      max-width: 280px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-left .badges {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border-radius: 100px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      backdrop-filter: blur(4px);
+    }
+
+
+    .panel-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2.5rem;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+    }
+
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .logo .icon { font-size: 2.5rem; }
+
+    .logo-text { font-size: 1.3rem; font-weight: 900; color: var(--text); line-height: 1; }
+    .logo-text span { color: var(--orange); }
+
+
+    .login-box h1 {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .login-box .subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+
+    .field { margin-bottom: 1.2rem; }
+
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .field input {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.15);
+    }
+
+
+    .forgot {
+      text-align: right;
+      margin-top: -0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .forgot a {
+      font-size: 0.82rem;
+      color: var(--orange);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .forgot a:hover { text-decoration: underline; }
+
+
+    .btn-login {
+      width: 100%;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-login:hover  { background: var(--orange-dk); }
+    .btn-login:active { transform: scale(0.98); }
+
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+
+    .roles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .role-card {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .role-card:hover { border-color: var(--orange); background: var(--orange-lt); }
+
+    .role-card.active {
+      border-color: var(--orange);
+      background: var(--orange-lt);
+    }
+
+    .role-card .ri { font-size: 1.4rem; }
+
+    .role-card .rl {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 0.25rem;
+    }
+
+
+    .register-link {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .register-link a {
+      color: var(--orange);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .register-link a:hover { text-decoration: underline; }
+
+
+    @media (max-width: 700px) {
+      body { grid-template-columns: 1fr; }
+      .panel-left { display: none; }
+      .panel-right { padding: 2rem 1.25rem; }
+    }
