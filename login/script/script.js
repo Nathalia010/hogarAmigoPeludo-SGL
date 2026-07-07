@@ -40,7 +40,7 @@ btnLogin.addEventListener("click", function () {
         alert("Bienvenido " + usuario.nombre);
 
         //Redireccionar
-        window.location.href = "inicio.html";
+        window.location.href = "../../ADMIN/admin.html";
 
     } else {
 
