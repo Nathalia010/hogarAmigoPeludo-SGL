@@ -40,23 +40,97 @@ const mascotasIniciales = [
 ];
 
 export function inicializarMascotas() {
-  const mascotas = localStorage.getItem(MASCOTAS_KEY);
+  const mascotasGuardadas = localStorage.getItem(MASCOTAS_KEY);
 
-  if (!mascotas) {
-    localStorage.setItem(MASCOTAS_KEY, JSON.stringify(mascotasIniciales));
+  if (mascotasGuardadas === null) {
+    guardarMascotas(mascotasIniciales);
   }
 }
 
 export function obtenerMascotas() {
   inicializarMascotas();
-  return JSON.parse(localStorage.getItem(MASCOTAS_KEY)) || [];
+
+  try {
+    const mascotas = JSON.parse(
+      localStorage.getItem(MASCOTAS_KEY)
+    );
+
+    return Array.isArray(mascotas) ? mascotas : [];
+  } catch (error) {
+    console.error("Error al leer las mascotas:", error);
+    return [];
+  }
 }
 
 export function guardarMascotas(mascotas) {
-  localStorage.setItem(MASCOTAS_KEY, JSON.stringify(mascotas));
+  if (!Array.isArray(mascotas)) {
+    throw new Error("Las mascotas deben guardarse como un arreglo.");
+  }
+
+  localStorage.setItem(
+    MASCOTAS_KEY,
+    JSON.stringify(mascotas)
+  );
 }
 
 export function obtenerMascotaPorId(id) {
   const mascotas = obtenerMascotas();
-  return mascotas.find((mascota) => mascota.id === Number(id));
+  const idNumerico = Number(id);
+
+  return mascotas.find(
+    (mascota) => Number(mascota.id) === idNumerico
+  );
+}
+
+export function agregarMascota(datosMascota) {
+  const mascotas = obtenerMascotas();
+
+  const nuevaMascota = {
+    id: Date.now(),
+    nombre: datosMascota.nombre,
+    especie: datosMascota.especie,
+    edad: datosMascota.edad,
+    sexo: datosMascota.sexo,
+    tamano: datosMascota.tamano,
+    imagen: datosMascota.imagen,
+    descripcion: datosMascota.descripcion,
+    estado: datosMascota.estado || "Disponible",
+  };
+
+  mascotas.push(nuevaMascota);
+  guardarMascotas(mascotas);
+
+  return nuevaMascota;
+}
+
+export function actualizarMascota(id, datosActualizados) {
+  const mascotas = obtenerMascotas();
+  const idNumerico = Number(id);
+
+  const indice = mascotas.findIndex(
+    (mascota) => Number(mascota.id) === idNumerico
+  );
+
+  if (indice === -1) {
+    return false;
+  }
+
+  mascotas[indice] = {
+    ...mascotas[indice],
+    ...datosActualizados,
+    id: mascotas[indice].id,
+  };
+
+  guardarMascotas(mascotas);
+  return true;
+}
+
+export function eliminarMascota(id) {
+  const idNumerico = Number(id);
+
+  const mascotasActualizadas = obtenerMascotas().filter(
+    (mascota) => Number(mascota.id) !== idNumerico
+  );
+
+  guardarMascotas(mascotasActualizadas);
 }
