@@ -101,41 +101,26 @@ export function cambiarEstadoSolicitud(idSolicitud, nuevoEstado) {
 /**
  * Actualiza toda la información del envío
  */
-export function actualizarEnvio(
-    idSolicitud,
-    modalidad,
-    direccion,
-    fechaEntrega,
-    estadoEntrega,
-    estadoProceso
-) {
+export function actualizarEnvio(idSolicitud, envioActualizado) {
+  const solicitudes = obtenerSolicitudes();
 
-    const solicitudes = obtenerSolicitudes();
+  const solicitud = solicitudes.find(
+    (item) =>
+      Number(item.idSolicitud) === Number(idSolicitud)
+  );
 
-    const solicitud = solicitudes.find(
-        s => s.idSolicitud == idSolicitud
-    );
+  if (!solicitud) {
+    return false;
+  }
 
-    if (solicitud) {
+  solicitud.envio = {
+    ...solicitud.envio,
+    ...envioActualizado,
+  };
 
-        solicitud.envio = {
+  guardarSolicitudes(solicitudes);
 
-            modalidad,
-
-            direccion,
-
-            fechaEntrega,
-
-            estadoEntrega,
-
-            estadoProceso
-
-        };
-
-        guardarSolicitudes(solicitudes);
-
-    }
-
+  return true;
 }
 
 /**
