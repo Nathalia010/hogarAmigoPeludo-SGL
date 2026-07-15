@@ -47,7 +47,8 @@ function mostrarAdopciones() {
 
     sinAdopciones.style.display = "none";
 
-    solicitudes.forEach((solicitud) => {
+    console.log(solicitudes);
+    solicitudes.forEach((solicitud, index) => {
         const mascota = solicitud.mascota;
         cantidadMascotas.textContent = solicitudes.length;
         cantidadSolicitudes.textContent = solicitudes.length;
@@ -56,14 +57,14 @@ function mostrarAdopciones() {
         listaAdopciones.innerHTML += `
             <div class="card mb-4 adoption-card">
                 <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="${mascota.imagen}" class="img-fluid rounded-start adoption-image" alt="${mascota.nombre}">
+                    <div class="col-md-4 d-flex align-items-center">
+                        <img src="${mascota.imagen}" class="card-img-top mascota-img rounded-start adoption-image" alt="${mascota.nombre}">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <span class="estado-solicitud mb-2"> ${solicitud.estadoSolicitud} </span>
                             <h4> ${mascota.nombre} </h4>
-                            <p> ${mascota.descripcion} </p>
+                            <p class="descripcion-mascota"> ${mascota.descripcion} </p>
                             <p class="mb-2"><strong>Fecha de solicitud :</strong> ${solicitud.fechaSolicitud} </p>
                             <p class="mb-3"><strong>Proceso:</strong>${solicitud.envio.estadoProceso} </p>
                             <div class="row">
@@ -89,11 +90,164 @@ function mostrarAdopciones() {
                                 </div>
                             </div>
                             <div class="d-flex gap-2 mt-4">
-                                <button id="btnContinuar" class="btn  flex-fill"> Continuar proceso </button>
+                                <button id="btnInfo" class="btn flex-fill" data-bs-toggle="modal" data-bs-target="#modalSolicitud${index}"> Ver información</button>
                                 <button id="btnCancelar" class="btn btn-outline-danger" onclick="cancelarSolicitud(${solicitud.idSolicitud})"> Cancelar solicitud </button>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalSolicitud${index}" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <h4 class="modal-title">
+                                 Información de la solicitud
+                            </h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"> </button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="text-center mb-4">
+
+                                <img src="${mascota.imagen}" class="img-fluid rounded shadow" style="max-height:250px; object-fit:cover;">
+
+                                <h3 class="mt-3">${mascota.nombre}</h3>
+
+                                <span class="estado-solicitud">
+                                    ${solicitud.estadoSolicitud}
+                                </span>
+
+                            </div>
+
+                            <hr>
+
+                            <h5 class="mb-3">
+                                 Datos del adoptante
+                            </h5>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Nombre</strong><br>
+                                    ${solicitud.propietario.nombre}
+                                    ${solicitud.propietario.apellido}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Documento</strong><br>
+                                    ${solicitud.propietario.documento}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Correo</strong><br>
+                                    ${solicitud.propietario.correo}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Teléfono</strong><br>
+                                    ${solicitud.propietario.telefono}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Edad</strong><br>
+                                    ${solicitud.propietario.edad}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Ciudad</strong><br>
+                                    ${solicitud.propietario.ciudad}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>País</strong><br>
+                                    ${solicitud.propietario.pais}
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+                            <h5 class="mb-3">
+                                 Información del hogar
+                            </h5>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Tipo de vivienda</strong><br>
+                                    ${solicitud.propietario.tipoVivienda}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Régimen</strong><br>
+                                    ${solicitud.propietario.regimenVivienda}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Otras mascotas</strong><br>
+                                    ${solicitud.propietario.otrasMascotas}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Horas solo</strong><br>
+                                    ${solicitud.propietario.horasSolo}
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+                            <h5 class="mb-3">
+                                 Información de entrega
+                            </h5>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Modalidad</strong><br>
+                                    ${solicitud.envio.modalidad}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Estado de entrega</strong><br>
+                                    ${solicitud.envio.estadoEntrega}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Fecha de entrega</strong><br>
+                                    ${solicitud.envio.fechaEntrega || "Pendiente"}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Dirección</strong><br>
+                                    ${solicitud.envio.direccion || "Pendiente"}
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+                            <h5 class="mb-3">
+                                 Motivo de adopción
+                            </h5>
+
+                            <div class="alert alert-light border">
+                                ${solicitud.propietario.motivo}
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal"> Cerrar </button>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         `;
