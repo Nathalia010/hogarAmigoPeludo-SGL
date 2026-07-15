@@ -1,4 +1,5 @@
 import { obtenerSolicitudes, eliminarSolicitud } from "../../31.2Dashboard/scripts/solicitudes.js";
+import { obtenerUsuarioLogueado } from "../../registro/scripts/usuarios.js";
 
 const listaAdopciones = document.getElementById("listaAdopciones");
 const sinAdopciones = document.getElementById("sinAdopciones");
@@ -13,7 +14,11 @@ const telefonoUsuario = document.getElementById("telefonoUsuario");
 const ciudadUsuario = document.getElementById("ciudadUsuario");
 const miembroDesde = document.getElementById("miembroDesde");
 
-let solicitudes = obtenerSolicitudes();
+const usuarioLogueado = obtenerUsuarioLogueado();
+
+let solicitudes = obtenerSolicitudes().filter(
+    (solicitud) => solicitud.propietario?.correo?.toLowerCase() === usuarioLogueado?.email?.toLowerCase()
+);
 
 mostrarAdopciones();
 cargarInformacionUsuario();
@@ -259,7 +264,9 @@ function cancelarSolicitud(idSolicitud){
         return;
     }
     eliminarSolicitud(idSolicitud);
-    solicitudes = obtenerSolicitudes();
+    solicitudes = obtenerSolicitudes().filter(
+        (solicitud) => solicitud.propietario?.correo?.toLowerCase() === usuarioLogueado?.email?.toLowerCase()
+    );
     mostrarAdopciones();
 }
 window.cancelarSolicitud = cancelarSolicitud;
