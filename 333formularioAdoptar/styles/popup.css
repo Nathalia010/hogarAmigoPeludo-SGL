@@ -1,0 +1,43 @@
+.popup-cuenta {
+  border-radius: 18px;
+  border: none;
+  box-shadow: 0 20px 45px rgba(43, 43, 51, 0.18);
+}
+
+.popup-cuenta .modal-body {
+  padding: 8px 32px 32px;
+}
+
+.popup-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: rgba(255, 106, 28, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.popup-cuenta h4 {
+  color: var(--text-dark);
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.popup-cuenta p {
+  color: var(--text-muted);
+}
+
+.popup-cuenta .form-label {
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.popup-cuenta .btn-outline-secondary {
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 12px 24px;
+}

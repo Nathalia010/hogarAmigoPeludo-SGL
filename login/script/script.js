@@ -39,8 +39,14 @@ btnLogin.addEventListener("click", function () {
 
         alert("Bienvenido " + usuario.nombre);
 
-        //Redireccionar
-        window.location.href = "../../ADMIN/admin.html";
+        //Redireccionar según el rol (admin vs cliente/adoptante)
+        const esAdmin = usuario.rol === "admin" || usuario.email === "admin@hogaramigo.com";
+
+        if (esAdmin) {
+            window.location.href = "../../ADMIN/admin.html";
+        } else {
+            window.location.href = "../../33333PerfilUsuario/perfil.html";
+        }
 
     } else {
 

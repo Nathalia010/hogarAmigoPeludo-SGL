@@ -11,6 +11,7 @@
     />
     <!--Styles-->
     <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/popup.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -351,6 +352,24 @@
     </main>
 
     <page-footer> </page-footer>
+
+    <!-- Popup de cuenta / inicio de sesión -->
+    <div class="modal fade" id="modalCuenta" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content popup-cuenta">
+          <div class="modal-header border-0">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalCuentaBody"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- navbar-footer script -->
 
     <script src="scripts.js" type="module"></script>
