@@ -9,7 +9,19 @@
 
 
 /*----------------------------------------*/
+.section-badge {
+  display: inline-block;
+  background: rgba(255, 106, 28, 0.12);
+  color: var(--orange);
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase; /*mayus*/
+  padding: 8px 18px;
 
+  border-radius: 18px;
+  margin-bottom: 15px;
+}
 
 /* HOME HOGAR PELUDO */
 
@@ -136,7 +148,7 @@
 .home-message-section,
 .adoption-section,
 .process-section {
-  padding: 80px 0;
+  padding: 40px 0;
 }
 
 .home-info-card,
