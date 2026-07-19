@@ -1,116 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi perfil | Hogar Amigo Peludo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/css/portal-usuario.css" />
+  </head>
+  <body>
+    <div class="user-shell" id="userShell">
+      <aside class="user-sidebar" aria-label="Menú del usuario">
+        <a class="user-brand" href="../index.html"><span class="user-brand-mark"><i class="fa-solid fa-paw"></i></span><span class="user-brand-copy"><strong>Hogar Amigo</strong><small>Peludo</small></span><button type="button" class="user-sidebar-close" id="userSidebarClose" aria-label="Cerrar menú"><i class="fa-solid fa-xmark"></i></button></a>
+        <nav class="user-nav">
+          <p class="user-nav-title">Mi cuenta</p>
+          <a class="user-nav-link" href="../index.html"><i class="fa-solid fa-house"></i>Inicio</a>
+          <a class="user-nav-link active" href="perfil.html"><i class="fa-regular fa-user"></i>Mi perfil</a>
+          <a class="user-nav-link" href="../Usuario/solicitudes/solicitudes-usuario.html"><i class="fa-regular fa-clipboard"></i>Mis solicitudes<span class="user-nav-count" id="navRequestCount">0</span></a>
+          <a class="user-nav-link" href="../Usuario/Proceso-Entrega/proceso-entrega.html"><i class="fa-solid fa-truck"></i>Proceso de entrega</a>
+          <a class="user-nav-link" href="../32.4Catalogo/catalogo.html"><i class="fa-solid fa-paw"></i>Explorar mascotas</a>
+        </nav>
+        <div class="user-help"><strong>¿Necesitas ayuda?</strong><a href="../26.2Contactenos/contactenos.html">Contáctanos</a></div>
+        <div class="user-sidebar-footer"><button class="user-logout" id="userLogout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</button></div>
+      </aside>
+      <button class="user-overlay" id="userOverlay" aria-label="Cerrar menú"></button>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <div class="user-workspace">
+        <header class="user-topbar">
+          <div class="user-topbar-start"><button class="user-menu-toggle" id="userMenuToggle" aria-expanded="false"><i class="fa-solid fa-bars"></i></button><div class="user-page-context"><span>Mi cuenta</span><strong>Perfil de usuario</strong></div></div>
+          <a class="user-topbar-profile" href="perfil.html"><span class="user-avatar" data-user-initials>US</span><div><strong data-user-name>Usuario</strong><small>Adoptante</small></div></a>
+        </header>
 
-    <title>Mi Perfil | Hogar Amigo Peludo</title>
-    <link
-      rel="stylesheet"
-      href="../components/navbar-footer/navbar-footer.css"
-    />
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <!-- CSS -->
-    <link rel="stylesheet" href="styles/style.css">
-</head>
-<body class="profile-page">
-    <!-- ================= NAVBAR ================= -->
-    <nav-bar></nav-bar>
+        <main class="user-main">
+          <div class="page-heading"><div><span class="page-badge">Perfil de usuario</span><h1>Mi perfil</h1><p>Consulta tu información y revisa rápidamente el estado de tus adopciones.</p></div><a class="primary-action" href="../Usuario/solicitudes/solicitudes-usuario.html"><i class="fa-regular fa-clipboard"></i>Ver mis solicitudes</a></div>
 
-    <main>
-        <section class="profile-section">
-            <div class="container">
-                <!-- Encabezado -->
-                <div class="perfil-header text-center mb-5">
-                <h6 class="perfil-badge"> Perfil de Usuario </h6>
-                <h1> Mi Perfil </h1>
-                <p> Consulta tu información personal y realiza el seguimiento de todas tus solicitudes de adopción. </p>
-                </div>
-                <div class="row g-4">
-                    <!-- ================================= -->
-                    <!-- PERFIL -->
-                    <!-- ================================= -->
-                    <div class="col-lg-4">
-              <div class="card shadow">
-                <div class="card-body text-center">
-                  <img
-                    src="../assets/img/user.png"
-                    class="profile-image mb-3"
-                    alt="Usuario"
-                  />
-                  <h3 id="nombreUsuario">Nombre usuario</h3>
-                  <p class="text-muted" id="miembroDesde">Miembro de Hogar Amigo Peludo</p>
-                  <hr />
-
-                  <div class="text-start">
-                    <p><i class="bi bi-envelope-fill"></i><strong>Correo</strong></p>
-                    <span id="correoUsuario">No registrado</span>
-                    <br /><br />
-                    <p><i class="bi bi-telephone-fill"></i><strong>Teléfono</strong></p>
-                    <span id="telefonoUsuario">No registrado</span>
-                    <br /><br />
-                    <p><i class="bi bi-geo-alt-fill"></i><strong>Ciudad</strong></p>
-                    <span id="ciudadUsuario">No registrada</span>
-                  </div>
-
-                  <button class="btn btn-warning w-100 mt-4" id="btnEditarPerfil">
-                    Editar Perfil
-                  </button>
-                </div>
+          <div class="profile-grid">
+            <aside class="portal-card profile-summary">
+              <span class="profile-photo" data-user-initials>US</span>
+              <h2 data-user-name>Usuario</h2>
+              <p class="profile-member" id="miembroDesde">Miembro de Hogar Amigo Peludo</p>
+              <div class="profile-data">
+                <div><i class="fa-regular fa-envelope"></i><span><small>Correo</small><strong id="correoUsuario">No registrado</strong></span></div>
+                <div><i class="fa-solid fa-phone"></i><span><small>Teléfono</small><strong id="telefonoUsuario">No registrado</strong></span></div>
+                <div><i class="fa-solid fa-location-dot"></i><span><small>Ciudad</small><strong id="ciudadUsuario">No registrada</strong></span></div>
               </div>
-            </div>
-                    <!-- ================================= -->
-                    <!-- MIS ADOPCIONES -->
-                    <!-- ================================= -->
-                    <div class="col-lg-8">
-              <div class="card shadow">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3><i class="bi bi-heart-fill text-danger"></i> Mis Adopciones</h3>
-                    <span class="badge bg-success fs-6" id="totalMascotas">0 solicitudes</span>
-                  </div>
-                                <!-- Aquí el JavaScript agregará las tarjetas -->
-                                <div id="listaAdopciones" class="row g-4"></div>
-                                <!-- Mensaje cuando no existan adopciones -->
-                                <div id="sinAdopciones" class="text-center py-5">
-                                    <h4 class="mt-3">Aún no has seleccionado mascotas</h4>
-                                    <p class="text-muted">Explora nuestro catálogo y encuentra a tu nuevo mejor amigo.</p>
-                                    <a href="../32.4Catalogo/catalogo.html" class="btn btn-warning">Ver catálogo</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ================= RESUMEN ================= -->
-                        <div class="card shadow mt-4">
-                <div class="card-body">
-                  <h4 class="mb-4">Resumen</h4>
-                  <div class="d-flex justify-content-between mb-3">
-                    <span>Mascotas seleccionadas</span>
-                    <strong id="cantidadMascotas">0</strong>
-                  </div>
-                  <div class="d-flex justify-content-between mb-4">
-                    <span>Solicitudes activas</span>
-                    <strong id="cantidadSolicitudes">0</strong>
-                  </div>
-                </div>
+              <button class="primary-action" id="btnEditarPerfil"><i class="fa-regular fa-pen-to-square"></i>Editar perfil</button>
+            </aside>
+
+            <section class="profile-content">
+              <div class="profile-stats">
+                <article class="portal-card profile-stat"><i class="fa-regular fa-clipboard"></i><strong id="cantidadSolicitudes">0</strong><span>Solicitudes activas</span></article>
+                <article class="portal-card profile-stat"><i class="fa-solid fa-paw"></i><strong id="cantidadMascotas">0</strong><span>Mascotas solicitadas</span></article>
+                <article class="portal-card profile-stat"><i class="fa-solid fa-truck"></i><strong id="cantidadEntregas">0</strong><span>Entregas en proceso</span></article>
               </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ================= FOOTER ================= -->
-    <page-footer> </page-footer>
-
-    
+              <article class="portal-card content-card">
+                <div class="card-title-row"><h2>Solicitudes recientes</h2><a href="../Usuario/solicitudes/solicitudes-usuario.html">Ver todas <i class="fa-solid fa-arrow-right"></i></a></div>
+                <div class="profile-request-list" id="listaSolicitudesRecientes"></div>
+                <div class="empty-state" id="sinSolicitudes"><i class="fa-regular fa-heart"></i><h3>Aún no tienes solicitudes</h3><p>Explora el catálogo y encuentra a tu nuevo mejor amigo.</p><a class="primary-action" href="../32.4Catalogo/catalogo.html">Ver catálogo</a></div>
+              </article>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="../assets/js/portal-usuario.js" defer></script>
     <script type="module" src="scripts/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-    <script
-      src="../components/navbar-footer/navbar-footer.js"
-      type="module"
-    ></script>
-</body>
+  </body>
+</html>

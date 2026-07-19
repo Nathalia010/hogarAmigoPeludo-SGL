@@ -243,7 +243,7 @@ function mostrarPopupYaRegistrado() {
         </div>
 
         <div class="d-flex gap-2">
-            <a href="../login/login.html" class="btn-submit flex-fill text-center">
+            <a href="../../login/login.html" class="btn-submit flex-fill text-center">
                 Iniciar sesión
             </a>
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
