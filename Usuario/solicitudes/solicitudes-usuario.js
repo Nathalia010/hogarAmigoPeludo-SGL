@@ -49,8 +49,8 @@ function mostrarSolicitudes() {
     }
 
     contenedor.innerHTML += `
-<div class="row g-4" id="contenedorMascotas">
-      <div class="col-md-6 col-lg-4">
+
+     
       
         <div class="pet-card">
 
@@ -176,9 +176,7 @@ function mostrarSolicitudes() {
 
                     </div>
 
-                </div>
-
-            </div>
+             </div>
             </div>
 
         </div>

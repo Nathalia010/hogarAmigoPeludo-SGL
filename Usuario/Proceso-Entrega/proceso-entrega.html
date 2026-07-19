@@ -6,6 +6,7 @@
     <title>Proceso de entrega | Hogar Amigo Peludo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/portal-usuario.css" />
+    <link rel="stylesheet" href="proceso-entrega.css" />
   </head>
   <body>
     <div class="user-shell" id="userShell">
@@ -14,28 +15,121 @@
         <nav class="user-nav"><p class="user-nav-title">Mi cuenta</p><a class="user-nav-link" href="../../index.html"><i class="fa-solid fa-house"></i>Inicio</a><a class="user-nav-link" href="../../33333PerfilUsuario/perfil.html"><i class="fa-regular fa-user"></i>Mi perfil</a><a class="user-nav-link" href="../solicitudes/solicitudes-usuario.html"><i class="fa-regular fa-clipboard"></i>Mis solicitudes</a><a class="user-nav-link active" href="proceso-entrega.html"><i class="fa-solid fa-truck"></i>Proceso de entrega</a><a class="user-nav-link" href="../../32.4Catalogo/catalogo.html"><i class="fa-solid fa-paw"></i>Explorar mascotas</a></nav>
         <div class="user-help"><strong>¿Necesitas ayuda?</strong><a href="../../26.2Contactenos/contactenos.html">Contáctanos</a></div><div class="user-sidebar-footer"><button class="user-logout" id="userLogout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</button></div>
       </aside>
+
       <button class="user-overlay" id="userOverlay" aria-label="Cerrar menú"></button>
+
       <div class="user-workspace">
         <header class="user-topbar"><div class="user-topbar-start"><button class="user-menu-toggle" id="userMenuToggle"><i class="fa-solid fa-bars"></i></button><div class="user-page-context"><span>Seguimiento</span><strong id="pageModeTitle">Proceso de entrega</strong></div></div><a class="user-topbar-profile" href="../../33333PerfilUsuario/perfil.html"><span class="user-avatar" data-user-initials>US</span><div><strong data-user-name>Usuario</strong><small id="topbarRole">Adoptante</small></div></a></header>
-        <main class="user-main" id="deliveryContent">
-          <section class="portal-card delivery-hero"><div><span class="page-badge" id="deliveryStatusBadge">Seguimiento</span><h1 id="deliveryTitle">Proceso de entrega</h1><p id="deliverySubtitle">Consulta el avance de la entrega de tu mascota.</p></div><span class="delivery-pet-icon"><i class="fa-solid fa-paw"></i></span></section>
-          <div class="delivery-grid">
-            <div class="delivery-main">
-              <section class="portal-card delivery-card"><h2>Estado de la entrega</h2><div class="delivery-timeline" id="deliveryTimeline"></div></section>
-              <section class="portal-card delivery-card"><h2>Información de entrega</h2><div class="delivery-info-grid" id="deliveryInfo"></div></section>
+
+        <main class="user-main delivery-page" id="deliveryContent">
+          <section class="portal-card delivery-hero">
+            <div class="delivery-hero-copy">
+              <div class="delivery-title-row">
+                <h1 id="deliveryTitle">Entrega en proceso</h1>
+                <span class="delivery-status-badge" id="deliveryStatusBadge">En camino</span>
+              </div>
+              <p id="deliverySubtitle">Tu mascota está siendo transportada con cuidado y amor <span aria-hidden="true">♥</span></p>
             </div>
+            <span class="delivery-pet-icon" aria-hidden="true"><i class="fa-solid fa-paw"></i></span>
+          </section>
+
+          <div class="delivery-layout">
+            <div class="delivery-main">
+              <section class="portal-card delivery-metrics" aria-label="Resumen del recorrido">
+                <article class="delivery-metric">
+                  <span class="delivery-metric-icon"><i class="fa-regular fa-clock"></i></span>
+                  <div><small>Horario estimado de llegada</small><strong id="deliveryEta">0</strong></div>
+                </article>
+                <article class="delivery-metric">
+                  <div><small>Tiempo restante</small><strong id="deliveryRemainingTime">0</strong></div>
+                </article>
+                <article class="delivery-metric">
+                  <div><small>Distancia restante</small><strong id="deliveryDistance">0</strong></div>
+                </article>
+              </section>
+
+              <section class="portal-card delivery-card delivery-status-card">
+                <h2>Estado de la entrega</h2>
+                <div class="delivery-timeline" id="deliveryTimeline"></div>
+                <div class="delivery-notice">
+                  <i class="fa-regular fa-circle-info"></i>
+                  <p>Nuestro transportista se pondrá en contacto contigo antes de llegar al destino.</p>
+                </div>
+              </section>
+            </div>
+
             <aside class="delivery-side">
-              <section class="portal-card delivery-card" id="adminDeliveryPanel" hidden><h2>Actualizar entrega</h2><form class="delivery-admin-form" id="deliveryAdminForm"><label>Modalidad<select id="modalidadEntrega"><option>Recoger en fundación</option><option>Entrega a domicilio</option></select></label><label>Dirección<input id="direccionEntrega" type="text" /></label><label>Fecha<input id="fechaEntrega" type="date" /></label><label>Estado<select id="estadoEntrega"><option>No enviado</option><option>De camino</option><option>Recibido</option></select></label><button class="primary-action" type="submit"><i class="fa-regular fa-floppy-disk"></i>Guardar cambios</button></form></section>
-              <section class="portal-card delivery-card"><h2>Recomendaciones</h2><ul class="recommendation-list"><li><i class="fa-solid fa-circle-check"></i>Ten a mano tu documento de identidad.</li><li><i class="fa-solid fa-circle-check"></i>Verifica que alguien pueda recibir a la mascota.</li><li><i class="fa-solid fa-circle-check"></i>Prepara un espacio tranquilo y agua fresca.</li></ul></section>
+              <section class="portal-card delivery-card delivery-details-card">
+                <h2>Detalles de la entrega</h2>
+                <div class="delivery-pet-summary">
+                  <span class="delivery-pet-avatar"><i class="fa-solid fa-paw"></i></span>
+                  <div>
+                    <strong id="deliveryPetName">Mascota</strong>
+                    <small id="deliveryPetBreed">Información de la mascota</small>
+                    <span class="delivery-id" id="deliveryRequestId">ID: Pendiente</span>
+                  </div>
+                </div>
+                <div class="delivery-info-list" id="deliveryInfo"></div>
+              </section>
+
+              <section class="portal-card delivery-card" id="adminDeliveryPanel" hidden>
+                <h2>Actualizar entrega</h2>
+                <form class="delivery-admin-form" id="deliveryAdminForm">
+                  <label>Modalidad<select id="modalidadEntrega"><option>Recoger en fundación</option><option>Entrega a domicilio</option></select></label>
+                  <label>Dirección<input id="direccionEntrega" type="text" /></label>
+                  <label>Fecha<input id="fechaEntrega" type="date" /></label>
+                  <label>Estado<select id="estadoEntrega"><option>No enviado</option><option>De camino</option><option>Recibido</option></select></label>
+                  <button class="primary-action" type="submit"><i class="fa-regular fa-floppy-disk"></i>Guardar cambios</button>
+                </form>
+              </section>
+
+              <section class="portal-card delivery-card delivery-recommendations">
+                <h2>Recomendaciones</h2>
+                <ul class="recommendation-list">
+                  <li><i class="fa-regular fa-user"></i><span>Asegúrate de que alguien esté en el lugar de destino para recibir a tu mascota.</span></li>
+                  <li><i class="fa-regular fa-address-card"></i><span>Ten a mano el documento de identidad del receptor.</span></li>
+                  <li><i class="fa-solid fa-heart"></i><span>Bríndale agua y un lugar tranquilo a tu mascota al llegar.</span></li>
+                </ul>
+                <p class="delivery-thanks"><i class="fa-solid fa-paw"></i> ¡Gracias por confiar en nosotros!</p>
+              </section>
+
               <a class="secondary-action" id="backLink" href="../solicitudes/solicitudes-usuario.html"><i class="fa-solid fa-arrow-left"></i>Volver</a>
             </aside>
           </div>
-          <div class="portal-card empty-state" id="deliveryEmpty" hidden><i class="fa-solid fa-truck"></i><h3>No hay una entrega seleccionada</h3><p>Abre el proceso desde una solicitud en coordinación.</p><a class="primary-action" href="../solicitudes/solicitudes-usuario.html">Mis solicitudes</a></div>
+        </main>
+
+        <main class="user-main" id="deliveryEmpty" hidden>
+          <div class="portal-card empty-state"><i class="fa-solid fa-truck"></i><h3>No hay una entrega seleccionada</h3><p>Abre el proceso desde una solicitud en coordinación.</p><a class="primary-action" href="../solicitudes/solicitudes-usuario.html">Mis solicitudes</a></div>
         </main>
       </div>
     </div>
+
     <div class="toast-message" id="deliveryToast">Entrega actualizada.</div>
+
     <script src="../../assets/js/portal-usuario.js" defer></script>
     <script type="module" src="proceso-entrega.js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <!-- navbar-footer script -->
+    <script src="../../components/navbar-footer/navbar-footer.js" type="module"></script>
   </body>
 </html>
