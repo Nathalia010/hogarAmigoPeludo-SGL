@@ -407,3 +407,78 @@ nav.nav-bar .navbar-hamburger-icon span {
     font-size: 1rem;
   }
 }
+
+/*==================================================
+  RESPONSIVE
+==================================================*/
+
+@media (max-width: 800px) {
+  #economica > .card {
+    grid-template-columns: 1fr;
+  }
+
+  #economica > .card > h3,
+  #economica > .card > p,
+  #economica > .card > hr {
+    grid-column: auto;
+  }
+
+  #donaciones-tab .nav-item {
+    flex-basis: calc(50% - 7px);
+    max-width: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .donation-header-section {
+    padding: 30px 16px 16px;
+  }
+
+  .donation-section {
+    padding: 16px 14px 44px;
+  }
+
+  #donaciones-tab {
+    gap: 10px;
+  }
+
+  #donaciones-tab .nav-item {
+    flex-basis: 100%;
+  }
+
+  #donaciones-tab .card {
+    min-height: 92px;
+    padding: 12px 14px !important;
+  }
+
+  #donaciones-tab h4 {
+    margin-bottom: 6px;
+    font-size: 1.8rem;
+  }
+
+  .tab-content {
+    margin-top: 22px !important;
+  }
+
+  .tab-content > .tab-pane > .card {
+    padding: 20px 16px !important;
+    border-radius: 16px;
+  }
+
+  .info-box {
+    padding: 17px;
+  }
+
+  .btn-donate {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #donaciones-tab .card,
+  #donaciones-tab h4,
+  .info-box,
+  .btn-donate {
+    transition: none;
+  }
+}

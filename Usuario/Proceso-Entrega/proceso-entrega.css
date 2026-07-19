@@ -1,0 +1,444 @@
+/* Complementa portal-usuario.css únicamente en la vista de proceso de entrega. */
+.delivery-page {
+  --delivery-navy: #101d4f;
+  --delivery-blue: #4169e1;
+  --delivery-green: #39af70;
+  --delivery-coral: #ff7452;
+  --delivery-line: #e4e8f1;
+  --delivery-soft-blue: #f3f6ff;
+  width: min(100%, 1380px);
+  padding: clamp(22px, 3vw, 38px);
+}
+
+.delivery-page .portal-card {
+  border-color: var(--delivery-line);
+  border-radius: 16px;
+  box-shadow: 0 8px 26px rgba(23, 36, 77, 0.055);
+}
+
+.delivery-hero {
+  position: relative;
+  min-height: 145px;
+  margin-bottom: 18px;
+  padding: clamp(24px, 3vw, 34px);
+  overflow: hidden;
+  background: linear-gradient(120deg, #fff 58%, #fff8f2 100%);
+}
+
+.delivery-hero::after {
+  content: "";
+  position: absolute;
+  right: 110px;
+  bottom: -62px;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: rgba(255, 106, 28, 0.07);
+}
+
+.delivery-hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.delivery-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.delivery-hero .delivery-title-row h1 {
+  margin: 0;
+  color: var(--delivery-navy);
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  letter-spacing: -0.025em;
+}
+
+.delivery-status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  color: #167743;
+  background: #e5f7ec;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.delivery-hero p {
+  margin-top: 14px;
+  color: #53607b;
+  font-size: 0.9rem;
+}
+
+.delivery-hero p span {
+  margin-left: 5px;
+  color: #f46f7b;
+}
+
+.delivery-pet-icon {
+  position: relative;
+  z-index: 1;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  color: var(--orange);
+  background: #fff6ef;
+  box-shadow: none;
+}
+
+.delivery-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(300px, 0.72fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.delivery-main,
+.delivery-side {
+  display: grid;
+  gap: 18px;
+}
+
+.delivery-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 18px 20px;
+}
+
+.delivery-metric {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 4px 22px;
+  border-right: 1px solid var(--delivery-line);
+}
+
+.delivery-metric:first-child {
+  padding-left: 4px;
+}
+
+.delivery-metric:last-child {
+  border-right: 0;
+}
+
+.delivery-metric-icon {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--delivery-blue);
+  background: #eef3ff;
+  font-size: 1.2rem;
+}
+
+.delivery-metric div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.delivery-metric small {
+  color: #69738d;
+  font-size: 0.68rem;
+}
+
+.delivery-metric strong {
+  margin-top: 3px;
+  color: var(--delivery-navy);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+}
+
+.delivery-card {
+  padding: clamp(20px, 2.6vw, 28px);
+}
+
+.delivery-card h2 {
+  color: var(--delivery-navy);
+  font-size: 1rem;
+}
+
+.delivery-status-card .delivery-timeline {
+  margin-top: 8px;
+  padding: 0 5px 6px;
+}
+
+.delivery-timeline::before {
+  top: 19px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--delivery-green) 0 66%, var(--delivery-line) 66% 100%);
+}
+
+.step-dot {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 10px;
+  border: 0;
+  color: #a7aec0;
+  background: #e9ecf4;
+  box-shadow: 0 0 0 5px #fff;
+  font-size: 0.76rem;
+}
+
+.delivery-step.complete .step-dot {
+  background: var(--delivery-green);
+  box-shadow: 0 0 0 5px #fff;
+}
+
+.delivery-step.active .step-dot {
+  color: var(--delivery-blue);
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--delivery-blue), 0 0 0 7px #fff;
+}
+
+.delivery-step strong {
+  max-width: 118px;
+  color: var(--delivery-navy);
+  font-size: 0.7rem;
+  line-height: 1.3;
+}
+
+.delivery-step small {
+  color: #8089a2;
+  font-size: 0.6rem;
+}
+
+.delivery-step.active small {
+  color: var(--delivery-blue);
+  font-weight: 800;
+}
+
+.delivery-notice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 13px 16px;
+  border: 1px solid #e1e7fa;
+  border-radius: 10px;
+  color: #214395;
+  background: var(--delivery-soft-blue);
+}
+
+.delivery-notice p {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.delivery-details-card h2 {
+  margin-bottom: 18px;
+}
+
+.delivery-pet-summary {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 13px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--delivery-line);
+}
+
+.delivery-pet-avatar {
+  display: inline-grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--orange);
+  background: var(--orange-soft);
+  font-size: 1.5rem;
+}
+
+.delivery-pet-summary div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.delivery-pet-summary strong {
+  color: var(--delivery-navy);
+  font-size: 0.92rem;
+}
+
+.delivery-pet-summary small {
+  margin: 3px 0 6px;
+  color: #6f7891;
+  font-size: 0.7rem;
+}
+
+.delivery-id {
+  padding: 3px 7px;
+  border-radius: 5px;
+  color: #3f51c6;
+  background: #eef0ff;
+  font-size: 0.63rem;
+}
+
+.delivery-info-list {
+  display: grid;
+  margin-top: 4px;
+}
+
+.delivery-info-list .delivery-info-item {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 10px;
+  padding: 16px 0;
+  border: 0;
+  border-bottom: 1px solid #edf0f5;
+  border-radius: 0;
+  background: transparent;
+}
+
+.delivery-info-list .delivery-info-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.delivery-info-icon {
+  color: #7d88a5;
+  text-align: center;
+}
+
+.delivery-info-origin .delivery-info-icon {
+  color: var(--delivery-green);
+}
+
+.delivery-info-destination .delivery-info-icon {
+  color: var(--delivery-coral);
+}
+
+.delivery-info-item div {
+  min-width: 0;
+}
+
+.delivery-info-item strong {
+  display: block;
+  color: var(--delivery-navy);
+  font-size: 0.74rem;
+}
+
+.delivery-info-item p,
+.delivery-info-item small {
+  margin: 5px 0 0;
+  color: #57627d;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.delivery-recommendations .recommendation-list {
+  gap: 13px;
+}
+
+.delivery-recommendations .recommendation-list li {
+  align-items: flex-start;
+  color: #55617b;
+}
+
+.delivery-recommendations .recommendation-list i {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 9px;
+  color: var(--delivery-green);
+  background: #e9f8ef;
+}
+
+.delivery-recommendations .recommendation-list li:last-child i {
+  color: var(--delivery-coral);
+  background: #fff0e8;
+}
+
+.delivery-thanks {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 11px 13px;
+  border-radius: 9px;
+  color: #d85b18;
+  background: #fff1e7;
+  font-size: 0.7rem;
+}
+
+.delivery-side > .secondary-action {
+  justify-self: start;
+}
+
+@media (max-width: 1100px) {
+  .delivery-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .delivery-side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .delivery-side > .secondary-action {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .delivery-hero {
+    min-height: auto;
+  }
+
+  .delivery-pet-icon {
+    width: 64px;
+    height: 64px;
+    font-size: 1.7rem;
+  }
+
+  .delivery-metrics,
+  .delivery-side {
+    grid-template-columns: 1fr;
+  }
+
+  .delivery-metric {
+    padding: 13px 4px;
+    border-right: 0;
+    border-bottom: 1px solid var(--delivery-line);
+  }
+
+  .delivery-metric:last-child {
+    border-bottom: 0;
+  }
+
+  .delivery-status-card .delivery-timeline {
+    padding-left: 0;
+  }
+
+  .delivery-timeline::before {
+    left: 18px;
+    background: var(--delivery-line);
+  }
+
+  .delivery-step {
+    padding-left: 54px;
+  }
+}
+
+@media (max-width: 480px) {
+  .delivery-page {
+    padding: 18px 13px 34px;
+  }
+
+  .delivery-hero {
+    padding: 21px;
+  }
+
+  .delivery-pet-icon {
+    display: none;
+  }
+}
