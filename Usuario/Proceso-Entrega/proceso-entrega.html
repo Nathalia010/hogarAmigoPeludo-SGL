@@ -62,7 +62,10 @@
               <section class="portal-card delivery-card delivery-details-card">
                 <h2>Detalles de la entrega</h2>
                 <div class="delivery-pet-summary">
-                  <span class="delivery-pet-avatar"><i class="fa-solid fa-paw"></i></span>
+                  <span class="delivery-pet-avatar">
+                    <img id="deliveryPetImage" src="" alt="" hidden />
+                    <i id="deliveryPetImageFallback" class="fa-solid fa-paw" aria-hidden="true"></i>
+                  </span>
                   <div>
                     <strong id="deliveryPetName">Mascota</strong>
                     <small id="deliveryPetBreed">Información de la mascota</small>
@@ -78,7 +81,7 @@
                   <label>Modalidad<select id="modalidadEntrega"><option>Recoger en fundación</option><option>Entrega a domicilio</option></select></label>
                   <label>Dirección<input id="direccionEntrega" type="text" /></label>
                   <label>Fecha<input id="fechaEntrega" type="date" /></label>
-                  <label>Estado<select id="estadoEntrega"><option>No enviado</option><option>De camino</option><option>Recibido</option></select></label>
+                  <label>Estado<select id="estadoEntrega"><option>No enviado</option><option>De camino</option><option>En proceso de entrega</option><option>Recibido</option></select></label>
                   <button class="primary-action" type="submit"><i class="fa-regular fa-floppy-disk"></i>Guardar cambios</button>
                 </form>
               </section>
