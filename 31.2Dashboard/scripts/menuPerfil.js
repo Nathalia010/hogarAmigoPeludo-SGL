@@ -247,8 +247,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   logoutButton?.addEventListener("click", () => {
-    /* Sustituye este aviso por tu cierre de sesión real cuando exista backend. */
-    showToast("Conecta este botón con tu función de cierre de sesión.");
+    /* Sustituye este aviso por tu cierre de sesión real cuando exista backend. 
+    showToast("Conecta este botón con tu función de cierre de sesión.");*/
+    localStorage.removeItem("usuarioActual");
+    showToast("Sesión cerrada correctamente.");
+    setTimeout(() => {
+    window.location.href = "../../login/login.html";
+    }, 800);
   });
 
   document.addEventListener("keydown", (event) => {

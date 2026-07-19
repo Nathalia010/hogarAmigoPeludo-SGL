@@ -1,8 +1,41 @@
-<a href="envio.html?id=15"
-    class="btn btn-success">
-
-    <i class="fa-solid fa-truck-fast"></i>
-
-    Ver envío
-
-</a>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proceso de entrega | Hogar Amigo Peludo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="../../assets/css/portal-usuario.css" />
+  </head>
+  <body>
+    <div class="user-shell" id="userShell">
+      <aside class="user-sidebar" aria-label="Menú del usuario">
+        <a class="user-brand" href="../../index.html"><span class="user-brand-mark"><i class="fa-solid fa-paw"></i></span><span class="user-brand-copy"><strong>Hogar Amigo</strong><small>Peludo</small></span><button type="button" class="user-sidebar-close" id="userSidebarClose"><i class="fa-solid fa-xmark"></i></button></a>
+        <nav class="user-nav"><p class="user-nav-title">Mi cuenta</p><a class="user-nav-link" href="../../index.html"><i class="fa-solid fa-house"></i>Inicio</a><a class="user-nav-link" href="../../33333PerfilUsuario/perfil.html"><i class="fa-regular fa-user"></i>Mi perfil</a><a class="user-nav-link" href="../solicitudes/solicitudes-usuario.html"><i class="fa-regular fa-clipboard"></i>Mis solicitudes</a><a class="user-nav-link active" href="proceso-entrega.html"><i class="fa-solid fa-truck"></i>Proceso de entrega</a><a class="user-nav-link" href="../../32.4Catalogo/catalogo.html"><i class="fa-solid fa-paw"></i>Explorar mascotas</a></nav>
+        <div class="user-help"><strong>¿Necesitas ayuda?</strong><a href="../../26.2Contactenos/contactenos.html">Contáctanos</a></div><div class="user-sidebar-footer"><button class="user-logout" id="userLogout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</button></div>
+      </aside>
+      <button class="user-overlay" id="userOverlay" aria-label="Cerrar menú"></button>
+      <div class="user-workspace">
+        <header class="user-topbar"><div class="user-topbar-start"><button class="user-menu-toggle" id="userMenuToggle"><i class="fa-solid fa-bars"></i></button><div class="user-page-context"><span>Seguimiento</span><strong id="pageModeTitle">Proceso de entrega</strong></div></div><a class="user-topbar-profile" href="../../33333PerfilUsuario/perfil.html"><span class="user-avatar" data-user-initials>US</span><div><strong data-user-name>Usuario</strong><small id="topbarRole">Adoptante</small></div></a></header>
+        <main class="user-main" id="deliveryContent">
+          <section class="portal-card delivery-hero"><div><span class="page-badge" id="deliveryStatusBadge">Seguimiento</span><h1 id="deliveryTitle">Proceso de entrega</h1><p id="deliverySubtitle">Consulta el avance de la entrega de tu mascota.</p></div><span class="delivery-pet-icon"><i class="fa-solid fa-paw"></i></span></section>
+          <div class="delivery-grid">
+            <div class="delivery-main">
+              <section class="portal-card delivery-card"><h2>Estado de la entrega</h2><div class="delivery-timeline" id="deliveryTimeline"></div></section>
+              <section class="portal-card delivery-card"><h2>Información de entrega</h2><div class="delivery-info-grid" id="deliveryInfo"></div></section>
+            </div>
+            <aside class="delivery-side">
+              <section class="portal-card delivery-card" id="adminDeliveryPanel" hidden><h2>Actualizar entrega</h2><form class="delivery-admin-form" id="deliveryAdminForm"><label>Modalidad<select id="modalidadEntrega"><option>Recoger en fundación</option><option>Entrega a domicilio</option></select></label><label>Dirección<input id="direccionEntrega" type="text" /></label><label>Fecha<input id="fechaEntrega" type="date" /></label><label>Estado<select id="estadoEntrega"><option>No enviado</option><option>De camino</option><option>Recibido</option></select></label><button class="primary-action" type="submit"><i class="fa-regular fa-floppy-disk"></i>Guardar cambios</button></form></section>
+              <section class="portal-card delivery-card"><h2>Recomendaciones</h2><ul class="recommendation-list"><li><i class="fa-solid fa-circle-check"></i>Ten a mano tu documento de identidad.</li><li><i class="fa-solid fa-circle-check"></i>Verifica que alguien pueda recibir a la mascota.</li><li><i class="fa-solid fa-circle-check"></i>Prepara un espacio tranquilo y agua fresca.</li></ul></section>
+              <a class="secondary-action" id="backLink" href="../solicitudes/solicitudes-usuario.html"><i class="fa-solid fa-arrow-left"></i>Volver</a>
+            </aside>
+          </div>
+          <div class="portal-card empty-state" id="deliveryEmpty" hidden><i class="fa-solid fa-truck"></i><h3>No hay una entrega seleccionada</h3><p>Abre el proceso desde una solicitud en coordinación.</p><a class="primary-action" href="../solicitudes/solicitudes-usuario.html">Mis solicitudes</a></div>
+        </main>
+      </div>
+    </div>
+    <div class="toast-message" id="deliveryToast">Entrega actualizada.</div>
+    <script src="../../assets/js/portal-usuario.js" defer></script>
+    <script type="module" src="proceso-entrega.js"></script>
+  </body>
+</html>

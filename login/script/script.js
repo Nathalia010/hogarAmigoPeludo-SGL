@@ -43,7 +43,7 @@ btnLogin.addEventListener("click", function () {
         const esAdmin = usuario.rol === "admin" || usuario.email === "admin@hogaramigo.com";
 
         if (esAdmin) {
-            window.location.href = "../adminDashboard/adminDashboard.html";
+            window.location.href = "../../31.2Dashboard/dashboardAdmin.html";
         } else {
             window.location.href = "../../33333PerfilUsuario/perfil.html";
         }

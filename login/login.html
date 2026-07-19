@@ -4,55 +4,63 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login — Hogar Amigo Peludo</title>
-  <link rel="stylesheet" href="css/styles.css">
+
+  <link rel="stylesheet" href="../components/navbar-footer/navbar-footer.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <nav-bar></nav-bar>
 
-
-  <div class="panel-left">
-    <div class="paw">🐾</div>
-    <h2>Cada patita merece un hogar</h2>
-    <p>Administra las publicaciones de adopción y ayuda a nuestros amigos peludos a encontrar su familia.</p>
-    <div class="badges">
-      <span class="badge">🐶 Perros</span>
-      <span class="badge">🐱 Gatos</span>
-      <span class="badge">🐰 Más</span>
-    </div>
-  </div>
-
-  <div class="panel-right">
-    <div class="login-box">
-
-      <div class="logo">
-        <span class="icon">🏠</span>
-        <div class="logo-text">HOGAR <span>AMIGO</span> PELUDO</div>
+  <main class="login-page">
+    <section class="panel-left">
+      <div class="paw">🐾</div>
+      <h2>Cada patita merece un hogar</h2>
+      <p>Administra las publicaciones de adopción y ayuda a nuestros amigos peludos a encontrar su familia.</p>
+      <div class="badges">
+        <span class="badge">🐶 Perros</span>
+        <span class="badge">🐱 Gatos</span>
+        <span class="badge">🐰 Más</span>
       </div>
+    </section>
 
-      <h1>Bienvenido</h1>
-      <p class="subtitle">Inicia sesión para continuar</p>
-      <div class="field">
-        <label for="email">Correo electrónico</label>
-        <input type="email" id="email" placeholder="correo@ejemplo.com" />
+    <section class="panel-right">
+      <div class="login-box">
+        <div class="logo">
+          <span class="icon">🏠</span>
+          <div class="logo-text">HOGAR <span>AMIGO</span> PELUDO</div>
+        </div>
+
+        <h1>Bienvenido</h1>
+        <p class="subtitle">Inicia sesión para continuar</p>
+
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" placeholder="correo@ejemplo.com" />
+        </div>
+
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" placeholder="••••••••" />
+        </div>
+
+        <div class="forgot"><a href="#">¿Olvidaste tu contraseña?</a></div>
+
+        <button class="btn-login" id="btnLogin">Iniciar sesión</button>
+
+        <p class="register-link">
+          ¿Aún no tienes cuenta? <a href="#">Regístrate aquí</a>
+        </p>
       </div>
+    </section>
+  </main>
 
-      <div class="field">
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" placeholder="••••••••" />
-      </div>
+  <page-footer></page-footer>
 
-      <div class="forgot"><a href="#">¿Olvidaste tu contraseña?</a></div>
-
-      <button class="btn-login" id="btnLogin">Iniciar sesión</button>
-
-      <p class="register-link">
-        ¿Aún no tienes cuenta? <a href="#">Regístrate aquí</a>
-      </p>
-
-    </div>
-  </div>
-
+  <script src="../components/navbar-footer/navbar-footer.js" type="module"></script>
   <script src="script/script.js"></script>
 </body>
 </html>
