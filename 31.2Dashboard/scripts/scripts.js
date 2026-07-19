@@ -43,6 +43,10 @@ function cargarPublicaciones() {
 formPublicacion.addEventListener("submit", function (event) {
   event.preventDefault();
 
+  const publicacionEditada = idEditando !== null
+    ? publicaciones.find((item) => Number(item.id) === Number(idEditando))
+    : null;
+
   const datosPublicacion = {
     nombre: document
       .getElementById("nombre")
@@ -72,7 +76,8 @@ formPublicacion.addEventListener("submit", function (event) {
       .getElementById("descripcion")
       .value.trim(),
 
-    estado: "Disponible",
+    // Las nuevas comienzan disponibles; al editar se conserva el estado actual.
+    estado: publicacionEditada?.estado ?? "Disponible",
   };
 
   if (!validarPublicacion(datosPublicacion)) {
@@ -295,4 +300,20 @@ function mostrarJsonConsola() {
   );
 }
 
+window.addEventListener("storage", (event) => {
+  if (event.key === "mascotas") {
+    cargarPublicaciones();
+  }
+});
+
+window.addEventListener("pageshow", cargarPublicaciones);
+window.addEventListener("focus", cargarPublicaciones);
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    cargarPublicaciones();
+  }
+});
+
 cargarPublicaciones();
+
