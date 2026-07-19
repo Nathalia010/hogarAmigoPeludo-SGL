@@ -1,4 +1,10 @@
-import { obtenerSolicitudes } from "../../31.2Dashboard/scripts/solicitudes.js";
+import {
+  obtenerSolicitudes,
+  eliminarSolicitud,
+} from "../../31.2Dashboard/scripts/solicitudes.js";
+import {
+  actualizarMascota,
+} from "../../31.2Dashboard/scripts/mascotas.js";
 
 const contenedor = document.getElementById("contenedorSolicitudes");
 
@@ -6,6 +12,11 @@ mostrarSolicitudes();
 
 function mostrarSolicitudes() {
   const solicitudes = obtenerSolicitudes();
+  const contadorSolicitudes = document.getElementById("navRequestCount");
+
+  if (contadorSolicitudes) {
+    contadorSolicitudes.textContent = solicitudes.length;
+  }
 
   contenedor.innerHTML = "";
 
@@ -45,6 +56,10 @@ function mostrarSolicitudes() {
 
       case "Coordinando entrega":
         colorEstado = "info";
+        break;
+
+      case "Adoptada":
+        colorEstado = "success";
         break;
     }
 
@@ -116,7 +131,7 @@ function mostrarSolicitudes() {
                     </button>
 
                     ${
-                      solicitud.estadoSolicitud === "Coordinando entrega"
+                      ["Coordinando entrega", "Adoptada"].includes(solicitud.estadoSolicitud)
                         ? `<a
                             href="../Proceso-Entrega/proceso-entrega.html?id=${solicitud.idSolicitud}"
                             class="btn btn-success mt-2">
@@ -174,6 +189,14 @@ function mostrarSolicitudes() {
                             ${solicitud.propietario.motivo}
                         </p>
 
+                        <button
+                            type="button"
+                            class="btn btn-outline-danger mt-3 w-100"
+                            data-eliminar-solicitud="${solicitud.idSolicitud}">
+                            <i class="fa-regular fa-trash-can"></i>
+                            Eliminar solicitud
+                        </button>
+
                     </div>
 
              </div>
@@ -184,3 +207,46 @@ function mostrarSolicitudes() {
         `;
   });
 }
+
+
+
+contenedor?.addEventListener("click", (event) => {
+  const botonEliminar = event.target.closest("[data-eliminar-solicitud]");
+  if (!botonEliminar) return;
+
+  const idSolicitud = botonEliminar.dataset.eliminarSolicitud;
+  const solicitud = obtenerSolicitudes().find(
+    (item) => Number(item.idSolicitud) === Number(idSolicitud),
+  );
+
+  if (!solicitud) {
+    mostrarSolicitudes();
+    return;
+  }
+
+  const nombreMascota = solicitud.mascota?.nombre || "esta mascota";
+  const confirmar = window.confirm(
+    `¿Deseas eliminar la solicitud de ${nombreMascota}? Esta acción no se puede deshacer.`,
+  );
+
+  if (!confirmar) return;
+
+  const adopcionFinalizada =
+    solicitud.estadoSolicitud === "Adoptada" ||
+    solicitud.envio?.estadoEntrega === "Recibido";
+
+  if (!adopcionFinalizada) {
+    const idMascota = solicitud.mascota?.id ?? solicitud.mascota?.idMascota;
+    if (idMascota != null) {
+      actualizarMascota(idMascota, {
+        estado: "Disponible",
+        fechaAdopcion: null,
+        solicitudAdopcionId: null,
+      });
+    }
+  }
+
+  eliminarSolicitud(idSolicitud);
+  mostrarSolicitudes();
+});
+
