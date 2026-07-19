@@ -2,8 +2,8 @@ export class navbar extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
             <nav class="nav-bar">
-                <a class="brand" href="../../../index.html">
-                    <img src="../../assets/logo.png" alt="Logo Hogar Amigo Peludo">
+                <a class="brand" href="../../index.html">
+                    <img src="../assets/logo.png" alt="Logo Hogar Amigo Peludo">
                     <p class="navbar-logo">Hogar <span>Amigo</span> Peludo</p>
                     </a>
                 <input type="checkbox" id="navbar-menu-toggle" class="navbar-hidden-checkbox">
@@ -14,13 +14,13 @@ export class navbar extends HTMLElement {
                 </label>
 
                 <ul id="ul-navbar">
-                    <li><a href="../../../index.html">Inicio</a> </li>
-                    <li><a href="../../../32.4Catalogo/catalogo.html">adoptar</a> </li>
-                    <li><a href="../../../Donaciones/donaciones.html">donaciones</a> </li>
-                    <li><a href="../../../25.3SobreNosotro/sobre-nosotros-index.html">Sobre Nosotros</a></li>
-                    <li><a href="../../../26.2Contactenos/contactenos.html">Contactenos</a></li>
-                    <li><a href="../../../33333PerfilUsuario/perfil.html">Mi Perfil</a></li>
-                    <li><a href="../../../login/login.html">login</a> </li>
+                    <li><a href="../../index.html">Inicio</a> </li>
+                    <li><a href="../../32.4Catalogo/catalogo.html">adoptar</a> </li>
+                    <li><a href="../../Donaciones/donaciones.html">donaciones</a> </li>
+                    <li><a href="../../25.3SobreNosotro/sobre-nosotros-index.html">Sobre Nosotros</a></li>
+                    <li><a href="../../26.2Contactenos/contactenos.html">Contactenos</a></li>
+                    <li><a href="../../33333PerfilUsuario/perfil.html">Mi Perfil</a></li>
+                    <li><a href="../../login/login.html">login</a> </li>
                 </ul>
             </nav>
             <section class="botones-flotantes">
@@ -35,7 +35,7 @@ export class navbar extends HTMLElement {
                         <br> Contacto</span>
                     </a>
                     <a href="adoptar.html" class="btn btn-warning btn-flotante rounded-pill shadow">
-                        <img src="../../assets/icons/adoptame.png" alt="Adoptar" class="icono-adoptar">
+                        <img src="../assets/icons/adoptame.png" alt="Adoptar" class="icono-adoptar">
                         <span>Adoptar</span>
                     </a>
                 </div>
