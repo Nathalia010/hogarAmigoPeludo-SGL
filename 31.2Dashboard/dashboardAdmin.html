@@ -1,188 +1,471 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>contactenos</title>
-    <!-- navbar-footer style -->
-    <link
-      rel="stylesheet"
-      href="../components/navbar-footer/navbar-footer.css"
+    <meta
+      name="description"
+      content="Panel administrativo de Hogar Amigo Peludo"
     />
+    <title>Dashboard | Hogar Amigo Peludo</title>
 
-    <link rel="stylesheet" href="css/style.css"/>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="https://cloudflare.com" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
     />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
   </head>
 
   <body>
+    <div class="admin-shell" id="adminShell">
+      <aside
+        class="admin-sidebar"
+        id="adminSidebar"
+        aria-label="Menú de administración"
+      >
+        <div class="sidebar-brand">
+          <span class="brand-mark" aria-hidden="true">
+            <i class="fa-solid fa-paw"></i>
+          </span>
+          <span class="sidebar-label brand-copy">
+            <strong>Hogar Amigo</strong>
+            <small>Peludo</small>
+          </span>
 
-    <main class="admin-page">
-      <section class="admin-section">
-        <div class="container">
-          <div class="section-header text-center">
-            <span class="section-badge">Administrador</span>
-            <h1>Crear publicación de adopción</h1>
-            <p>
-              Registra los animalitos que estarán disponibles en el catálogo.
-            </p>
-          </div>
+          <button
+            type="button"
+            class="sidebar-close"
+            id="sidebarClose"
+            aria-label="Cerrar menú"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
 
-          <div class="row g-4">
-            <div class="col-lg-5">
-              <form id="formPublicacion" class="admin-card">
-                <h2 class="section-title">Nueva publicación</h2>
+        <nav class="sidebar-nav">
+          <p class="sidebar-section-title sidebar-label">Administración</p>
 
-                <div class="mb-3">
-                  <label class="form-label">Nombre</label>
-                  <input
-                    type="text"
-                    id="nombre"
-                    class="form-control"
-                    required
-                  />
-                </div>
+          
+          <a class="sidebar-link active" href="dashboardAdmin.html" title="Dashboard">
+            <span class="sidebar-icon"><i class="fa-solid fa-house"></i></span>
+            <span class="sidebar-label">Dashboard</span>
+          </a>
 
-                <div class="mb-3">
-                  <label class="form-label">Especie</label>
-                  <select id="especie" class="form-select" required>
-                    <option value="">Seleccione</option>
-                    <option value="Perro">Perro</option>
-                    <option value="Gato">Gato</option>
-                    <option value="Otro">Otro</option>
-                  </select>
-                </div>
+          <a class="sidebar-link" href="admin-solicitud.html" title="Solicitudes">
+            <span class="sidebar-icon"><i class="fa-regular fa-clipboard"></i></span>
+            <span class="sidebar-label">Solicitudes</span>
+            <span class="sidebar-count sidebar-label">5</span>
+          </a>
 
-                <div class="mb-3">
-                  <label class="form-label">Edad</label>
-                  <input
-                    type="text"
-                    id="edad"
-                    class="form-control"
-                    placeholder="Ej: 2 años"
-                    required
-                  />
-                </div>
+          <a class="sidebar-link" href="publicaciones.html" title="Publicaciones">
+            <span class="sidebar-icon"><i class="fa-regular fa-rectangle-list"></i></span>
+            <span class="sidebar-label">Publicaciones</span>
+          </a>
 
-                <div class="mb-3">
-                  <label class="form-label">Sexo</label>
-                  <select id="sexo" class="form-select" required>
-                    <option value="">Seleccione</option>
-                    <option value="Macho">Macho</option>
-                    <option value="Hembra">Hembra</option>
-                  </select>
-                </div>
+          <a class="sidebar-link" href="admin-crear-mascota.html" title="Mascotas">
+            <span class="sidebar-icon"><i class="fa-solid fa-paw"></i></span>
+            <span class="sidebar-label">Mascotas</span>
+          </a>
 
-                <div class="mb-3">
-                  <label class="form-label">Tamaño</label>
-                  <select id="tamano" class="form-select" required>
-                    <option value="">Seleccione</option>
-                    <option value="Pequeño">Pequeño</option>
-                    <option value="Mediano">Mediano</option>
-                    <option value="Grande">Grande</option>
-                  </select>
-                </div>
+          <a class="sidebar-link" href="usuarios.html" title="Usuarios">
+            <span class="sidebar-icon"><i class="fa-regular fa-user"></i></span>
+            <span class="sidebar-label">Usuarios</span>
+          </a>
 
-                <div class="mb-3">
-                  <label class="form-label">Imagen URL</label>
-                  <input
-                    type="url"
-                    id="imagen"
-                    class="form-control"
-                    placeholder="https://..."
-                    required
-                  />
-                </div>
+          <a class="sidebar-link" href="entregas.html" title="Entregas">
+            <span class="sidebar-icon"><i class="fa-solid fa-truck"></i></span>
+            <span class="sidebar-label">Entregas</span>
+          </a>
 
-                <div class="mb-3">
-                  <label class="form-label">Descripción</label>
-                  <textarea
-                    id="descripcion"
-                    class="form-control"
-                    rows="4"
-                    required
-                  ></textarea>
-                </div>
+          <a class="sidebar-link" href="donaciones.html" title="Donaciones">
+            <span class="sidebar-icon"><i class="fa-solid fa-hand-holding-heart"></i></span>
+            <span class="sidebar-label">Donaciones</span>
+          </a>
 
-                <button type="submit" id="btnGuardar" class="btn-submit w-100">
-                  Guardar publicación
-                </button>
-              </form>
-            </div>
+          <a class="sidebar-link" href="reportes.html" title="Reportes">
+            <span class="sidebar-icon"><i class="fa-solid fa-chart-column"></i></span>
+            <span class="sidebar-label">Reportes</span>
+          </a>
 
-            <div class="col-lg-7">
-              <div class="admin-card">
-                <h2 class="section-title">Listado de publicaciones</h2>
+          <a class="sidebar-link" href="configuracion.html" title="Configuración">
+            <span class="sidebar-icon"><i class="fa-solid fa-gear"></i></span>
+            <span class="sidebar-label">Configuración</span>
+          </a>
+        </nav>
 
-                <div class="table-responsive">
-                  <table class="table align-middle">
-                    <thead>
-                      <tr>
-                        <th>Imagen</th>
-                        <th>Nombre</th>
-                        <th>Especie</th>
-                        <th>Edad</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody id="tablaPublicaciones"></tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+        <div class="sidebar-help sidebar-label">
+          <span class="help-icon"><i class="fa-regular fa-circle-question"></i></span>
+          <div>
+            <strong>¿Necesitas ayuda?</strong>
+            <a href="../26.2Contactenos/contactenos.html">Contáctanos</a>
           </div>
         </div>
-      </section>
-    </main>
 
-    <script
-      type="module"
-      src="./scripts/scripts.js"
-    ></script>
-    <script
-      src="../components/navbar-footer/navbar-footer.js"
-      type="module"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <!-- navbar-footer script -->
-    <script
-      src="../components/navbar-footer/navbar-footer.js"
-      type="module"
-    ></script>
+        <div class="sidebar-footer">
+          <button
+            type="button"
+            class="admin-mini-profile"
+            data-admin-view="perfil"
+            title="Editar perfil"
+          >
+            <span class="admin-avatar" data-admin-initials>AD</span>
+            <span class="sidebar-label admin-mini-copy">
+              <strong data-admin-name>Administrador</strong>
+              <small data-admin-role>Administrador general</small>
+            </span>
+            <i
+              class="fa-solid fa-pen sidebar-label edit-profile-icon"
+              aria-hidden="true"
+            ></i>
+          </button>
+
+          <button
+            type="button"
+            class="logout-button"
+            id="logoutButton"
+            title="Cerrar sesión"
+          >
+            <span class="sidebar-icon">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </span>
+            <span class="sidebar-label">Cerrar sesión</span>
+          </button>
+        </div>
+      </aside>
+
+      <button
+        type="button"
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+        aria-label="Cerrar menú"
+        tabindex="-1"
+      ></button>
+
+      <div class="admin-workspace">
+        <header class="admin-topbar">
+          <div class="topbar-start">
+            <button
+              type="button"
+              class="icon-button sidebar-toggle"
+              id="sidebarToggle"
+              aria-controls="adminSidebar"
+              aria-expanded="true"
+              aria-label="Contraer menú lateral"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <label class="admin-search" for="adminSearch">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input
+                type="search"
+                id="adminSearch"
+                placeholder="Buscar secciones..."
+                autocomplete="off"
+              />
+            </label>
+          </div>
+
+          <div class="topbar-actions">
+            <button
+              type="button"
+              class="icon-button notification-button"
+              id="notificationButton"
+              aria-label="Ver notificaciones"
+            >
+              <i class="fa-regular fa-bell"></i>
+              <span class="notification-count">3</span>
+            </button>
+
+            <button type="button" class="topbar-profile" data-admin-view="perfil">
+              <span class="admin-avatar small" data-admin-initials>AD</span>
+              <span class="topbar-profile-copy">
+                <strong data-admin-name>Administrador</strong>
+                <small data-admin-role>Administrador general</small>
+              </span>
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+          </div>
+        </header>
+
+        <main class="admin-main admin-page">
+          <!-- DASHBOARD -->
+          <section
+            class="admin-view active"
+            id="view-dashboard"
+            data-view-title="Dashboard"
+          >
+            <section class="welcome-banner">
+              <div class="welcome-copy">
+                <span class="section-badge">Panel administrador</span>
+                <h1>Bienvenida, <span data-admin-first-name>Administrador</span></h1>
+                <p>Aquí tienes el resumen de Hogar Amigo Peludo.</p>
+              </div>
+
+              <div class="welcome-visual" aria-hidden="true">
+                <span class="visual-paw paw-one"><i class="fa-solid fa-paw"></i></span>
+                <span class="visual-paw paw-two"><i class="fa-solid fa-paw"></i></span>
+                <span class="visual-pet dog"><i class="fa-solid fa-dog"></i></span>
+                <span class="visual-pet cat"><i class="fa-solid fa-cat"></i></span>
+              </div>
+            </section>
+
+            <section class="metric-grid" aria-label="Resumen del sistema">
+              <a class="metric-card metric-orange" href="admin-solicitud.html">
+                <span class="metric-icon"><i class="fa-regular fa-clipboard"></i></span>
+                <span class="metric-copy">
+                  <small>Solicitudes</small>
+                  <strong>5</strong>
+                  <span>Pendientes</span>
+                </span>
+                <span class="metric-link">Ver todas <i class="fa-solid fa-arrow-right"></i></span>
+              </a>
+
+              <a class="metric-card metric-blue" href="entregas.html">
+                <span class="metric-icon"><i class="fa-solid fa-truck-fast"></i></span>
+                <span class="metric-copy">
+                  <small>Entregas</small>
+                  <strong>8</strong>
+                  <span>En proceso</span>
+                </span>
+                <span class="metric-link">Ver todas <i class="fa-solid fa-arrow-right"></i></span>
+              </a>
+
+              <a class="metric-card metric-green" href="entregas.html">
+                <span class="metric-icon"><i class="fa-regular fa-circle-check"></i></span>
+                <span class="metric-copy">
+                  <small>Adopciones</small>
+                  <strong>24</strong>
+                  <span>Completadas</span>
+                </span>
+                <span class="metric-link">Ver todas <i class="fa-solid fa-arrow-right"></i></span>
+              </a>
+
+              <a class="metric-card metric-purple" href="admin-crear-mascota.html">
+                <span class="metric-icon"><i class="fa-solid fa-paw"></i></span>
+                <span class="metric-copy">
+                  <small>Mascotas</small>
+                  <strong>32</strong>
+                  <span>Registradas</span>
+                </span>
+                <span class="metric-link">Ver todas <i class="fa-solid fa-arrow-right"></i></span>
+              </a>
+            </section>
+
+            <div class="dashboard-grid">
+              <section class="dashboard-card quick-actions-card">
+                <div class="dashboard-card-heading">
+                  <div>
+                    <span>Gestión diaria</span>
+                    <h2>Accesos rápidos</h2>
+                  </div>
+                  <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+                </div>
+
+                <div class="quick-action-grid">
+                  <a href="publicaciones.html" class="quick-action">
+                    <span><i class="fa-solid fa-plus"></i></span>
+                    <div>
+                      <strong>Nueva publicación</strong>
+                      <small>Registra una mascota disponible</small>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </a>
+
+                  <a href="admin-solicitud.html" class="quick-action">
+                    <span><i class="fa-regular fa-clipboard"></i></span>
+                    <div>
+                      <strong>Revisar solicitudes</strong>
+                      <small>Consulta adopciones pendientes</small>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </a>
+
+                  <a href="admin-crear-mascota.html" class="quick-action">
+                    <span><i class="fa-solid fa-paw"></i></span>
+                    <div>
+                      <strong>Gestionar mascotas</strong>
+                      <small>Edita la información del catálogo</small>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </a>
+
+                  <a href="reportes.html" class="quick-action">
+                    <span><i class="fa-solid fa-chart-column"></i></span>
+                    <div>
+                      <strong>Consultar reportes</strong>
+                      <small>Revisa los resultados del refugio</small>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </a>
+                </div>
+              </section>
+
+              <section class="dashboard-card status-card">
+                <div class="dashboard-card-heading">
+                  <div>
+                    <span>Solicitudes</span>
+                    <h2>Estado de adopciones</h2>
+                  </div>
+                  <a href="admin-solicitud.html">Ver detalle</a>
+                </div>
+
+                <div class="status-chart-wrap">
+                  <div class="status-donut" aria-label="37 solicitudes en total">
+                    <span>Total<strong>37</strong></span>
+                  </div>
+                  <ul class="status-legend">
+                    <li><span class="legend-dot pending"></span>Pendientes <strong>5</strong></li>
+                    <li><span class="legend-dot progress"></span>En proceso <strong>8</strong></li>
+                    <li><span class="legend-dot completed"></span>Completadas <strong>24</strong></li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="dashboard-card recent-card">
+                <div class="dashboard-card-heading">
+                  <div>
+                    <span>Últimos movimientos</span>
+                    <h2>Actividad reciente</h2>
+                  </div>
+                  <a href="reportes.html">Ver toda</a>
+                </div>
+
+                <ul class="activity-list">
+                  <li>
+                    <span class="activity-icon orange"><i class="fa-solid fa-paw"></i></span>
+                    <div><strong>Nueva solicitud de adopción</strong><small>Max · Hace 10 minutos</small></div>
+                  </li>
+                  <li>
+                    <span class="activity-icon blue"><i class="fa-solid fa-truck"></i></span>
+                    <div><strong>Entrega puesta en proceso</strong><small>Luna · Hace 1 hora</small></div>
+                  </li>
+                  <li>
+                    <span class="activity-icon green"><i class="fa-solid fa-check"></i></span>
+                    <div><strong>Adopción completada</strong><small>Toby · Ayer</small></div>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="dashboard-card next-deliveries-card">
+                <div class="dashboard-card-heading">
+                  <div>
+                    <span>Agenda</span>
+                    <h2>Próximas entregas</h2>
+                  </div>
+                  <a href="entregas.html">Ver todas</a>
+                </div>
+
+                <div class="delivery-list">
+                  <article>
+                    <span class="pet-avatar"><i class="fa-solid fa-dog"></i></span>
+                    <div><strong>Luna</strong><small>18 Jul · Medellín</small></div>
+                    <span class="delivery-status">Programada</span>
+                  </article>
+                  <article>
+                    <span class="pet-avatar"><i class="fa-solid fa-cat"></i></span>
+                    <div><strong>Simba</strong><small>18 Jul · Ibagué</small></div>
+                    <span class="delivery-status">Programada</span>
+                  </article>
+                  <article>
+                    <span class="pet-avatar"><i class="fa-solid fa-dog"></i></span>
+                    <div><strong>Rocky</strong><small>19 Jul · Cali</small></div>
+                    <span class="delivery-status">Programada</span>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <!-- PERFIL EDITABLE -->
+          <section
+            class="admin-view"
+            id="view-perfil"
+            data-view-title="Mi perfil"
+            hidden
+          >
+            <div class="page-heading">
+              <div>
+                <span class="section-badge">Cuenta administrativa</span>
+                <h1>Perfil del administrador</h1>
+                <p>Actualiza la información visible de tu cuenta.</p>
+              </div>
+            </div>
+
+            <div class="profile-layout">
+              <article class="admin-card profile-summary-card">
+                <span class="admin-avatar profile-avatar" data-admin-initials>AD</span>
+                <h2 data-admin-name>Administrador</h2>
+                <p data-admin-role>Administrador general</p>
+                <span class="account-status">
+                  <i class="fa-solid fa-circle-check"></i>
+                  Cuenta activa
+                </span>
+
+                <dl class="profile-meta">
+                  <div>
+                    <dt>Correo</dt>
+                    <dd data-admin-email>admin@hogaramigopeludo.org</dd>
+                  </div>
+                  <div>
+                    <dt>Teléfono</dt>
+                    <dd data-admin-phone>Sin registrar</dd>
+                  </div>
+                </dl>
+              </article>
+
+              <form class="admin-card profile-form" id="adminProfileForm">
+                <div class="card-heading">
+                  <span class="heading-icon"><i class="fa-regular fa-pen-to-square"></i></span>
+                  <div>
+                    <h2>Editar datos</h2>
+                    <p>Los cambios se reflejarán en el panel administrativo.</p>
+                  </div>
+                </div>
+
+                <div class="row g-4">
+                  <div class="col-md-6">
+                    <label class="form-label" for="adminName">Nombre completo</label>
+                    <input id="adminName" name="name" class="form-control" autocomplete="name" required />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="adminEmail">Correo electrónico</label>
+                    <input id="adminEmail" name="email" type="email" class="form-control" autocomplete="email" required />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="adminPhone">Teléfono</label>
+                    <input id="adminPhone" name="phone" type="tel" class="form-control" autocomplete="tel" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="adminRole">Rol</label>
+                    <input id="adminRole" name="role" class="form-control" value="Administrador general" readonly />
+                    <small class="field-help">El rol se administra desde el sistema de usuarios.</small>
+                  </div>
+                  <div class="col-12 form-actions">
+                    <button type="button" class="secondary-button" id="cancelProfileChanges">Cancelar</button>
+                    <button type="submit" class="primary-button">
+                      <i class="fa-regular fa-floppy-disk"></i>
+                      Guardar cambios
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="admin-toast" id="adminToast" role="status" aria-live="polite">
+      <i class="fa-solid fa-circle-check"></i>
+      <span>Datos actualizados correctamente.</span>
+    </div>
+
+    <script src="scripts/menuPerfil.js" defer></script>
   </body>
 </html>
