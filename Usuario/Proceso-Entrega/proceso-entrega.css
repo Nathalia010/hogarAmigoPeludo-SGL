@@ -248,11 +248,24 @@
   display: inline-grid;
   width: 64px;
   height: 64px;
+  overflow: hidden;
   place-items: center;
   border-radius: 50%;
   color: var(--orange);
   background: var(--orange-soft);
   font-size: 1.5rem;
+}
+
+.delivery-pet-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.delivery-pet-avatar img[hidden],
+.delivery-pet-avatar i[hidden] {
+  display: none;
 }
 
 .delivery-pet-summary div {

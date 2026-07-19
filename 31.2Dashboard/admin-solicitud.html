@@ -166,6 +166,7 @@
                   <option value="Aceptada">Aceptada</option>
                   <option value="Negada">Negada</option>
                   <option value="Coordinando entrega">Coordinando entrega</option>
+                  <option value="Adoptada">Adoptada</option>
                 </select>
               </div>
               <div class="col-md-2 col-xl-4 filter-actions">
@@ -252,17 +253,49 @@
               <input type="text" class="form-control" id="direccionEntrega" />
               <small class="field-help">Obligatoria únicamente para entrega a domicilio.</small>
             </div>
+            <div class="mb-3">
+              <label for="origenEntrega" class="form-label">Origen</label>
+              <input type="text" class="form-control" id="origenEntrega" placeholder="Ej. Fundación Hogar Amigo Peludo" />
+            </div>
 
             <div class="mb-3">
               <label for="fechaEntrega" class="form-label">Fecha de entrega</label>
               <input type="date" class="form-control" id="fechaEntrega" />
             </div>
 
+            <div class="delivery-tracking-fields">
+              <div>
+                <label for="horaEstimadaEntrega" class="form-label">Horario estimado</label>
+                <input type="time" class="form-control" id="horaEstimadaEntrega" />
+              </div>
+              <div>
+                <label for="tiempoRestanteEntrega" class="form-label">Tiempo restante (min)</label>
+                <input type="number" class="form-control" id="tiempoRestanteEntrega" min="0" value="0" />
+              </div>
+              <div>
+                <label for="distanciaRestanteEntrega" class="form-label">Distancia restante (km)</label>
+                <input type="number" class="form-control" id="distanciaRestanteEntrega" min="0" step="0.1" value="0" />
+              </div>
+            </div>
+
+            <div class="delivery-transporter-fields">
+              <div>
+                <label for="transportistaNombreEntrega" class="form-label">Nombre del transportista</label>
+                <input type="text" class="form-control" id="transportistaNombreEntrega" value="Hogar Amigo Peludo" autocomplete="name" />
+              </div>
+              <div>
+                <label for="transportistaTelefonoEntrega" class="form-label">Teléfono del transportista</label>
+                <input type="tel" class="form-control" id="transportistaTelefonoEntrega" value="1234567890" inputmode="tel" autocomplete="tel" />
+              </div>
+            </div>
+
+
             <div>
               <label for="estadoEntrega" class="form-label">Estado del envío</label>
               <select id="estadoEntrega" class="form-select">
                 <option value="No enviado">No enviado</option>
                 <option value="De camino">De camino</option>
+                <option value="En proceso de entrega">En proceso de entrega</option>
                 <option value="Recibido">Recibido</option>
               </select>
             </div>

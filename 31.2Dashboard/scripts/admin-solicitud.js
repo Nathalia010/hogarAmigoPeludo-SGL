@@ -3,6 +3,10 @@ import {
   cambiarEstadoSolicitud,
   actualizarEnvio,
 } from "./solicitudes.js";
+import {
+  obtenerMascotas,
+  actualizarMascota,
+} from "./mascotas.js";
 
 const tbody = document.getElementById("tablaSolicitudes");
 const panelDetalle = document.getElementById("panelDetalle");
@@ -12,7 +16,13 @@ const limpiarFiltros = document.getElementById("limpiarFiltros");
 const modalEntregaElement = document.getElementById("modalEntrega");
 const modalidadEntrega = document.getElementById("modalidadEntrega");
 const direccionEntrega = document.getElementById("direccionEntrega");
+const origenEntrega = document.getElementById("origenEntrega");
 const fechaEntrega = document.getElementById("fechaEntrega");
+const horaEstimadaEntrega = document.getElementById("horaEstimadaEntrega");
+const tiempoRestanteEntrega = document.getElementById("tiempoRestanteEntrega");
+const distanciaRestanteEntrega = document.getElementById("distanciaRestanteEntrega");
+const transportistaNombreEntrega = document.getElementById("transportistaNombreEntrega");
+const transportistaTelefonoEntrega = document.getElementById("transportistaTelefonoEntrega");
 const estadoEntrega = document.getElementById("estadoEntrega");
 const grupoDireccionEntrega = document.getElementById("grupoDireccionEntrega");
 const resumenMascotaEntrega = document.getElementById("resumenMascotaEntrega");
@@ -45,7 +55,55 @@ function iniciar() {
 
 function refrescarSolicitudes() {
   solicitudes = obtenerSolicitudes();
+  reconciliarEstadosExistentes();
+  solicitudes = obtenerSolicitudes();
   filtrar();
+}
+
+function reconciliarEstadosExistentes() {
+  if (!Array.isArray(solicitudes)) return;
+
+  solicitudes.forEach((solicitud) => {
+    const solicitudAdoptada = solicitud.estadoSolicitud === "Adoptada";
+    const otraSolicitudAdoptada = solicitudes.some(
+      (otraSolicitud) =>
+        otraSolicitud !== solicitud &&
+        otraSolicitud.estadoSolicitud === "Adoptada" &&
+        solicitudesSonDeLaMismaMascota(solicitud, otraSolicitud),
+    );
+
+    if (solicitudAdoptada) {
+      actualizarEstadoMascotaAsociada(solicitud, "Adoptada");
+      return;
+    }
+
+    if (!otraSolicitudAdoptada) {
+      actualizarEstadoMascotaAsociada(solicitud, "Disponible");
+    }
+
+    if (solicitud.envio?.estadoEntrega === "Recibido") {
+      actualizarEnvio(solicitud.idSolicitud, {
+        estadoEntrega: "No enviado",
+        estadoProceso: "Estamos preparando la entrega.",
+        tiempoRestante: 0,
+        distanciaRestante: 0,
+      });
+    }
+  });
+}
+
+function solicitudesSonDeLaMismaMascota(primera, segunda) {
+  const primeraMascota = primera.mascota ?? {};
+  const segundaMascota = segunda.mascota ?? {};
+  const primerId = primeraMascota.id ?? primeraMascota.idMascota;
+  const segundoId = segundaMascota.id ?? segundaMascota.idMascota;
+
+  if (primerId != null && segundoId != null) {
+    return Number(primerId) === Number(segundoId);
+  }
+
+  return normalizarTexto(primeraMascota.nombre) === normalizarTexto(segundaMascota.nombre) &&
+    (!primeraMascota.imagen || !segundaMascota.imagen || primeraMascota.imagen === segundaMascota.imagen);
 }
 
 function filtrar() {
@@ -124,7 +182,7 @@ function mostrarSolicitudes(lista) {
       const propietario = solicitud.propietario ?? {};
       const mascota = solicitud.mascota ?? {};
       const estado = solicitud.estadoSolicitud ?? "Sin estado";
-      const mostrarEntrega = estado === "Coordinando entrega";
+      const mostrarEntrega = ["Coordinando entrega", "Adoptada"].includes(estado);
 
       return `
         <tr class="${Number(solicitud.idSolicitud) === solicitudSeleccionadaId ? "selected-row" : ""}">
@@ -179,6 +237,7 @@ function obtenerColorEstado(estado) {
     Aceptada: "success",
     Negada: "danger",
     "Coordinando entrega": "info",
+    Adoptada: "success",
   };
 
   return colores[estado] ?? "secondary";
@@ -301,6 +360,7 @@ function crearOpcionesEstado(estadoActual) {
     "Aceptada",
     "Negada",
     "Coordinando entrega",
+    "Adoptada",
   ]
     .map(
       (estado) => `
@@ -317,12 +377,74 @@ function guardarNuevoEstado(solicitud) {
   if (!nuevoEstado) return;
 
   cambiarEstadoSolicitud(solicitud.idSolicitud, nuevoEstado);
+  const mascotaActualizada = sincronizarDesdeEstadoSolicitud(solicitud, nuevoEstado);
   refrescarSolicitudes();
 
   const solicitudActualizada = buscarSolicitud(solicitud.idSolicitud);
   if (solicitudActualizada) mostrarDetalle(solicitudActualizada);
 
-  mostrarMensaje("Estado de la solicitud actualizado.");
+  mostrarMensaje(
+    mascotaActualizada
+      ? "Estado de la solicitud y de la mascota actualizados."
+      : "La solicitud cambió, pero no se encontró la mascota asociada.",
+    mascotaActualizada ? "success" : "error",
+  );
+}
+
+function sincronizarDesdeEstadoSolicitud(solicitud, nuevoEstado) {
+  const solicitudAdoptada = nuevoEstado === "Adoptada";
+
+  actualizarEnvio(solicitud.idSolicitud, {
+    estadoEntrega: solicitudAdoptada ? "Recibido" : "No enviado",
+    estadoProceso: solicitudAdoptada
+      ? "La mascota fue recibida correctamente."
+      : "Estamos preparando la entrega.",
+    tiempoRestante: solicitudAdoptada ? solicitud.envio?.tiempoRestante ?? 0 : 0,
+    distanciaRestante: solicitudAdoptada ? solicitud.envio?.distanciaRestante ?? 0 : 0,
+  });
+
+  return actualizarEstadoMascotaAsociada(
+    solicitud,
+    solicitudAdoptada ? "Adoptada" : "Disponible",
+  );
+}
+
+function actualizarEstadoMascotaAsociada(solicitud, estadoMascota) {
+  const mascotaSolicitud = solicitud.mascota ?? {};
+  const mascotas = obtenerMascotas();
+  const idMascota = mascotaSolicitud.id ?? mascotaSolicitud.idMascota;
+
+  let mascotaRegistrada = mascotas.find(
+    (mascota) => Number(mascota.id) === Number(idMascota),
+  );
+
+  if (!mascotaRegistrada) {
+    mascotaRegistrada = mascotas.find((mascota) => {
+      const mismoNombre = normalizarTexto(mascota.nombre) === normalizarTexto(mascotaSolicitud.nombre);
+      const mismaImagen = mascotaSolicitud.imagen && mascota.imagen === mascotaSolicitud.imagen;
+      return mismoNombre && (!mascotaSolicitud.imagen || mismaImagen);
+    });
+  }
+
+  if (!mascotaRegistrada) {
+    console.warn("No se encontró la mascota asociada a la solicitud:", solicitud.idSolicitud);
+    return false;
+  }
+
+  return actualizarMascota(
+    mascotaRegistrada.id,
+    estadoMascota === "Adoptada"
+      ? {
+          estado: "Adoptada",
+          fechaAdopcion: new Date().toISOString(),
+          solicitudAdopcionId: solicitud.idSolicitud,
+        }
+      : {
+          estado: "Disponible",
+          fechaAdopcion: null,
+          solicitudAdopcionId: null,
+        },
+  );
 }
 
 function abrirModalEntrega(solicitud) {
@@ -330,14 +452,26 @@ function abrirModalEntrega(solicitud) {
   const envio = solicitud.envio ?? {
     modalidad: "Recoger en fundación",
     direccion: "",
+    origen: "",
     fechaEntrega: "",
+    horaEstimada: "",
+    tiempoRestante: 0,
+    distanciaRestante: 0,
+    transportistaNombre: "Hogar Amigo Peludo",
+    transportistaTelefono: "1234567890",
     estadoEntrega: "No enviado",
   };
   const mascota = solicitud.mascota ?? {};
 
   modalidadEntrega.value = envio.modalidad ?? "Recoger en fundación";
   direccionEntrega.value = envio.direccion ?? "";
+  origenEntrega.value = envio.origen ?? "";
   fechaEntrega.value = envio.fechaEntrega ?? "";
+  horaEstimadaEntrega.value = envio.horaEstimada ?? "";
+  tiempoRestanteEntrega.value = envio.tiempoRestante ?? 0;
+  distanciaRestanteEntrega.value = envio.distanciaRestante ?? 0;
+  transportistaNombreEntrega.value = envio.transportistaNombre ?? "Hogar Amigo Peludo";
+  transportistaTelefonoEntrega.value = envio.transportistaTelefono ?? "1234567890";
   estadoEntrega.value = envio.estadoEntrega ?? "No enviado";
 
   resumenMascotaEntrega.innerHTML = `
@@ -367,7 +501,13 @@ function guardarDatosEntrega() {
 
   const modalidad = modalidadEntrega?.value;
   const direccion = direccionEntrega?.value.trim() ?? "";
+  const origen = origenEntrega?.value.trim() ?? "";
   const fecha = fechaEntrega?.value ?? "";
+  const horaEstimada = horaEstimadaEntrega?.value ?? "";
+  const tiempoRestante = Math.max(0, Number(tiempoRestanteEntrega?.value) || 0);
+  const distanciaRestante = Math.max(0, Number(distanciaRestanteEntrega?.value) || 0);
+  const transportistaNombre = transportistaNombreEntrega?.value.trim() ?? "";
+  const transportistaTelefono = transportistaTelefonoEntrega?.value.trim() ?? "";
   const estado = estadoEntrega?.value;
 
   if (!modalidad || !estado) {
@@ -381,20 +521,94 @@ function guardarDatosEntrega() {
     return;
   }
 
+  if (!transportistaNombre || !transportistaTelefono) {
+    mostrarMensaje("Escribe el nombre y teléfono del transportista.", "error");
+    return;
+  }
+
   actualizarEnvio(solicitud.idSolicitud, {
     modalidad,
     direccion: modalidad === "Entrega a domicilio" ? direccion : "",
+    origen,
     fechaEntrega: fecha,
+    horaEstimada,
+    tiempoRestante,
+    distanciaRestante,
+    transportistaNombre,
+    transportistaTelefono,
     estadoEntrega: estado,
-    estadoProceso:
-      estado === "Recibido"
-        ? "La mascota fue recibida."
-        : "Nos estaremos contactando para coordinar la fecha.",
+    estadoProceso: obtenerMensajeEstadoEntrega(estado),
   });
+
+  const estadosSincronizados = sincronizarEstadoAdopcion(solicitud, estado);
 
   refrescarSolicitudes();
   modalEntrega?.hide();
-  mostrarMensaje("Información de entrega actualizada.");
+  mostrarMensaje(
+    estadosSincronizados
+      ? "Información de entrega y estado de adopción actualizados."
+      : "La entrega se guardó, pero no se encontró la mascota para actualizar su estado.",
+    estadosSincronizados ? "success" : "error",
+  );
+}
+
+function sincronizarEstadoAdopcion(solicitud, estadoEntregaActual) {
+  const mascotaSolicitud = solicitud.mascota ?? {};
+  const mascotas = obtenerMascotas();
+  const idMascota = mascotaSolicitud.id ?? mascotaSolicitud.idMascota;
+  const entregaRecibida = estadoEntregaActual === "Recibido";
+  const estadoSolicitud = entregaRecibida ? "Adoptada" : "Coordinando entrega";
+  const estadoMascota = entregaRecibida ? "Adoptada" : "Disponible";
+
+  cambiarEstadoSolicitud(solicitud.idSolicitud, estadoSolicitud);
+
+  let mascotaRegistrada = mascotas.find(
+    (mascota) => Number(mascota.id) === Number(idMascota),
+  );
+
+  // Respaldo para solicitudes antiguas que no guardaron el id de la mascota.
+  if (!mascotaRegistrada) {
+    mascotaRegistrada = mascotas.find((mascota) => {
+      const mismoNombre = normalizarTexto(mascota.nombre) === normalizarTexto(mascotaSolicitud.nombre);
+      const mismaImagen = mascotaSolicitud.imagen && mascota.imagen === mascotaSolicitud.imagen;
+      return mismoNombre && (!mascotaSolicitud.imagen || mismaImagen);
+    });
+  }
+
+  if (!mascotaRegistrada) {
+    console.warn("No se encontró la mascota asociada a la solicitud:", solicitud.idSolicitud);
+    return false;
+  }
+
+  return actualizarMascota(
+    mascotaRegistrada.id,
+    entregaRecibida
+      ? {
+          estado: estadoMascota,
+          fechaAdopcion: new Date().toISOString(),
+          solicitudAdopcionId: solicitud.idSolicitud,
+        }
+      : {
+          estado: estadoMascota,
+          fechaAdopcion: null,
+          solicitudAdopcionId: null,
+        },
+  );
+}
+
+function normalizarTexto(valor) {
+  return String(valor ?? "").trim().toLocaleLowerCase("es");
+}
+
+function obtenerMensajeEstadoEntrega(estado) {
+  const mensajes = {
+    "No enviado": "Estamos preparando la entrega.",
+    "De camino": "La mascota está en ruta hacia el destino.",
+    "En proceso de entrega": "El transportista está realizando la entrega.",
+    Recibido: "La mascota fue recibida correctamente.",
+  };
+
+  return mensajes[estado] ?? "La entrega está siendo coordinada.";
 }
 
 function mostrarMensaje(mensaje, tipo = "success") {
