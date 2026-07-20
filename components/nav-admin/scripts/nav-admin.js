@@ -55,13 +55,14 @@ export class NavAdmin extends HTMLElement {
       ["publicaciones", "publicaciones.html", "fa-regular fa-rectangle-list", "Publicaciones"],
       ["mascotas", "admin-crear-mascota.html", "fa-solid fa-paw", "Mascotas"],
       ["usuarios", "usuarios.html", "fa-regular fa-user", "Usuarios"],
-      ["entregas", "entregas.html", "fa-solid fa-truck", "Entregas"],
+      ["entregas", "admin-entregas.html", "fa-solid fa-truck", "Entregas"],
       ["donaciones", "donaciones.html", "fa-solid fa-hand-holding-heart", "Donaciones"],
       ["reportes", "reportes.html", "fa-solid fa-chart-column", "Reportes"],
       ["configuracion", "configuracion.html", "fa-solid fa-gear", "Configuración"],
     ];
 
     this.innerHTML = `
+    
       <aside
         class="admin-sidebar offcanvas-lg offcanvas-start"
         id="adminSidebar"
@@ -100,23 +101,9 @@ export class NavAdmin extends HTMLElement {
           `).join("")}
         </nav>
 
-        <div class="sidebar-help sidebar-label">
-          <span class="help-icon"><i class="fa-regular fa-circle-question"></i></span>
-          <div>
-            <strong>¿Necesitas ayuda?</strong>
-            <a href="${projectUrl("26.2Contactenos/contactenos.html")}">Contáctanos</a>
-          </div>
-        </div>
 
         <div class="sidebar-footer">
-          <a class="admin-mini-profile" href="${projectUrl("31.2Dashboard/dashboardAdmin.html#perfil")}" title="Editar perfil">
-            <span class="admin-avatar" data-nav-admin-initials>AD</span>
-            <span class="sidebar-label admin-mini-copy">
-              <strong data-nav-admin-name>Administrador</strong>
-              <small data-nav-admin-role>Administrador general</small>
-            </span>
-            <i class="fa-solid fa-pen sidebar-label edit-profile-icon" aria-hidden="true"></i>
-          </a>
+      
           <button type="button" class="logout-button" data-nav-admin-logout title="Cerrar sesión">
             <span class="sidebar-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
             <span class="sidebar-label">Cerrar sesión</span>
