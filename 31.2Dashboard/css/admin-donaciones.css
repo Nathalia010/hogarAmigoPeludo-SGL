@@ -1,0 +1,83 @@
+:root {
+  --donation-orange: #ef6c2f;
+  --donation-orange-soft: #fff1e9;
+  --donation-green: #42a967;
+  --donation-green-soft: #e7f6eb;
+  --donation-navy: #17203a;
+  --donation-muted: #747b8c;
+  --donation-border: #e7e9f0;
+  --donation-bg: #f5f7fb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--donation-navy);
+  background: var(--donation-bg);
+  font-family: "Nunito", sans-serif;
+}
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.admin-workspace {
+  width: 100%;
+  min-width: 0;
+}
+
+.admin-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 76px;
+  padding: 12px 26px;
+  border-bottom: 1px solid var(--donation-border);
+  background: rgba(255, 255, 255, .95);
+  backdrop-filter: blur(10px);
+}
+
+.admin-topbar small { color: var(--donation-muted); }
+.admin-topbar h1 { margin: 0; font-size: 1.25rem; font-weight: 900; }
+.donations-heading span { color: var(--donation-orange); font-size: .7rem; font-weight: 900; letter-spacing: .08em; }
+.donations-heading h2 { margin: 5px 0; font-size: 1.7rem; font-weight: 900; }
+.donations-heading p { margin: 0; color: var(--donation-muted); }
+.summary-card, .donations-card { border-radius: 16px; }
+.summary-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  color: var(--donation-green);
+  background: var(--donation-green-soft);
+}
+.summary-icon.orange { color: var(--donation-orange); background: var(--donation-orange-soft); }
+.summary-card small { display: block; color: var(--donation-muted); font-size: .72rem; }
+.summary-card strong { display: block; font-size: 1.45rem; font-weight: 900; }
+.donation-count, .donation-type { color: var(--donation-orange); background: var(--donation-orange-soft); }
+.donation-status { color: var(--donation-green); background: var(--donation-green-soft); }
+.donations-table { min-width: 850px; font-size: .82rem; }
+.donations-table th {
+  padding: 13px 12px;
+  color: var(--donation-muted);
+  background: #fafbfc;
+  border-bottom-color: var(--donation-border);
+  font-size: .68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.donations-table td { padding: 16px 12px; border-color: var(--donation-border); }
+
+@media (max-width: 991.98px) {
+  .admin-shell { display: block; }
+  .admin-topbar { padding-inline: 16px; }
+}

@@ -1,45 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const tabs = document.querySelectorAll('.sidebar-tab');
-    const iframe = document.getElementById('dashboard-iframe');
-
-    function ajustarAlturaIframe() {
-        if (iframe) {
-            try {
-                iframe.style.height = "0px";
-                const nuevaAltura = iframe.contentWindow.document.documentElement.scrollHeight;
-                iframe.style.height = nuevaAltura + "px";
-            } catch (error) {
-                console.warn("Error", error);
-            }
-        }
-    }
-
-    if (iframe) {
-        iframe.addEventListener('load', ajustarAlturaIframe);
-        window.addEventListener('resize', ajustarAlturaIframe);
-    }
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const targetUrl = tab.getAttribute('data-url');
-            
-            if (targetUrl && iframe) {
-                iframe.src = targetUrl;
-                
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-            }
-        });
-    });
-});
-
-
-
 (() => {
   "use strict";
 
   const STORAGE_KEYS = {
-    sidebar: "hogarAmigo.admin.sidebarCollapsed",
     profile: "hogarAmigo.admin.profile",
   };
 
@@ -50,10 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     role: "Administrador general",
   };
 
-  const shell = document.querySelector("#adminShell");
-  const toggleButton = document.querySelector("#sidebarToggle");
-  const closeButton = document.querySelector("#sidebarClose");
-  const overlay = document.querySelector("#sidebarOverlay");
   const profileForm = document.querySelector("#adminProfileForm");
   const cancelButton = document.querySelector("#cancelProfileChanges");
   const currentViewTitle = document.querySelector("#currentViewTitle");
@@ -67,10 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentProfile = readProfile();
   let toastTimer;
-
-  function isMobile() {
-    return window.matchMedia("(max-width: 991px)").matches;
-  }
 
   function safeJsonParse(value, fallback) {
     try {
@@ -128,40 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function setSidebarCollapsed(collapsed) {
-    if (!shell || isMobile()) return;
-
-    shell.classList.toggle("sidebar-collapsed", collapsed);
-    toggleButton?.setAttribute("aria-expanded", String(!collapsed));
-    toggleButton?.setAttribute(
-      "aria-label",
-      collapsed ? "Expandir menú lateral" : "Contraer menú lateral",
-    );
-    localStorage.setItem(STORAGE_KEYS.sidebar, String(collapsed));
-  }
-
-  function openMobileSidebar() {
-    shell?.classList.add("mobile-sidebar-open");
-    toggleButton?.setAttribute("aria-expanded", "true");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeMobileSidebar() {
-    shell?.classList.remove("mobile-sidebar-open");
-    toggleButton?.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
-  }
-
-  function handleSidebarToggle() {
-    if (isMobile()) {
-      const open = shell?.classList.contains("mobile-sidebar-open");
-      open ? closeMobileSidebar() : openMobileSidebar();
-      return;
-    }
-
-    setSidebarCollapsed(!shell?.classList.contains("sidebar-collapsed"));
-  }
-
   function showView(viewName) {
     const requestedView = document.querySelector(`#view-${viewName}`);
     if (!requestedView) return;
@@ -178,9 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dashboardLink?.classList.toggle("active", viewName === "dashboard");
 
-    currentViewTitle.textContent = requestedView.dataset.viewTitle || "Administración";
+    if (currentViewTitle) currentViewTitle.textContent = requestedView.dataset.viewTitle || "Administración";
     history.replaceState(null, "", `#${viewName}`);
-    closeMobileSidebar();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -211,10 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast("Datos del administrador actualizados.");
   }
 
-  toggleButton?.addEventListener("click", handleSidebarToggle);
-  closeButton?.addEventListener("click", closeMobileSidebar);
-  overlay?.addEventListener("click", closeMobileSidebar);
-
   document.querySelectorAll("[data-admin-view]").forEach((control) => {
     control.addEventListener("click", () => showView(control.dataset.adminView));
   });
@@ -243,7 +158,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   notificationButton?.addEventListener("click", () => {
-    showToast("Tienes 3 notificaciones pendientes.");
+    const count = Number(document.querySelector(".notification-count")?.textContent) || 0;
+    showToast(
+      count === 1
+        ? "Tienes 1 solicitud pendiente."
+        : `Tienes ${count} solicitudes pendientes.`,
+    );
   });
 
   logoutButton?.addEventListener("click", () => {
@@ -252,28 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem("usuarioActual");
     showToast("Sesión cerrada correctamente.");
     setTimeout(() => {
-    window.location.href = "../../login/login.html";
+    window.location.href = "../login/login.html";
     }, 800);
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeMobileSidebar();
-  });
-
-  window.addEventListener("resize", () => {
-    if (!isMobile()) {
-      closeMobileSidebar();
-      setSidebarCollapsed(localStorage.getItem(STORAGE_KEYS.sidebar) === "true");
-    }
-  });
-
   renderProfile(currentProfile);
-
-  if (!isMobile()) {
-    setSidebarCollapsed(localStorage.getItem(STORAGE_KEYS.sidebar) === "true");
-  } else {
-    toggleButton?.setAttribute("aria-expanded", "false");
-  }
 
   const initialView = window.location.hash.replace("#", "");
   showView(initialView === "perfil" ? "perfil" : "dashboard");

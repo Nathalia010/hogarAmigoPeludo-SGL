@@ -1,0 +1,49 @@
+nav-admin {
+  display: contents;
+}
+
+@media (max-width: 991.98px) {
+  nav-admin #adminSidebar.offcanvas-lg {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1045;
+    width: min(85vw, 280px);
+    height: 100vh;
+    visibility: hidden;
+    transform: translateX(-100%);
+  }
+
+  nav-admin #adminSidebar.offcanvas-lg.show,
+  nav-admin #adminSidebar.offcanvas-lg.showing {
+    visibility: visible;
+    transform: none;
+  }
+
+  nav-admin #adminSidebar.offcanvas-lg.hiding {
+    visibility: visible;
+  }
+
+  .sidebar-toggle,
+  nav-admin .sidebar-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 992px) {
+  nav-admin #adminSidebar.offcanvas-lg {
+    position: sticky;
+    top: 80px;
+    display: flex;
+    height: 100vh;
+    visibility: visible;
+    transform: none;
+    height: calc(100vh - 80px);
+  }
+
+  .sidebar-toggle,
+  nav-admin .sidebar-close {
+    display: none;
+  }
+}
