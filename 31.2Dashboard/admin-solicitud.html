@@ -6,6 +6,8 @@
     <meta name="description" content="Gestión administrativa de solicitudes de adopción" />
     <title>Solicitudes | Hogar Amigo Peludo</title>
 
+    <link rel="stylesheet" href="../components/navbar-footer/navbar-footer.css">
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -14,11 +16,13 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="stylesheet" href="css/style-admin-solicitud.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
   </head>
-
+ <nav-bar></nav-bar>
   <body>
+    
+   
     <div class="admin-shell" id="adminShell">
       <nav-admin active="solicitudes"></nav-admin>
 
@@ -231,6 +235,10 @@
       <span>Cambios guardados correctamente.</span>
     </div>
 
+    <script
+      src="../components/nav-admin/nav-admin.js"
+      type="module"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../components/nav-admin/nav-admin.js" type="module"></script>
     <script src="scripts/menuPerfil.js" defer></script>
