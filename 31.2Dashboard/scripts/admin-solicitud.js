@@ -55,6 +55,8 @@ function iniciar() {
 
 function refrescarSolicitudes() {
   solicitudes = obtenerSolicitudes();
+  const sidebarRequestCount = document.getElementById("sidebarRequestCount");
+  if (sidebarRequestCount) sidebarRequestCount.textContent = solicitudes.length;
   reconciliarEstadosExistentes();
   solicitudes = obtenerSolicitudes();
   filtrar();
