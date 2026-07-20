@@ -34,11 +34,12 @@ nav-admin {
 @media (min-width: 992px) {
   nav-admin #adminSidebar.offcanvas-lg {
     position: sticky;
-    top: 0;
+    top: 80px;
     display: flex;
     height: 100vh;
     visibility: visible;
     transform: none;
+    height: calc(100vh - 80px);
   }
 
   .sidebar-toggle,

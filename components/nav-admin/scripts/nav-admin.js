@@ -52,13 +52,13 @@ export class NavAdmin extends HTMLElement {
     const links = [
       ["dashboard", "dashboardAdmin.html", "fa-solid fa-house", "Dashboard"],
       ["solicitudes", "admin-solicitud.html", "fa-regular fa-clipboard", "Solicitudes"],
-      ["publicaciones", "publicaciones.html", "fa-regular fa-rectangle-list", "Publicaciones"],
+      //["publicaciones", "#", "fa-regular fa-rectangle-list", "Publicaciones"],
       ["mascotas", "admin-crear-mascota.html", "fa-solid fa-paw", "Mascotas"],
       ["usuarios", "admin-usuarios.html", "fa-regular fa-user", "Usuarios"],
       ["entregas", "admin-entregas.html", "fa-solid fa-truck", "Entregas"],
       ["donaciones", "admin-donaciones.html", "fa-solid fa-hand-holding-heart", "Donaciones"],
-      ["reportes", "reportes.html", "fa-solid fa-chart-column", "Reportes"],
-      ["configuracion", "configuracion.html", "fa-solid fa-gear", "Configuración"],
+      //["reportes", "#", "fa-solid fa-chart-column", "Reportes"],
+      //["configuracion", "#", "fa-solid fa-gear", "Configuración"],
     ];
 
     this.innerHTML = `
