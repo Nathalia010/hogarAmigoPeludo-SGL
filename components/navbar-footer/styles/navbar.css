@@ -6,7 +6,7 @@ nav.nav-bar {
     --nav-text: #555555;
     --nav-logo-color: #2c3e50;
     --nav-hover: #e67e22;
-    --nav-font: 'Boogaloo', sans-serif;
+    --nav-font: "Poppins", sans-serif;
 
     display: flex;
     justify-content: space-between;
