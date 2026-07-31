@@ -225,7 +225,7 @@ function confirmarCreacionCuenta() {
 
     alert(`Cuenta creada. La solicitud para adoptar a ${solicitudPendiente.mascota.nombre} fue enviada correctamente.`);
     formulario.reset();
-    window.location.href = "../33333PerfilUsuario/perfil.html";
+    window.location.href = "../Usuario/solicitudes/solicitudes-usuario.html";
 }
 
 function mostrarPopupYaRegistrado() {

@@ -41,14 +41,14 @@
     <div class="user-shell" id="userShell">
       <aside class="user-sidebar" aria-label="Menú del usuario">
         <a class="user-brand" href="../../index.html">
-          <span class="user-brand-mark">
+          <!-- <span class="user-brand-mark">
             <i class="fa-solid fa-paw"></i>
-          </span>
+          </span> -->
 
-          <span class="user-brand-copy">
+          <!-- <span class="user-brand-copy">
             <strong>Hogar Amigo</strong>
             <small>Peludo</small>
-          </span>
+          </span> -->
 
           <button
             type="button"
@@ -61,17 +61,17 @@
         </a>
 
         <nav class="user-nav">
-          <p class="user-nav-title">Mi cuenta</p>
+          <p class="user-nav-title">Secciones</p>
 
           <a class="user-nav-link" href="../../index.html">
             <i class="fa-solid fa-house"></i>
             Inicio
           </a>
 
-          <a class="user-nav-link" href="../../33333PerfilUsuario/perfil.html">
+          <!-- <a class="user-nav-link" href="../../33333PerfilUsuario/perfil.html">
             <i class="fa-regular fa-user"></i>
             Mi perfil
-          </a>
+          </a> -->
 
           <a class="user-nav-link active" href="solicitudes-usuario.html">
             <i class="fa-regular fa-clipboard"></i>
@@ -124,12 +124,12 @@
             </button>
 
             <div class="user-page-context">
-              <span>Mi cuenta</span>
+              <span>Seccion</span>
               <strong>Mis solicitudes</strong>
             </div>
           </div>
 
-          <a
+          <!-- <a
             class="user-topbar-profile"
             href="../../33333PerfilUsuario/perfil.html"
           >
@@ -139,7 +139,7 @@
               <strong data-user-name>Usuario</strong>
               <small>Adoptante</small>
             </div>
-          </a>
+          </a> -->
         </header>
 
         <main class="user-main">
@@ -172,11 +172,30 @@
               <option>Coordinando entrega</option>
               <option>Adoptada</option>
             </select>
+
+            <div class="filtros">
+              <div class="busqueda-documento">
+                  <input type="text" id="buscarDocumento" placeholder="Número de documento">
+                  <button id="btnBuscar"> Buscar </button>
+              </div>
+            </div>
           </section>
+          
+          
 
           <section class="portal-card p-4">
             <div id="contenedorSolicitudes" class="contenedor-mascotas">
               <!-- Las tarjetas se agregan aquí desde JavaScript -->
+               <div class="estado-vacio">
+                  <i class="bi bi-search"></i>
+
+                  <h3>Busca una solicitud</h3>
+
+                  <p>
+                      Ingresa el número de documento del solicitante en el buscador para
+                      visualizar las mascotas asociadas a la solicitud de adopción.
+                  </p>
+              </div>
             </div>
           </section>
         </main>
