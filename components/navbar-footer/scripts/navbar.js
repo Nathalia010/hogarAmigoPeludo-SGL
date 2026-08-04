@@ -54,7 +54,6 @@ export class navbar extends HTMLElement {
   }
 }
 
-// ../../assets/icons/adoptame.png
 if (!customElements.get("nav-bar")) {
   customElements.define("nav-bar", navbar);
 }
