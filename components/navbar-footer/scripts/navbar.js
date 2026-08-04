@@ -50,36 +50,6 @@ export class navbar extends HTMLElement {
           <li><a href="${projectUrl("login/login.html")}">Login</a></li>
         </ul>
       </nav>
-
-      <section class="botones-flotantes">
-        <div class="botones-flotantes">
-          <a
-            href="https://wa.me/573001112233?text=Hola,%20quiero%20más%20información"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-success btn-flotante rounded-pill shadow"
-          >
-            <img
-              src="${projectUrl("assets/icons/icono-WhatsApp.jpg")}" 
-              alt="WhatsApp"
-              class="icono-WhatsApp"
-            >
-            <span>Nuestro<br>Contacto</span>
-          </a>
-
-          <a
-            href="${projectUrl("32.4Catalogo/catalogo.html")}" 
-            class="btn btn-warning btn-flotante rounded-pill shadow"
-          >
-            <img
-              src="${projectUrl("assets/icons/adoptame.png")}" 
-              alt="Adoptar"
-              class="icono-adoptar"
-            >
-            <span>Adoptar</span>
-          </a>
-        </div>
-      </section>
     `;
   }
 }
