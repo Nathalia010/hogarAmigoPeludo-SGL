@@ -246,15 +246,19 @@ main .text-muted {
     line-height: 1.6;
 }
 
+
 .busqueda-documento{
     display: flex;
     align-items: center;
     gap: 10px;
     margin-left: auto;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .busqueda-documento input{
-    width: 260px;
+    flex: 1 1 200px;
+    max-width: 260px;
     height: 42px;
     border: 1px solid #ced4da;
     border-radius: 8px;
@@ -265,8 +269,7 @@ main .text-muted {
 }
 
 .busqueda-documento input:focus{
-    
-    box-shadow: 0 0 0 3px rgba(255, 107, 28, 0.2);;
+    box-shadow: 0 0 0 3px rgba(255, 107, 28, 0.2);
 }
 
 .busqueda-documento button{
@@ -279,11 +282,14 @@ main .text-muted {
     font-weight: 600;
     cursor: pointer;
     transition: .3s;
+    white-space: nowrap;
 }
 
 .busqueda-documento button:hover{
     background: rgba(255, 107, 28, 0.703);
 }
+
+
 
 /* ===========================
    Responsive
@@ -322,3 +328,10 @@ main .text-muted {
 
 }
  
+@media (max-width: 480px) {
+    .busqueda-documento input,
+    .busqueda-documento button {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+}
