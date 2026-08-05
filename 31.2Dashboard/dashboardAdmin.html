@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description"content="Panel administrativo de Hogar Amigo Peludo"/>
+    <meta
+      name="description"
+      content="Panel administrativo de Hogar Amigo Peludo"
+    />
     <title>Dashboard | Hogar Amigo Peludo</title>
     <link rel="stylesheet" href="../components/navbar-footer/navbar-footer.css">
     <link
@@ -20,7 +23,6 @@
 
   <body>
     <nav-bar></nav-bar>
-
     <div class="admin-shell" id="adminShell">
       <nav-admin active="dashboard"></nav-admin>
 
@@ -105,7 +107,7 @@
                 <span class="metric-link">Ver todas <i class="fa-solid fa-arrow-right"></i></span>
               </a>
 
-              <a class="metric-card metric-blue" href="entregas.html">
+              <a class="metric-card metric-blue" href="admin-entregas.html">
                 <span class="metric-icon"><i class="fa-solid fa-truck-fast"></i></span>
                 <span class="metric-copy">
                   <small>Entregas</small>
@@ -115,7 +117,7 @@
                 <span class="metric-link">Ver todas <i class="fa-solid fa-arrow-right"></i></span>
               </a>
 
-              <a class="metric-card metric-green" href="entregas.html">
+              <a class="metric-card metric-green" href="admin-entregas.html">
                 <span class="metric-icon"><i class="fa-regular fa-circle-check"></i></span>
                 <span class="metric-copy">
                   <small>Adopciones</small>
@@ -147,41 +149,52 @@
                 </div>
 
                 <div class="quick-action-grid">
-                  <a href="publicaciones.html" class="quick-action">
-                    <span><i class="fa-solid fa-plus"></i></span>
-                    <div>
-                      <strong>Nueva publicación</strong>
-                      <small>Registra una mascota disponible</small>
+                  <a href="admin-redes-sociales.html" class="featured-quick-card social-feature-card">
+                    <span class="featured-card-icon"><i class="fa-solid fa-share-nodes"></i></span>
+                    <h3>Administrar redes sociales</h3>
+                    <p>Gestiona los enlaces de Facebook, Instagram y TikTok.</p>
+                    <div class="social-platforms" aria-hidden="true">
+                      <span><i class="fa-brands fa-facebook-f"></i></span>
+                      <span><i class="fa-brands fa-instagram"></i></span>
+                      <span><i class="fa-brands fa-tiktok"></i></span>
                     </div>
-                    <i class="fa-solid fa-chevron-right"></i>
+                    <span class="featured-card-link">
+                      Ir a redes sociales
+                      <i class="fa-solid fa-arrow-right"></i>
+                    </span>
                   </a>
 
-                  <a href="admin-solicitud.html" class="quick-action">
-                    <span><i class="fa-regular fa-clipboard"></i></span>
-                    <div>
-                      <strong>Revisar solicitudes</strong>
-                      <small>Consulta adopciones pendientes</small>
-                    </div>
-                    <i class="fa-solid fa-chevron-right"></i>
-                  </a>
+                  <article class="featured-quick-card donation-feature-card">
+                    <span class="featured-card-icon"><i class="fa-solid fa-hand-holding-heart"></i></span>
+                    <h3>Donaciones</h3>
+                    <p>Resumen del apoyo recibido para nuestros peludos.</p>
 
-                  <a href="admin-crear-mascota.html" class="quick-action">
-                    <span><i class="fa-solid fa-paw"></i></span>
-                    <div>
-                      <strong>Gestionar mascotas</strong>
-                      <small>Edita la información del catálogo</small>
-                    </div>
-                    <i class="fa-solid fa-chevron-right"></i>
-                  </a>
+                    <a class="donation-total" href="admin-donaciones.html">
+                      <span id="donationSummaryLabel">Recaudo en dinero</span>
+                      <strong id="donationSummaryValue">$1.000</strong>
+                      <i class="fa-solid fa-chevron-right"></i>
+                    </a>
 
-                  <a href="reportes.html" class="quick-action">
-                    <span><i class="fa-solid fa-chart-column"></i></span>
-                    <div>
-                      <strong>Consultar reportes</strong>
-                      <small>Revisa los resultados del refugio</small>
+                    <div class="donation-view-selector" role="group" aria-label="Seleccionar tipo de recaudo">
+                      <button
+                        type="button"
+                        class="active"
+                        data-donation-view="money"
+                        aria-pressed="true"
+                      >
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                        Dinero
+                      </button>
+                      <button
+                        type="button"
+                        data-donation-view="things"
+                        aria-pressed="false"
+                      >
+                        <i class="fa-solid fa-gift"></i>
+                        En cosas
+                      </button>
                     </div>
-                    <i class="fa-solid fa-chevron-right"></i>
-                  </a>
+                  </article>
                 </div>
               </section>
 
@@ -237,26 +250,10 @@
                     <span>Agenda</span>
                     <h2>Próximas entregas</h2>
                   </div>
-                  <a href="entregas.html">Ver todas</a>
+                  <a href="admin-entregas.html">Ver todas</a>
                 </div>
 
-                <div class="delivery-list" id="nextDeliveriesList">
-                  <article>
-                    <span class="pet-avatar"><i class="fa-solid fa-dog"></i></span>
-                    <div><strong>Luna</strong><small>18 Jul · Medellín</small></div>
-                    <span class="delivery-status">Programada</span>
-                  </article>
-                  <article>
-                    <span class="pet-avatar"><i class="fa-solid fa-cat"></i></span>
-                    <div><strong>Simba</strong><small>18 Jul · Ibagué</small></div>
-                    <span class="delivery-status">Programada</span>
-                  </article>
-                  <article>
-                    <span class="pet-avatar"><i class="fa-solid fa-dog"></i></span>
-                    <div><strong>Rocky</strong><small>19 Jul · Cali</small></div>
-                    <span class="delivery-status">Programada</span>
-                  </article>
-                </div>
+                <div class="delivery-list" id="nextDeliveriesList"></div>
               </section>
             </div>
           </section>

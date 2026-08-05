@@ -1,14 +1,7 @@
 import { obtenerSolicitudes } from "./solicitudes.js";
 import { obtenerMascotas } from "./mascotas.js";
-/*
-===========================================================
-Referencias a los elementos del Dashboard
------------------------------------------------------------
-Este objeto almacena las referencias a los elementos del DOM
-que serán actualizados dinámicamente con la información del
-dashboard, evitando realizar múltiples búsquedas en el HTML.
-===========================================================
-*/
+import { obtenerResumenDonaciones } from "./donaciones.js";
+
 const dashboardElements = {
   metricRequests: document.getElementById("metricRequests"),
   metricDeliveries: document.getElementById("metricDeliveries"),
@@ -23,15 +16,13 @@ const dashboardElements = {
   statusCompleted: document.getElementById("statusCompleted"),
   recentActivityList: document.getElementById("recentActivityList"),
   nextDeliveriesList: document.getElementById("nextDeliveriesList"),
+  donationSummaryLabel: document.getElementById("donationSummaryLabel"),
+  donationSummaryValue: document.getElementById("donationSummaryValue"),
+  donationViewButtons: document.querySelectorAll("[data-donation-view]"),
 };
-/*
-===========================================================
-renderDashboard()  Obtiene la información de mascotas y solicitudes, calcula
-las métricas generales y actualiza todos los componentes
-visuales del dashboard como indicadores, gráfico de estados,
-actividad reciente y próximas entregas.
-===========================================================
-*/
+
+let selectedDonationView = "money";
+
 function renderDashboard() {
   const solicitudes = obtenerSolicitudes();
   const mascotas = obtenerMascotas();
@@ -47,9 +38,41 @@ function renderDashboard() {
   renderStatusChart(resumen);
   renderRecentActivity(solicitudes);
   renderNextDeliveries(solicitudes);
+  renderDonationSummary();
 }
-//calcularResumen(solicitudes) -Recorre todas las solicitudes y las clasifica según su 
-//  estado para obtener un resumen general del sistema.
+
+// Permite consultar el recaudo registrado por dinero o por donaciones en especie.
+function initializeDonationSummary() {
+  dashboardElements.donationViewButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const selectedView = button.dataset.donationView;
+      if (!['money', 'things'].includes(selectedView)) return;
+      selectedDonationView = selectedView;
+      renderDonationSummary();
+
+      dashboardElements.donationViewButtons.forEach((item) => {
+        const isActive = item === button;
+        item.classList.toggle("active", isActive);
+        item.setAttribute("aria-pressed", String(isActive));
+      });
+    });
+  });
+}
+
+function renderDonationSummary() {
+  const summary = obtenerResumenDonaciones();
+  const isMoney = selectedDonationView === "money";
+  setText(dashboardElements.donationSummaryLabel, isMoney ? "Recaudo en dinero" : "Recaudo en cosas");
+  setText(
+    dashboardElements.donationSummaryValue,
+    isMoney ? formatMoney(summary.dinero) : String(summary.cosas),
+  );
+}
+
+function formatMoney(value) {
+  return `$${new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(Number(value) || 0)}`;
+}
+
 function calcularResumen(solicitudes) {
   let pendientes = 0;
   let enProceso = 0;
@@ -73,22 +96,18 @@ function calcularResumen(solicitudes) {
   };
 }
 
-//Retorna:
-//true  -> adopción completada.
-//false -> aún no finaliza.
 function esAdopcionCompletada(solicitud) {
   return solicitud.estadoSolicitud === "Adoptada" ||
     solicitud.envio?.estadoEntrega === "Recibido";
 }
-// Retorna true cuando la entrega está siendo coordinada o el envío ya fue despachado.
+
 function esEntregaEnProceso(solicitud) {
   const estadoEnvio = solicitud.envio?.estadoEntrega;
   return solicitud.estadoSolicitud === "Coordinando entrega" ||
     estadoEnvio === "De camino" ||
     estadoEnvio === "En proceso de entrega";
 }
-//Actualiza el gráfico circular (Donut Chart) mostrando la 
-// proporción de solicitudes pendientes, en proceso y completadas.
+
 function renderStatusChart(resumen) {
   setText(dashboardElements.statusTotal, resumen.total);
   setText(dashboardElements.statusPending, resumen.pendientes);
@@ -114,8 +133,6 @@ function renderStatusChart(resumen) {
   );
 }
 
-// Actualiza la lista de actividad reciente mostrando las últimas 3 solicitudes registradas,
-// ordenadas de la más reciente a la más antigua, con su estado y tiempo relativo.
 function renderRecentActivity(solicitudes) {
   const container = dashboardElements.recentActivityList;
   if (!container) return;
@@ -145,8 +162,6 @@ function renderRecentActivity(solicitudes) {
   }).join("");
 }
 
-// Determina el tipo de actividad según el estado de la solicitud y el envío,
-// retornando un objeto con el título, color y icono correspondiente.
 function obtenerActividad(solicitud) {
   if (esAdopcionCompletada(solicitud)) {
     return { titulo: "Adopción completada", color: "green", icono: "fa-check" };
@@ -163,19 +178,16 @@ function obtenerActividad(solicitud) {
   };
 }
 
-// Actualiza la lista de próximas entregas mostrando las siguientes 3 solicitudes programadas,
-// ordenadas de la más inmediata a la más lejana, con su fecha y destino.
 function renderNextDeliveries(solicitudes) {
   const container = dashboardElements.nextDeliveriesList;
   if (!container) return;
 
   const proximas = solicitudes
-    .filter((solicitud) =>
-      solicitud.envio?.fechaEntrega &&
-      solicitud.envio?.estadoEntrega !== "Recibido",
+    .filter((solicitud) => solicitud.estadoSolicitud === "Coordinando entrega")
+    .sort((a, b) =>
+      convertirFecha(a.envio?.fechaEntrega) - convertirFecha(b.envio?.fechaEntrega),
     )
-    .sort((a, b) => convertirFecha(a.envio.fechaEntrega) - convertirFecha(b.envio.fechaEntrega))
-    .slice(0, 3);
+    .slice(0, 4);
 
   if (proximas.length === 0) {
     container.innerHTML = crearEstadoVacio("No hay entregas programadas.");
@@ -188,34 +200,61 @@ function renderNextDeliveries(solicitudes) {
     const propietario = solicitud.propietario ?? {};
     const esGato = String(mascota.especie || "").toLocaleLowerCase("es").includes("gato");
     const destino = envio.direccion || propietario.ciudad || envio.modalidad || "Por definir";
+    const imagen = obtenerUrlImagenSegura(mascota.imagen);
+    const estado = envio.estadoEntrega || "No enviado";
 
     return `
       <article>
-        <span class="pet-avatar"><i class="fa-solid ${esGato ? "fa-cat" : "fa-dog"}"></i></span>
+        <span class="pet-avatar ${imagen ? "has-photo" : ""}">
+          ${
+            imagen
+              ? `<img src="${escapeHTML(imagen)}" alt="${escapeHTML(mascota.nombre || "Mascota")}">`
+              : `<i class="fa-solid ${esGato ? "fa-cat" : "fa-dog"}"></i>`
+          }
+        </span>
         <div>
           <strong>${escapeHTML(mascota.nombre || "Mascota")}</strong>
           <small>${escapeHTML(formatearFecha(envio.fechaEntrega))} · ${escapeHTML(destino)}</small>
         </div>
-        <span class="delivery-status">${escapeHTML(envio.estadoEntrega || "Programada")}</span>
+        <span class="delivery-status ${obtenerClaseEstadoEntrega(estado)}">${escapeHTML(estado)}</span>
       </article>
     `;
   }).join("");
 }
-// Convierte una fecha en formato "YYYY-MM-DD" a un timestamp numérico.
+
+// Valida la imagen antes de agregarla al HTML de la agenda.
+function obtenerUrlImagenSegura(valor) {
+  if (!valor) return "";
+
+  try {
+    const url = new URL(valor, window.location.href);
+    return ["http:", "https:", "data:", "blob:", "file:"].includes(url.protocol)
+      ? url.href
+      : "";
+  } catch {
+    return "";
+  }
+}
+
+function obtenerClaseEstadoEntrega(estado) {
+  if (estado === "De camino") return "is-route";
+  if (estado === "Recibido") return "is-received";
+  return "is-pending";
+}
+
 function convertirFecha(valor) {
   if (!valor) return Number.MAX_SAFE_INTEGER;
   const fecha = new Date(`${valor}T00:00:00`);
   return Number.isNaN(fecha.getTime()) ? Number.MAX_SAFE_INTEGER : fecha.getTime();
 }
 
-// Formatea una fecha en formato "YYYY-MM-DD" a un string legible.
 function formatearFecha(valor) {
   const timestamp = convertirFecha(valor);
   if (timestamp === Number.MAX_SAFE_INTEGER) return "Fecha pendiente";
   return new Intl.DateTimeFormat("es-CO", { day: "numeric", month: "short" })
     .format(new Date(timestamp));
 }
-// Formatea un timestamp relativo a la fecha actual, retornando un string como "Hace 5 min" o "Ahora".
+
 function formatearTiempoRelativo(idSolicitud) {
   const timestamp = Number(idSolicitud);
   if (!Number.isFinite(timestamp) || timestamp < 1_000_000_000_000) return "Fecha registrada";
@@ -230,16 +269,15 @@ function formatearTiempoRelativo(idSolicitud) {
   if (horas < 24) return `Hace ${horas} h`;
   return `Hace ${dias} día${dias === 1 ? "" : "s"}`;
 }
-// Crea un elemento de lista indicando que no hay datos disponibles, con un mensaje personalizado.
+
 function crearEstadoVacio(mensaje) {
   return `<li class="dashboard-empty"><small>${escapeHTML(mensaje)}</small></li>`;
 }
-// Actualiza el contenido de un elemento con un valor dado, asegurando que sea una cadena.
+
 function setText(element, value) {
   if (element) element.textContent = String(value);
 }
-// Escapa caracteres especiales en un string para prevenir inyección de HTML.
-//prevenir el XSS es la codificación de salida (o escapado), que convierte los caracteres especiales en sus equivalentes seguros (entidades HTML).  
+
 function escapeHTML(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -250,7 +288,7 @@ function escapeHTML(value) {
 }
 
 window.addEventListener("storage", (event) => {
-  if (["solicitudes", "mascotas"].includes(event.key)) renderDashboard();
+  if (["solicitudes", "mascotas", "donaciones"].includes(event.key)) renderDashboard();
 });
 window.addEventListener("pageshow", renderDashboard);
 window.addEventListener("focus", renderDashboard);
@@ -258,4 +296,5 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden) renderDashboard();
 });
 
+initializeDonationSummary();
 renderDashboard();
