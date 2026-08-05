@@ -54,7 +54,7 @@ export class NavAdmin extends HTMLElement {
       ["solicitudes", "admin-solicitud.html", "fa-regular fa-clipboard", "Solicitudes"],
       //["publicaciones", "#", "fa-regular fa-rectangle-list", "Publicaciones"],
       ["mascotas", "admin-crear-mascota.html", "fa-solid fa-paw", "Mascotas"],
-      ["usuarios", "admin-usuarios.html", "fa-regular fa-user", "Usuarios"],
+      ["redes", "admin-redes-sociales.html", "fa-solid fa-share-nodes", "Redes sociales"],
       ["entregas", "admin-entregas.html", "fa-solid fa-truck", "Entregas"],
       ["donaciones", "admin-donaciones.html", "fa-solid fa-hand-holding-heart", "Donaciones"],
       //["reportes", "#", "fa-solid fa-chart-column", "Reportes"],

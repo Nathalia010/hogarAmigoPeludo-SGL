@@ -1485,3 +1485,205 @@ textarea.form-control {
     display: none;
   }
 }
+
+/*==================================================
+  ACCESOS RÁPIDOS: REDES SOCIALES Y DONACIONES
+==================================================*/
+
+.quick-actions-card {
+  grid-column: auto;
+}
+
+.featured-quick-card {
+  display: flex;
+  min-width: 0;
+  min-height: 230px;
+  padding: 17px;
+  border: 1px solid;
+  border-radius: 16px;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-dark);
+  text-align: center;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.featured-quick-card:hover {
+  color: var(--text-dark);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.social-feature-card {
+  border-color: rgba(255, 106, 28, 0.34);
+  background: linear-gradient(145deg, #fff8f2, #fffdfb);
+}
+
+.donation-feature-card {
+  border-color: rgba(118, 84, 207, 0.3);
+  background: linear-gradient(145deg, #faf8ff, #fff);
+}
+
+.featured-card-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  font-size: 1.15rem;
+  background: var(--white);
+  box-shadow: 0 10px 24px rgba(43, 43, 51, 0.1);
+}
+
+.social-feature-card .featured-card-icon { color: var(--orange); }
+.donation-feature-card .featured-card-icon { color: #7654cf; }
+
+.featured-quick-card h3 {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
+.featured-quick-card p {
+  max-width: 360px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+}
+
+.social-platforms {
+  display: flex;
+  gap: 7px;
+  margin: 13px 0;
+}
+
+.social-platforms span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--orange);
+  font-size: 0.78rem;
+}
+
+.social-platforms span:nth-child(2) { background: #d94685; }
+.social-platforms span:nth-child(3) { background: #28282d; }
+
+.featured-card-link {
+  display: flex;
+  width: 100%;
+  min-height: 34px;
+  margin-top: auto;
+  padding: 7px 12px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--orange-dark), var(--orange));
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.donation-total {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 390px;
+  min-height: 61px;
+  margin: 12px 0 10px;
+  padding: 9px 36px 9px 13px;
+  border: 1px solid #e7e0fb;
+  border-radius: 11px;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--text-dark);
+  background: var(--white);
+  text-align: left;
+  text-decoration: none;
+  box-shadow: 0 7px 18px rgba(118, 84, 207, 0.08);
+}
+
+.donation-total:hover { color: var(--text-dark); }
+.donation-total span { color: var(--text-muted); font-size: 0.62rem; }
+.donation-total strong { color: #7654cf; font-size: 1.22rem; line-height: 1.1; }
+.donation-total > i { position: absolute; right: 13px; color: #9a83db; font-size: 0.72rem; }
+
+.donation-view-selector {
+  display: grid;
+  width: 100%;
+  max-width: 390px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.donation-view-selector button {
+  display: inline-flex;
+  min-height: 33px;
+  padding: 6px 8px;
+  border: 1px solid #bca9f1;
+  border-radius: 9px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #7654cf;
+  background: var(--white);
+  font-size: 0.64rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.donation-view-selector button:hover,
+.donation-view-selector button.active {
+  color: var(--white);
+  border-color: #7654cf;
+  background: linear-gradient(135deg, #7654cf, #8a63ed);
+}
+
+/*==================================================
+  AGENDA DE ENTREGAS CON FOTOGRAFÍA
+==================================================*/
+
+.pet-avatar.has-photo {
+  overflow: hidden;
+  border: 2px solid var(--orange-soft);
+  background: var(--white);
+}
+
+.pet-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.delivery-status.is-route {
+  color: #c4521d;
+  background: #ffe9de;
+}
+
+.delivery-status.is-received {
+  color: #17603f;
+  background: #ddf7eb;
+}
+
+.delivery-status.is-pending {
+  color: #91600e;
+  background: #fff2d3;
+}
+
+.dashboard-empty {
+  padding: 18px 0;
+  color: var(--text-muted);
+  list-style: none;
+}
+
+@media (max-width: 760px) {
+  .featured-quick-card {
+    min-height: 220px;
+  }
+}
