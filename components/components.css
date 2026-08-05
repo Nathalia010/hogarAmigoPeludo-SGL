@@ -5,3 +5,8 @@
 @import './navbar-footer/styles/footer.css';
 
 @import './cta-btn/css/botones-flotantes.css';
+
+@import './nav-admin/styles/nav-admin.css';
+
+@import './nav-usuario/css/nav-usuario.css';
+

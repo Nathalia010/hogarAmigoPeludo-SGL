@@ -6,34 +6,16 @@
     <title>Mi perfil | Hogar Amigo Peludo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="../assets/css/portal-usuario.css" />
-    <link rel="stylesheet" href="../components/navbar-footer/navbar-footer.css">
+    <link rel="stylesheet" href="../components/components.css">
+    
   </head>
   <body>
     <nav-bar></nav-bar>
-    <div class="user-shell" id="userShell">
-      <aside class="user-sidebar" aria-label="Menú del usuario">
-        <a class="user-brand" href="../index.html"><span class="user-brand-mark"><i class="fa-solid fa-paw"></i></span><span class="user-brand-copy"><strong>Hogar Amigo</strong><small>Peludo</small></span><button type="button" class="user-sidebar-close" id="userSidebarClose" aria-label="Cerrar menú"><i class="fa-solid fa-xmark"></i></button></a>
-        <input type="checkbox" id="navbar-menu-toggle" class="navbar-hidden-checkbox">
-                <label for="navbar-menu-toggle" class="navbar-hamburger-icon">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </label>
-        <nav class="user-nav">
-          <p class="user-nav-title">Mi cuenta</p>
-          <a class="user-nav-link" href="../index.html"><i class="fa-solid fa-house"></i>Inicio</a>
-          <a class="user-nav-link active" href="perfil.html"><i class="fa-regular fa-user"></i>Mi perfil</a>
-          <a class="user-nav-link" href="../Usuario/solicitudes/solicitudes-usuario.html"><i class="fa-regular fa-clipboard"></i>Mis solicitudes<span class="user-nav-count" id="navRequestCount">0</span></a>
-          <a class="user-nav-link" href="../Usuario/Proceso-Entrega/proceso-entrega.html"><i class="fa-solid fa-truck"></i>Proceso de entrega</a>
-          <a class="user-nav-link" href="../32.4Catalogo/catalogo.html"><i class="fa-solid fa-paw"></i>Explorar mascotas</a>
-        </nav>
-        <div class="user-help"><strong>¿Necesitas ayuda?</strong><a href="../26.2Contactenos/contactenos.html">Contáctanos</a></div>
-     <div class="user-sidebar-footer">
-    <a href="../login/login.html" class="user-logout">
-        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-        Cerrar sesión
-    </a>
-</div> 
+     <nav-usuario active="solicitudes"></nav-usuario>
+     <div class="user-shell">
+  <div class="user-workspace">
+ 
+
       </aside>
       <button class="user-overlay" id="userOverlay" aria-label="Cerrar menú"></button>
 
@@ -76,10 +58,11 @@
       </div>
     </div>
 
-
+</div>
+</div>
     <page-footer></page-footer>
+  
 
-    <!-- navbar-footer script -->
 
 
     <script
@@ -103,12 +86,10 @@
       crossorigin="anonymous"
     ></script>
     <!-- navbar-footer script -->
-    <script
-      src="../../components/navbar-footer/navbar-footer.js"
-      type="module"
-    ></script>
+    <script src="../components/components.js" type="module"></script>
     <script src="../assets/js/portal-usuario.js" defer></script>
     <script type="module" src="scripts/script.js"></script>
-    <script src="../components/navbar-footer/navbar-footer.js" type="module"></script>
+    
+
   </body>
 </html>

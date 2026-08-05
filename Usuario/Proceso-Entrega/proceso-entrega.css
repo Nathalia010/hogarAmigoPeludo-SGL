@@ -1,22 +1,18 @@
+@import url("../css/theme.css");
+
 /* Complementa portal-usuario.css únicamente en la vista de proceso de entrega. */
 .delivery-page {
-  --delivery-navy: #101d4f;
+  --delivery-navy: var(--text-dark);
   --delivery-blue: #4169e1;
   --delivery-green: #39af70;
-  --delivery-coral: #ff7452;
-  --delivery-line: #e4e8f1;
+  --delivery-coral: var(--orange);
+  --delivery-line: var(--border-light);
   --delivery-soft-blue: #f3f6ff;
   width: min(100%, 1380px);
   padding: clamp(22px, 3vw, 38px);
 }
 
-.delivery-page .portal-card {
-  border-color: var(--delivery-line);
-  border-radius: 16px;
-  box-shadow: 0 8px 26px rgba(23, 36, 77, 0.055);
-}
-
-.delivery-hero {
+.delivery-page .delivery-hero {
   position: relative;
   min-height: 145px;
   margin-bottom: 18px;
@@ -25,7 +21,7 @@
   background: linear-gradient(120deg, #fff 58%, #fff8f2 100%);
 }
 
-.delivery-hero::after {
+.delivery-page .delivery-hero::after {
   content: "";
   position: absolute;
   right: 110px;
@@ -36,26 +32,26 @@
   background: rgba(255, 106, 28, 0.07);
 }
 
-.delivery-hero-copy {
+.delivery-page .delivery-hero-copy {
   position: relative;
   z-index: 1;
 }
 
-.delivery-title-row {
+.delivery-page .delivery-title-row {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 14px;
 }
 
-.delivery-hero .delivery-title-row h1 {
+.delivery-page .delivery-hero .delivery-title-row h1 {
   margin: 0;
   color: var(--delivery-navy);
   font-size: clamp(1.65rem, 3vw, 2.25rem);
   letter-spacing: -0.025em;
 }
 
-.delivery-status-badge {
+.delivery-page .delivery-status-badge {
   display: inline-flex;
   align-items: center;
   min-height: 30px;
@@ -67,18 +63,18 @@
   font-weight: 800;
 }
 
-.delivery-hero p {
+.delivery-page .delivery-hero p {
   margin-top: 14px;
   color: #53607b;
   font-size: 0.9rem;
 }
 
-.delivery-hero p span {
+.delivery-page .delivery-hero p span {
   margin-left: 5px;
   color: #f46f7b;
 }
 
-.delivery-pet-icon {
+.delivery-page .delivery-pet-icon {
   position: relative;
   z-index: 1;
   width: 92px;
@@ -89,26 +85,26 @@
   box-shadow: none;
 }
 
-.delivery-layout {
+.delivery-page .delivery-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.65fr) minmax(300px, 0.72fr);
   gap: 18px;
   align-items: start;
 }
 
-.delivery-main,
-.delivery-side {
+.delivery-page .delivery-main,
+.delivery-page .delivery-side {
   display: grid;
   gap: 18px;
 }
 
-.delivery-metrics {
+.delivery-page .delivery-metrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   padding: 18px 20px;
 }
 
-.delivery-metric {
+.delivery-page .delivery-metric {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -117,15 +113,15 @@
   border-right: 1px solid var(--delivery-line);
 }
 
-.delivery-metric:first-child {
+.delivery-page .delivery-metric:first-child {
   padding-left: 4px;
 }
 
-.delivery-metric:last-child {
+.delivery-page .delivery-metric:last-child {
   border-right: 0;
 }
 
-.delivery-metric-icon {
+.delivery-page .delivery-metric-icon {
   display: inline-grid;
   flex: 0 0 auto;
   width: 44px;
@@ -137,44 +133,44 @@
   font-size: 1.2rem;
 }
 
-.delivery-metric div {
+.delivery-page .delivery-metric div {
   display: flex;
   min-width: 0;
   flex-direction: column;
 }
 
-.delivery-metric small {
+.delivery-page .delivery-metric small {
   color: #69738d;
   font-size: 0.68rem;
 }
 
-.delivery-metric strong {
+.delivery-page .delivery-metric strong {
   margin-top: 3px;
   color: var(--delivery-navy);
   font-size: clamp(1.2rem, 2vw, 1.55rem);
 }
 
-.delivery-card {
+.delivery-page .delivery-card {
   padding: clamp(20px, 2.6vw, 28px);
 }
 
-.delivery-card h2 {
+.delivery-page .delivery-card h2 {
   color: var(--delivery-navy);
   font-size: 1rem;
 }
 
-.delivery-status-card .delivery-timeline {
+.delivery-page .delivery-status-card .delivery-timeline {
   margin-top: 8px;
   padding: 0 5px 6px;
 }
 
-.delivery-timeline::before {
+.delivery-page .delivery-timeline::before {
   top: 19px;
   height: 2px;
   background: linear-gradient(90deg, var(--delivery-green) 0 66%, var(--delivery-line) 66% 100%);
 }
 
-.step-dot {
+.delivery-page .step-dot {
   width: 38px;
   height: 38px;
   margin-bottom: 10px;
@@ -185,35 +181,35 @@
   font-size: 0.76rem;
 }
 
-.delivery-step.complete .step-dot {
+.delivery-page .delivery-step.complete .step-dot {
   background: var(--delivery-green);
   box-shadow: 0 0 0 5px #fff;
 }
 
-.delivery-step.active .step-dot {
+.delivery-page .delivery-step.active .step-dot {
   color: var(--delivery-blue);
   background: #fff;
   box-shadow: 0 0 0 2px var(--delivery-blue), 0 0 0 7px #fff;
 }
 
-.delivery-step strong {
+.delivery-page .delivery-step strong {
   max-width: 118px;
   color: var(--delivery-navy);
   font-size: 0.7rem;
   line-height: 1.3;
 }
 
-.delivery-step small {
+.delivery-page .delivery-step small {
   color: #8089a2;
   font-size: 0.6rem;
 }
 
-.delivery-step.active small {
+.delivery-page .delivery-step.active small {
   color: var(--delivery-blue);
   font-weight: 800;
 }
 
-.delivery-notice {
+.delivery-page .delivery-notice {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -225,17 +221,17 @@
   background: var(--delivery-soft-blue);
 }
 
-.delivery-notice p {
+.delivery-page .delivery-notice p {
   margin: 0;
   font-size: 0.72rem;
   line-height: 1.45;
 }
 
-.delivery-details-card h2 {
+.delivery-page .delivery-details-card h2 {
   margin-bottom: 18px;
 }
 
-.delivery-pet-summary {
+.delivery-page .delivery-pet-summary {
   display: grid;
   grid-template-columns: 64px minmax(0, 1fr);
   align-items: center;
@@ -244,7 +240,7 @@
   border-bottom: 1px solid var(--delivery-line);
 }
 
-.delivery-pet-avatar {
+.delivery-page .delivery-pet-avatar {
   display: inline-grid;
   width: 64px;
   height: 64px;
@@ -256,37 +252,37 @@
   font-size: 1.5rem;
 }
 
-.delivery-pet-avatar img {
+.delivery-page .delivery-pet-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-.delivery-pet-avatar img[hidden],
-.delivery-pet-avatar i[hidden] {
+.delivery-page .delivery-pet-avatar img[hidden],
+.delivery-page .delivery-pet-avatar i[hidden] {
   display: none;
 }
 
-.delivery-pet-summary div {
+.delivery-page .delivery-pet-summary div {
   display: flex;
   min-width: 0;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.delivery-pet-summary strong {
+.delivery-page .delivery-pet-summary strong {
   color: var(--delivery-navy);
   font-size: 0.92rem;
 }
 
-.delivery-pet-summary small {
+.delivery-page .delivery-pet-summary small {
   margin: 3px 0 6px;
   color: #6f7891;
   font-size: 0.7rem;
 }
 
-.delivery-id {
+.delivery-page .delivery-id {
   padding: 3px 7px;
   border-radius: 5px;
   color: #3f51c6;
@@ -294,12 +290,12 @@
   font-size: 0.63rem;
 }
 
-.delivery-info-list {
+.delivery-page .delivery-info-list {
   display: grid;
   margin-top: 4px;
 }
 
-.delivery-info-list .delivery-info-item {
+.delivery-page .delivery-info-list .delivery-info-item {
   display: grid;
   grid-template-columns: 24px minmax(0, 1fr);
   gap: 10px;
@@ -310,36 +306,36 @@
   background: transparent;
 }
 
-.delivery-info-list .delivery-info-item:last-child {
+.delivery-page .delivery-info-list .delivery-info-item:last-child {
   border-bottom: 0;
   padding-bottom: 0;
 }
 
-.delivery-info-icon {
+.delivery-page .delivery-info-icon {
   color: #7d88a5;
   text-align: center;
 }
 
-.delivery-info-origin .delivery-info-icon {
+.delivery-page .delivery-info-origin .delivery-info-icon {
   color: var(--delivery-green);
 }
 
-.delivery-info-destination .delivery-info-icon {
+.delivery-page .delivery-info-destination .delivery-info-icon {
   color: var(--delivery-coral);
 }
 
-.delivery-info-item div {
+.delivery-page .delivery-info-item div {
   min-width: 0;
 }
 
-.delivery-info-item strong {
+.delivery-page .delivery-info-item strong {
   display: block;
   color: var(--delivery-navy);
   font-size: 0.74rem;
 }
 
-.delivery-info-item p,
-.delivery-info-item small {
+.delivery-page .delivery-info-item p,
+.delivery-page .delivery-info-item small {
   margin: 5px 0 0;
   color: #57627d;
   font-size: 0.7rem;
@@ -347,16 +343,16 @@
   overflow-wrap: anywhere;
 }
 
-.delivery-recommendations .recommendation-list {
+.delivery-page .delivery-recommendations .recommendation-list {
   gap: 13px;
 }
 
-.delivery-recommendations .recommendation-list li {
+.delivery-page .delivery-recommendations .recommendation-list li {
   align-items: flex-start;
   color: #55617b;
 }
 
-.delivery-recommendations .recommendation-list i {
+.delivery-page .delivery-recommendations .recommendation-list i {
   display: inline-grid;
   flex: 0 0 auto;
   width: 34px;
@@ -367,12 +363,12 @@
   background: #e9f8ef;
 }
 
-.delivery-recommendations .recommendation-list li:last-child i {
+.delivery-page .delivery-recommendations .recommendation-list li:last-child i {
   color: var(--delivery-coral);
   background: #fff0e8;
 }
 
-.delivery-thanks {
+.delivery-page .delivery-thanks {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -384,60 +380,60 @@
   font-size: 0.7rem;
 }
 
-.delivery-side > .secondary-action {
+.delivery-page .delivery-side > .secondary-action {
   justify-self: start;
 }
 
 @media (max-width: 1100px) {
-  .delivery-layout {
+  .delivery-page .delivery-layout {
     grid-template-columns: 1fr;
   }
 
-  .delivery-side {
+  .delivery-page .delivery-side {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .delivery-side > .secondary-action {
+  .delivery-page .delivery-side > .secondary-action {
     grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 720px) {
-  .delivery-hero {
+  .delivery-page .delivery-hero {
     min-height: auto;
   }
 
-  .delivery-pet-icon {
+  .delivery-page .delivery-pet-icon {
     width: 64px;
     height: 64px;
     font-size: 1.7rem;
   }
 
-  .delivery-metrics,
-  .delivery-side {
+  .delivery-page .delivery-metrics,
+  .delivery-page .delivery-side {
     grid-template-columns: 1fr;
   }
 
-  .delivery-metric {
+  .delivery-page .delivery-metric {
     padding: 13px 4px;
     border-right: 0;
     border-bottom: 1px solid var(--delivery-line);
   }
 
-  .delivery-metric:last-child {
+  .delivery-page .delivery-metric:last-child {
     border-bottom: 0;
   }
 
-  .delivery-status-card .delivery-timeline {
+  .delivery-page .delivery-status-card .delivery-timeline {
     padding-left: 0;
   }
 
-  .delivery-timeline::before {
+  .delivery-page .delivery-timeline::before {
     left: 18px;
     background: var(--delivery-line);
   }
 
-  .delivery-step {
+  .delivery-page .delivery-step {
     padding-left: 54px;
   }
 }
@@ -447,11 +443,11 @@
     padding: 18px 13px 34px;
   }
 
-  .delivery-hero {
+  .delivery-page .delivery-hero {
     padding: 21px;
   }
 
-  .delivery-pet-icon {
+  .delivery-page .delivery-pet-icon {
     display: none;
   }
 }
