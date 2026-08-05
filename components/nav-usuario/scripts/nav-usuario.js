@@ -142,8 +142,7 @@ export class NavUsuario extends HTMLElement {
             >
               <span class="user-nav-icon"><i class="${icon}"></i></span>
               <span>${label}</span>
-              ${key === "solicitudes" ? '<span class="user-nav-count" data-user-request-count>0</span>' : ""}
-            </a>
+              
           `).join("")}
         </nav>
 
