@@ -1,135 +1,98 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Solicitudes</title>
-    <!-- navbar-footer style -->
-    <link
-      rel="stylesheet"
-      href="../../components/navbar-footer/navbar-footer.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <link rel="stylesheet" href="../../assets/css/portal-usuario.css" />
 
-    <link rel="stylesheet" href="styles/style.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="https://cloudflare.com" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solicitudes</title>
+  <!-- navbar-footer style -->
+  <link rel="stylesheet" href="../../components/navbar-footer/navbar-footer.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../../assets/css/portal-usuario.css" />
 
-  <body>
-    <nav-bar></nav-bar>
+  <link rel="stylesheet" href="styles/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cloudflare.com" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
 
-    <div class="user-shell" id="userShell">
-      <aside class="user-sidebar" aria-label="Menú del usuario">
-        <a class="user-brand" href="../../index.html">
-          <span class="user-brand-mark">
+<body>
+  <nav-bar></nav-bar>
+
+  <div class="user-shell" id="userShell">
+    <aside class="user-sidebar" aria-label="Menú del usuario">
+      <a class="user-brand" href="../../index.html">
+        <!-- <span class="user-brand-mark">
             <i class="fa-solid fa-paw"></i>
-          </span>
+          </span> -->
 
-          <span class="user-brand-copy">
+        <!-- <span class="user-brand-copy">
             <strong>Hogar Amigo</strong>
             <small>Peludo</small>
-          </span>
+          </span> -->
 
-          <button
-            type="button"
-            class="user-sidebar-close"
-            id="userSidebarClose"
-            aria-label="Cerrar menú"
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+        <button type="button" class="user-sidebar-close" id="userSidebarClose" aria-label="Cerrar menú">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </a>
+
+      <nav class="user-nav">
+        <p class="user-nav-title">Secciones</p>
+
+        <a class="user-nav-link" href="../../index.html">
+          <i class="fa-solid fa-house"></i>
+          Inicio
         </a>
 
-        <nav class="user-nav">
-          <p class="user-nav-title">Mi cuenta</p>
-
-          <a class="user-nav-link" href="../../index.html">
-            <i class="fa-solid fa-house"></i>
-            Inicio
-          </a>
-
-          <a class="user-nav-link" href="../../33333PerfilUsuario/perfil.html">
+        <!-- <a class="user-nav-link" href="../../33333PerfilUsuario/perfil.html">
             <i class="fa-regular fa-user"></i>
             Mi perfil
-          </a>
+          </a> -->
 
-          <a class="user-nav-link active" href="solicitudes-usuario.html">
-            <i class="fa-regular fa-clipboard"></i>
-            Mis solicitudes
-            <span class="user-nav-count" id="navRequestCount">0</span>
-          </a>
+        <a class="user-nav-link active" href="solicitudes-usuario.html">
+          <i class="fa-regular fa-clipboard"></i>
+          Mis solicitudes
+          <span class="user-nav-count" id="navRequestCount">0</span>
+        </a>
 
-          <a
-            class="user-nav-link"
-            href="../Proceso-Entrega/proceso-entrega.html"
-          >
-            <i class="fa-solid fa-truck"></i>
-            Proceso de entrega
-          </a>
+        <a class="user-nav-link" href="../Proceso-Entrega/proceso-entrega.html">
+          <i class="fa-solid fa-truck"></i>
+          Proceso de entrega
+        </a>
 
-          <a class="user-nav-link" href="../../32.4Catalogo/catalogo.html">
-            <i class="fa-solid fa-paw"></i>
-            Explorar mascotas
-          </a>
-        </nav>
+        <a class="user-nav-link" href="../../32.4Catalogo/catalogo.html">
+          <i class="fa-solid fa-paw"></i>
+          Explorar mascotas
+        </a>
+      </nav>
 
-        <div class="user-help">
-          <strong>¿Necesitas ayuda?</strong>
-          <a href="../../26.2Contactenos/contactenos.html">Contáctanos</a>
-        </div>
+      <div class="user-help">
+        <strong>¿Necesitas ayuda?</strong>
+        <a href="../../26.2Contactenos/contactenos.html">Contáctanos</a>
+      </div>
 
-        <div class="user-sidebar-footer">
-          <button class="user-logout" id="userLogout">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            Cerrar sesión
+
+    </aside>
+
+    <button class="user-overlay" id="userOverlay" aria-label="Cerrar menú"></button>
+
+    <div class="user-workspace">
+      <header class="user-topbar">
+        <div class="user-topbar-start">
+          <button class="user-menu-toggle" id="userMenuToggle" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
           </button>
-        </div>
-      </aside>
 
-      <button
-        class="user-overlay"
-        id="userOverlay"
-        aria-label="Cerrar menú"
-      ></button>
-
-      <div class="user-workspace">
-        <header class="user-topbar">
-          <div class="user-topbar-start">
-            <button
-              class="user-menu-toggle"
-              id="userMenuToggle"
-              aria-expanded="false"
-            >
-              <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <div class="user-page-context">
-              <span>Mi cuenta</span>
-              <strong>Mis solicitudes</strong>
-            </div>
+          <div class="user-page-context">
+            <span>Seccion</span>
+            <strong>Mis solicitudes</strong>
           </div>
+        </div>
 
-          <a
+        <!-- <a
             class="user-topbar-profile"
             href="../../33333PerfilUsuario/perfil.html"
           >
@@ -139,81 +102,89 @@
               <strong data-user-name>Usuario</strong>
               <small>Adoptante</small>
             </div>
-          </a>
-        </header>
+          </a> -->
+      </header>
 
-        <main class="user-main">
-          <div class="page-heading">
-            <div>
-              <span class="section-badge">Seguimiento</span>
+      <main class="user-main">
+        <div class="page-heading">
+          <div>
+            <span class="section-badge">Seguimiento</span>
 
-              <h1>Mis solicitudes de adopción</h1>
+            <h1>Mis solicitudes de adopción</h1>
 
-              <p>
-                Consulta el estado de cada solicitud y accede al proceso de
-                entrega.
-              </p>
-            </div>
-
-            <a class="primary-action" href="../../32.4Catalogo/catalogo.html">
-              <i class="fa-solid fa-plus"></i>
-
-              Nueva solicitud
-            </a>
+            <p>
+              Consulta el estado de cada solicitud y accede al proceso de
+              entrega.
+            </p>
           </div>
 
-          <section class="portal-card request-filter">
-            <select id="filtroEstado" aria-label="Filtrar por estado">
-              <option value="">Todos los estados</option>
-              <option>Solicitud llenada</option>
-              <option>En revisión</option>
-              <option>Aceptada</option>
-              <option>Negada</option>
-              <option>Coordinando entrega</option>
-              <option>Adoptada</option>
-            </select>
-          </section>
+          <a class="primary-action" href="../../32.4Catalogo/catalogo.html">
+            <i class="fa-solid fa-plus"></i>
 
-          <section class="portal-card p-4">
-            <div id="contenedorSolicitudes" class="contenedor-mascotas">
-              <!-- Las tarjetas se agregan aquí desde JavaScript -->
+            Nueva solicitud
+          </a>
+        </div>
+
+        <section class="portal-card request-filter">
+          <select id="filtroEstado" class="filter-select" aria-label="Filtrar por estado">
+            <option value="">Todos los estados</option>
+            <option>Solicitud llenada</option>
+            <option>En revisión</option>
+            <option>Aceptada</option>
+            <option>Negada</option>
+            <option>Coordinando entrega</option>
+            <option>Adoptada</option>
+          </select>
+
+          <div class="filtros">
+            <div class="busqueda-documento">
+              <input type="text" id="buscarDocumento" class="search-input" placeholder="Número de documento">
+              <button id="btnBuscar" class="search-btn">Buscar</button>
             </div>
-          </section>
-        </main>
-      </div>
+          </div>
+        </section>
+
+
+
+
+        <section class="portal-card p-4">
+          <div id="contenedorSolicitudes" class="contenedor-mascotas">
+            <!-- Las tarjetas se agregan aquí desde JavaScript -->
+            <div class="estado-vacio">
+              <i class="bi bi-search"></i>
+
+              <h3>Busca una solicitud</h3>
+
+              <p>
+                Ingresa el número de documento del solicitante en el buscador para
+                visualizar las mascotas asociadas a la solicitud de adopción.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
+  </div>
 
-    <page-footer></page-footer>
+  <page-footer></page-footer>
 
-    <!-- navbar-footer script -->
+  <!-- navbar-footer script -->
 
-    <script type="module" src="solicitudes-usuario.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <!-- navbar-footer script -->
-    <script
-      src="../../components/navbar-footer/navbar-footer.js"
-      type="module"
-    ></script>
-  </body>
+  <script type="module" src="solicitudes-usuario.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <!-- navbar-footer script -->
+  <script src="../../components/navbar-footer/navbar-footer.js" type="module"></script>
+</body>
+
 </html>
-
-

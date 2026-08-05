@@ -46,16 +46,14 @@ export class navbar extends HTMLElement {
           <li><a href="${projectUrl("Donaciones/donaciones.html")}">Donaciones</a></li>
           <li><a href="${projectUrl("25.3SobreNosotro/sobre-nosotros-index.html")}">Sobre Nosotros</a></li>
           <li><a href="${projectUrl("26.2Contactenos/contactenos.html")}">Contáctenos</a></li>
-          <li><a href="${projectUrl("33333PerfilUsuario/perfil.html")}">Mi Perfil</a></li>
+          <li><a href="${projectUrl("Usuario/solicitudes/solicitudes-usuario.html")}">Mis Solicitudes</a></li>
           <li><a href="${projectUrl("login/login.html")}">Login</a></li>
         </ul>
       </nav>
-
-      `;
+    `;
   }
 }
 
-// ../../assets/icons/adoptame.png
 if (!customElements.get("nav-bar")) {
   customElements.define("nav-bar", navbar);
 }

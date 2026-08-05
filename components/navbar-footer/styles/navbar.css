@@ -1,19 +1,18 @@
-/* ESTILOS DE LA NAV BAR */
-
+/* NAVBAR */
 
 nav.nav-bar {
     --nav-bg: #ffffff;
     --nav-text: #555555;
     --nav-logo-color: #2c3e50;
     --nav-hover: #e67e22;
-    --nav-font: 'Boogaloo', sans-serif;
+    --nav-font: "Poppins", sans-serif;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--nav-bg);
-    padding: 1rem 1rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: var(--nav-bg);
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -24,16 +23,33 @@ nav.nav-bar {
 nav.nav-bar *,
 nav.nav-bar *::before,
 nav.nav-bar *::after {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-nav.nav-bar p.navbar-logo {
-    font-size: 1.8rem;
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.brand img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+}
+
+.navbar-logo {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -.5px;
     color: var(--nav-logo-color);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+}
+
+.navbar-logo span {
+    color: var(--nav-hover);
 }
 
 nav.nav-bar #ul-navbar {
@@ -47,11 +63,9 @@ nav.nav-bar #ul-navbar li a {
     text-decoration: none;
     color: var(--nav-text);
     font-size: 1.3rem;
-    text-transform: capitalize;
-    transition: color 0.3s ease;
-    padding: 0.5rem 0.2rem;
+    padding: .5rem .2rem;
+    transition: .3s;
     display: inline-block;
-    letter-spacing: 0.5px;
 }
 
 nav.nav-bar #ul-navbar li a:hover {
@@ -59,41 +73,39 @@ nav.nav-bar #ul-navbar li a:hover {
 }
 
 nav.nav-bar #ul-navbar li:last-child a {
-    background-color: var(--nav-hover);
-    color: #ffffff;
-    padding: 0.4rem 1.4rem;
+    background: var(--nav-hover);
+    color: white;
+    padding: .4rem 1.4rem;
     border-radius: 20px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 nav.nav-bar #ul-navbar li:last-child a:hover {
-    background-color: #d35400;
-    color: #ffffff;
+    background: #d35400;
     transform: scale(1.05);
 }
 
-nav.nav-bar .navbar-hidden-checkbox {
+.navbar-hidden-checkbox {
     display: none;
 }
 
-nav.nav-bar .navbar-hamburger-icon {
+.navbar-hamburger-icon {
     display: none;
     cursor: pointer;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: .35rem;
 }
 
-nav.nav-bar .navbar-hamburger-icon span {
-    display: block;
+.navbar-hamburger-icon span {
     width: 25px;
     height: 3px;
-    background-color: var(--nav-logo-color);
     border-radius: 2px;
-    transition: all 0.3s ease;
+    background: var(--nav-logo-color);
+    transition: .3s;
 }
 
-@media screen and (max-width: 768px) {
-    nav.nav-bar .navbar-hamburger-icon {
+@media (max-width: 1350px) {
+
+    .navbar-hamburger-icon {
         display: flex;
     }
 
@@ -102,159 +114,44 @@ nav.nav-bar .navbar-hamburger-icon span {
         top: 100%;
         left: 0;
         width: 100%;
-        background-color: var(--nav-bg);
+        background: var(--nav-bg);
         flex-direction: column;
-        gap: 0;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.4s ease-in-out;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        transition: max-height .4s ease;
     }
 
     nav.nav-bar #ul-navbar li {
         width: 100%;
         text-align: center;
-        border-bottom: 1px solid #f5f5f5;
+        border-bottom: 1px solid #eee;
+    }
+
+    nav.nav-bar #ul-navbar li:last-child {
+        margin-bottom: 16px;
     }
 
     nav.nav-bar #ul-navbar li a {
         display: block;
         padding: 1rem;
-        width: 100%;
     }
 
-    nav.nav-bar #ul-navbar li:last-child {
-        padding: 1rem 2rem;
-        border-bottom: none;
+    .navbar-hidden-checkbox:checked~#ul-navbar {
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
     }
 
-    nav.nav-bar #ul-navbar li:last-child a {
-        border-radius: 8px;
-    }
-
-    nav.nav-bar .navbar-hidden-checkbox:checked~#ul-navbar {
-        max-height: 450px;
-    }
-
-    nav.nav-bar .navbar-hidden-checkbox:checked~.navbar-hamburger-icon span:nth-child(1) {
+    .navbar-hidden-checkbox:checked~.navbar-hamburger-icon span:nth-child(1) {
         transform: translateY(7px) rotate(45deg);
     }
 
-    nav.nav-bar .navbar-hidden-checkbox:checked~.navbar-hamburger-icon span:nth-child(2) {
+    .navbar-hidden-checkbox:checked~.navbar-hamburger-icon span:nth-child(2) {
         opacity: 0;
     }
 
-    nav.nav-bar .navbar-hidden-checkbox:checked~.navbar-hamburger-icon span:nth-child(3) {
+    .navbar-hidden-checkbox:checked~.navbar-hamburger-icon span:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg);
     }
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-
-.brand img {
-  width: 52px;
-  height: 52px;
-  object-fit: contain;
-}
-.navbar-logo {
-  font-family: var(--nav-font);
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--text-dark);
-  margin: 0;
-  letter-spacing: -0.5px;
-  cursor: pointer;
-}
-
-.navbar-logo span {
-  color: var(--orange);
-}
-
-/*Botones flotantes*/
-.botones-flotantes {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 9999;
-}
-
-.botones-flotantes .btn{
-    width: 130px;
-    height: 70px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50px;
-}
-
-@media (max-width: 768px) {
-  .botones-flotantes {
-    bottom: 10px;
-    right: 10px;
-  }
-
-  .botones-flotantes .btn {
-    min-width: 90px;
-    padding: 10px 15px;
-  }
-}
-
-.icono-WhatsApp{
-    width: 52px;
-    height: 52px;
-    object-fit: cover;
-    border-radius: 50%; 
-    
-    
-    
-}
-.icono-WhatsApp span {
-    color: white;
-  font-weight: 700;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.2s ease;  
-}
-.icono-adoptar{
-    width: 58px;
-    height: 58px;
-     /*border-radius: 50%;*/
-    vertical-align: middle;
-}
-
-/* Ajuste para móviles */
-@media (max-width: 576px) {
-  .team-slide {
-    min-height: 420px;
-    padding: 25px;
-  }
-
-  .team-photo {
-    width: 140px;
-    height: 140px;
-  }
-
-  .team-name {
-    font-size: 1.5rem;
-  }
-
-  .team-role {
-    font-size: 1rem;
-  }
-}
-
-/*==================================================
-  RESPONSIVE
-==================================================*/
 
 @media (max-width: 800px) {
   #economica > .card {
@@ -325,4 +222,5 @@ nav.nav-bar .navbar-hamburger-icon span {
   .btn-donate {
     transition: none;
   }
+}
 }

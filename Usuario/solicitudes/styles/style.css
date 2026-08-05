@@ -211,6 +211,86 @@ main .text-muted {
 
 }
 
+/* busqueda */
+
+.estado-vacio{
+    grid-column: 1 / -1;   /* Ocupa todas las columnas del grid */
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.estado-vacio i{
+    font-size: 70px;
+    color: rgba(255, 107, 28);
+    margin-bottom: 20px;
+}
+
+.estado-vacio h3,
+.estado-vacio h4{
+    color: rgba(255, 107, 28);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.estado-vacio p{
+    max-width: 500px;
+    margin: 0 auto;
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+
+.busqueda-documento{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.busqueda-documento input{
+    flex: 1 1 200px;
+    max-width: 260px;
+    height: 42px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 0 15px;
+    outline: none;
+    transition: .3s;
+    font-size: 15px;
+}
+
+.busqueda-documento input:focus{
+    box-shadow: 0 0 0 3px rgba(255, 107, 28, 0.2);
+}
+
+.busqueda-documento button{
+    height: 42px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 107, 28);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+    white-space: nowrap;
+}
+
+.busqueda-documento button:hover{
+    background: rgba(255, 107, 28, 0.703);
+}
+
+
+
 /* ===========================
    Responsive
 =========================== */
@@ -248,3 +328,10 @@ main .text-muted {
 
 }
  
+@media (max-width: 480px) {
+    .busqueda-documento input,
+    .busqueda-documento button {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+}

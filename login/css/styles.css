@@ -14,7 +14,6 @@
 }
 
 body {
-  font-weight: 700;
   font-family: var(--font);
   background: var(--bg);
   min-height: 100vh;

@@ -8,10 +8,35 @@ import {
 
 const contenedor = document.getElementById("contenedorSolicitudes");
 
-mostrarSolicitudes();
+mostrarEstadoInicial();
+const inputDocumento = document.getElementById("buscarDocumento");
+const btnBuscar = document.getElementById("btnBuscar");
 
-function mostrarSolicitudes() {
-  const solicitudes = obtenerSolicitudes();
+btnBuscar?.addEventListener("click", buscarSolicitudes);
+
+inputDocumento?.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") {
+        buscarSolicitudes();
+    }
+});
+
+function buscarSolicitudes() {
+
+    const documento = inputDocumento.value.trim();
+
+    if (!documento) {
+        mostrarEstadoInicial();
+        return;
+    }
+
+    const solicitudes = obtenerSolicitudes().filter(
+        solicitud => solicitud.propietario.documento === documento
+    );
+
+    mostrarSolicitudes(solicitudes);
+}
+
+function mostrarSolicitudes(solicitudes = obtenerSolicitudes()) {
   const contadorSolicitudes = document.getElementById("navRequestCount");
 
   if (contadorSolicitudes) {
@@ -19,18 +44,23 @@ function mostrarSolicitudes() {
   }
 
   contenedor.innerHTML = "";
+  contenedor.classList.remove("vacio");
 
   if (solicitudes.length === 0) {
-    contenedor.innerHTML = `
-            <div class="col-12 text-center py-5">
-                <i class="fa-solid fa-paw fa-4x text-secondary mb-3"></i>
-                <h3>No tienes solicitudes de adopción.</h3>
-                <p class="text-muted">
-                    Cuando envíes una solicitud aparecerá aquí.
-                </p>
-            </div>
-        `;
+    contenedor.classList.add("vacio");
 
+    contenedor.innerHTML = `
+        <div class="estado-vacio">
+            <i class="bi bi-search"></i>
+
+            <h3>No se encontraron solicitudes</h3>
+
+            <p>
+                No existen solicitudes asociadas al número de documento ingresado.
+                Verifica la información e inténtalo nuevamente.
+            </p>
+        </div>
+    `;
     return;
   }
 
@@ -249,4 +279,23 @@ contenedor?.addEventListener("click", (event) => {
   eliminarSolicitud(idSolicitud);
   mostrarSolicitudes();
 });
+
+function mostrarEstadoInicial() {
+    contenedor.classList.add("vacio");
+
+    contenedor.innerHTML = `
+        <div class="estado-vacio">
+            <i class="bi bi-search"></i>
+
+            <h3>Busca una solicitud</h3>
+
+            <p>
+                Ingresa el número de documento del solicitante en el buscador
+                para visualizar las mascotas asociadas a la solicitud de adopción.
+            </p>
+        </div>
+    `;
+}
+
+
 

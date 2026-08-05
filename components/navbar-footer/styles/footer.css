@@ -22,7 +22,7 @@ footer {
 }
 
 footer h3 {
-    font-family: "Boogaloo", sans-serif;
+    font-family: "Poppins", sans-serif;
     color: #FC9E37;
     font-size: 1.2rem;
     margin: 15px 0;
@@ -46,7 +46,7 @@ footer #ul-navbar li {
 }
 
 footer #ul-navbar a {
-    font-family: "Boogaloo", sans-serif;
+    font-family: "Poppins", sans-serif;
     color: #fff;
     text-decoration: none;
     text-transform: capitalize;
