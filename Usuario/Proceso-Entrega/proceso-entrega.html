@@ -9,16 +9,16 @@
     <link rel="stylesheet" href="proceso-entrega.css" />
     <link
       rel="stylesheet"
-      href="../../components/navbar-footer/navbar-footer.css"
+      href="../../components/components.css"
     />
   </head>
   <body>
-    <div class="user-shell" id="userShell">
-      <aside class="user-sidebar" aria-label="Menú del usuario">
-        <a class="user-brand" href="../../index.html"><span class="user-brand-mark"><i class="fa-solid fa-paw"></i></span><span class="user-brand-copy"><strong>Hogar Amigo</strong><small>Peludo</small></span><button type="button" class="user-sidebar-close" id="userSidebarClose"><i class="fa-solid fa-xmark"></i></button></a>
-        <nav class="user-nav"><p class="user-nav-title">Secciones</p><a class="user-nav-link" href="../../index.html"><i class="fa-solid fa-house"></i>Inicio</a><a class="user-nav-link" href="../solicitudes/solicitudes-usuario.html"><i class="fa-regular fa-clipboard"></i>Mis solicitudes</a><a class="user-nav-link active" href="proceso-entrega.html"><i class="fa-solid fa-truck"></i>Proceso de entrega</a><a class="user-nav-link" href="../../32.4Catalogo/catalogo.html"><i class="fa-solid fa-paw"></i>Explorar mascotas</a></nav>
-        <div class="user-help"><strong>¿Necesitas ayuda?</strong><a href="../../26.2Contactenos/contactenos.html">Contáctanos</a></div>
-      </aside>
+    <nav-bar></nav-bar>
+     <nav-usuario active="entrega"></nav-usuario>
+     <div class="user-shell">
+  <div class="user-workspace">
+
+   
 
       <button class="user-overlay" id="userOverlay" aria-label="Cerrar menú"></button>
 
@@ -114,7 +114,13 @@
     </div>
 
     <div class="toast-message" id="deliveryToast">Entrega actualizada.</div>
+   </div>
+    </div>
     <footer> </footer>
+
+    
+
+
     <script src="../../assets/js/portal-usuario.js" defer></script>
     <script type="module" src="proceso-entrega.js"></script>
 
@@ -139,6 +145,6 @@
       crossorigin="anonymous"
     ></script>
     <!-- navbar-footer script -->
-    <script src="../../components/navbar-footer/navbar-footer.js" type="module"></script>
+    <script src="../../components/components.js" type="module"></script>
   </body>
 </html>

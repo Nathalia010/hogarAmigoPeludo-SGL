@@ -1,0 +1,288 @@
+:root {
+  --user-nav-orange: #ef6c2f;
+  --user-nav-orange-soft: #fff1e9;
+  --user-nav-navy: #252936;
+  --user-nav-muted: #747b8c;
+  --user-nav-border: #e7e9f0;
+  --user-general-navbar-height: 82px;
+}
+
+nav-usuario {
+  display: contents;
+}
+
+/* Si aún quedó el menú escrito a mano, el componente lo reemplaza. */
+body:has(nav-usuario) .user-shell > aside.user-sidebar,
+body:has(nav-usuario) .user-shell > .user-overlay {
+  display: none !important;
+}
+
+/* El componente ocupa la primera columna y el contenido la segunda. */
+.user-shell:has(> nav-usuario),
+.user-shell.user-shell--nav-child {
+  display: grid;
+  grid-template-columns: 225px minmax(0, 1fr) !important;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.user-shell.user-shell--nav-child > nav-usuario {
+  grid-column: 1;
+}
+
+.user-shell.user-shell--nav-child > .user-workspace {
+  grid-column: 2;
+  width: 100%;
+  min-width: 0;
+}
+
+nav-usuario .user-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 225px;
+  min-width: 225px;
+  height: 100vh;
+  color: var(--user-nav-navy);
+  background: #fff;
+  border-right: 1px solid var(--user-nav-border);
+  box-shadow: 5px 0 18px rgba(23, 32, 58, .04);
+  font-family: "Nunito", sans-serif;
+}
+
+/* También permite escribir nav-usuario antes de user-shell. */
+.user-shell.user-shell--nav-sibling,
+body > nav-usuario + .user-shell {
+  display: block !important;
+  width: calc(100% - 225px) !important;
+  margin-left: 225px !important;
+  min-width: 0;
+}
+
+.user-shell.user-shell--nav-sibling > .user-workspace,
+body > nav-usuario + .user-shell > .user-workspace {
+  width: 100%;
+  min-width: 0;
+}
+
+/* En escritorio queda vacío; en móvil contiene el botón para cerrar. */
+nav-usuario .user-sidebar-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 26px;
+  padding: 8px 14px 0;
+}
+
+nav-usuario .user-sidebar-tools.has-brand {
+  min-height: 78px;
+  padding: 14px;
+  border-bottom: 1px solid var(--user-nav-border);
+}
+
+nav-usuario .user-brand {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 9px;
+  margin-right: auto;
+  color: var(--user-nav-navy);
+  text-decoration: none;
+}
+
+nav-usuario .user-brand-mark {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: var(--user-nav-orange);
+  background: var(--user-nav-orange-soft);
+  border-radius: 12px;
+}
+
+nav-usuario .user-brand-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+nav-usuario .user-brand-copy strong {
+  font-size: .9rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+nav-usuario .user-brand-copy small {
+  color: var(--user-nav-orange);
+  font-size: .75rem;
+  font-weight: 800;
+}
+
+nav-usuario .user-sidebar-close {
+  display: none;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: var(--user-nav-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+nav-usuario .user-sidebar-close:hover {
+  color: var(--user-nav-orange);
+  background: var(--user-nav-orange-soft);
+}
+
+nav-usuario .user-nav {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 12px;
+}
+
+nav-usuario .user-nav-title {
+  margin: 0 10px 10px;
+  color: #979dac;
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+nav-usuario .user-nav-link {
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 10px 12px;
+  color: var(--user-nav-muted);
+  border-radius: 11px;
+  font-size: .86rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: color .2s, background .2s, transform .2s;
+}
+
+nav-usuario .user-nav-link:hover {
+  color: var(--user-nav-orange);
+  background: #fff8f4;
+  transform: translateX(2px);
+}
+
+nav-usuario .user-nav-link.active {
+  color: #d9571d;
+  background: var(--user-nav-orange-soft);
+}
+
+nav-usuario .user-nav-link i {
+  width: 25px;
+  text-align: center;
+  font-size: .95rem;
+}
+
+nav-usuario .user-nav-count {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  color: var(--user-nav-orange);
+  background: #fff;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 900;
+}
+
+nav-usuario .user-help {
+  margin: auto 14px 18px;
+  padding: 15px;
+  background: #fff8f4;
+  border: 1px solid #ffe1cf;
+  border-radius: 13px;
+  font-size: .8rem;
+}
+
+nav-usuario .user-help strong,
+nav-usuario .user-help a {
+  display: block;
+}
+
+nav-usuario .user-help a {
+  margin-top: 4px;
+  color: var(--user-nav-orange);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+nav-usuario .user-help a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 992px) {
+  nav-usuario .user-sidebar.offcanvas-lg {
+    position: sticky;
+    top: var(--user-general-navbar-height) !important;
+    display: flex;
+    height: calc(100vh - var(--user-general-navbar-height)) !important;
+    max-height: calc(100vh - var(--user-general-navbar-height));
+    visibility: visible;
+    transform: none;
+    overflow-y: auto;
+  }
+
+  body > nav-usuario > .user-sidebar.offcanvas-lg {
+    position: fixed;
+    left: 0;
+  }
+}
+
+@media (max-width: 991.98px) {
+  :root {
+    --user-general-navbar-height: 68px;
+  }
+
+  .user-shell:has(> nav-usuario),
+  .user-shell.user-shell--nav-child {
+    display: block;
+    min-height: 100vh;
+  }
+
+  nav-usuario .user-sidebar.offcanvas-lg {
+    position: fixed;
+    top: var(--user-general-navbar-height) !important;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    z-index: 1055;
+    width: min(84vw, 260px);
+    min-width: 0;
+    height: calc(100dvh - var(--user-general-navbar-height)) !important;
+    visibility: hidden;
+    transform: translateX(-100%);
+  }
+
+  nav-usuario .user-sidebar.offcanvas-lg.show,
+  nav-usuario .user-sidebar.offcanvas-lg.showing {
+    visibility: visible;
+    transform: none;
+  }
+
+  nav-usuario .user-sidebar.offcanvas-lg.hiding {
+    visibility: visible;
+  }
+
+  nav-usuario .user-sidebar-close {
+    display: grid;
+  }
+
+  .user-shell.user-shell--nav-sibling,
+  body > nav-usuario + .user-shell {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
