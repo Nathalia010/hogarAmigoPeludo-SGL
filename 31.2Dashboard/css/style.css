@@ -323,6 +323,21 @@
   font-weight: 800;
 }
 
+.admin-page .pet-status {
+  display: inline-block;
+  background: rgba(255, 106, 28, 0.12);
+  color: #ff6a1c;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.72rem;
+}
+
+.admin-page .pet-status.is-adoptado {
+  background: rgba(34, 160, 83, 0.14);
+  color: #1b7a3c;
+}
+
 .admin-page .status-pending,
 .admin-page .bg-warning {
   color: #84500d !important;

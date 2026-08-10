@@ -2,12 +2,10 @@ import { obtenerMascotaPorId } from "../31.2Dashboard/scripts/mascotas.js";
 import { agregarSolicitud } from "../31.2Dashboard/scripts/solicitudes.js";
 import { existeUsuario, registrarUsuario } from "../registro/scripts/usuarios.js";
 
-// Obtener el id de la URL
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-// Buscar la mascota
-const mascota = obtenerMascotaPorId(id);
+let mascota = null;
 
 if (!mascota) {
     alert("No se encontró la mascota.");
@@ -31,8 +29,6 @@ if (!mascota) {
 
 // Formulario
 const formulario = document.getElementById("formContacto");
-
-// Popup de cuenta / inicio de sesión
 const modalCuentaEl = document.getElementById("modalCuenta");
 const modalCuentaBody = document.getElementById("modalCuentaBody");
 const modalCuenta = new bootstrap.Modal(modalCuentaEl);
@@ -65,66 +61,114 @@ formulario.addEventListener("submit", (e) => {
 
             apellido: document.getElementById("apellidos").value,
 
-            documento: document.getElementById("documento").value,
+  if (!mascota) {
+    alert("No se encontró la mascota.");
+    return;
+  }
 
-            edad: document.getElementById("edad").value,
+  document.getElementById("imagenMascota").src = mascota.imagen;
+  document.getElementById("imagenMascota").alt = mascota.nombre;
 
-            correo: document.getElementById("email").value,
+  document.getElementById("nombreMascota").textContent = mascota.nombre;
+  document.getElementById("estadoMascota").textContent = mascota.estado;
 
-            telefono: document.getElementById("telefono").value,
+  document.getElementById("edadSexoMascota").textContent =
+    `${mascota.edad} • ${mascota.sexo}`;
 
-            pais: document.getElementById("pais").value,
+  document.getElementById("tamanoMascota").textContent = mascota.tamano;
+  document.getElementById("especieMascota").textContent = mascota.especie;
+  document.getElementById("sexoMascota").textContent = mascota.sexo;
+  document.getElementById("descripcionMascota").textContent =
+    mascota.descripcion;
+}
 
-            ciudad: document.getElementById("estado").value,
+cargarMascota().catch((error) => {
+  console.error(error);
+  alert(
+    "No se pudo cargar la mascota. Verifica que el backend esté en http://localhost:8080"
+  );
+});
 
-            tipoVivienda: document.getElementById("tipo_vivienda").value,
+formulario.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-            regimenVivienda: document.getElementById("regimen_vivienda").value,
+  if (!mascota) {
+    alert("La mascota aún no está cargada. Intenta de nuevo.");
+    return;
+  }
 
-            horasSola: document.getElementById("horas_sola").value,
+  const nuevaSolicitud = {
+    mascota: {
+      id: mascota.id,
+      nombre: mascota.nombre,
+      imagen: mascota.imagen,
+      especie: mascota.especie,
+      sexo: mascota.sexo,
+      edad: mascota.edad,
+      tamano: mascota.tamano,
+      estado: mascota.estado,
+      descripcion: mascota.descripcion,
+    },
+    propietario: {
+      nombre: document.getElementById("nombre").value,
+      apellido: document.getElementById("apellidos").value,
+      documento: document.getElementById("documento").value,
+      edad: document.getElementById("edad").value,
+      correo: document.getElementById("email").value,
+      telefono: document.getElementById("telefono").value,
+      pais: document.getElementById("pais").value,
+      ciudad: document.getElementById("estado").value,
+      tipoVivienda: document.getElementById("tipo_vivienda").value,
+      regimenVivienda: document.getElementById("regimen_vivienda").value,
+      horasSola: document.getElementById("horas_sola").value,
+      otrasMascotas: document.getElementById("otras_mascotas").value,
+      motivo: document.getElementById("motivo").value,
+    },
+  };
 
-            otrasMascotas: document.getElementById("otras_mascotas").value,
+  const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogueado"));
 
-            motivo: document.getElementById("motivo").value
+  if (usuarioLogueado) {
+    await enviarYRedirigir(nuevaSolicitud);
+    return;
+  }
 
-        }
+  try {
+    const yaExiste = await existeUsuario(nuevaSolicitud.propietario.correo);
 
-    };
+    if (yaExiste) {
+      const guardado = await agregarSolicitud(nuevaSolicitud);
 
-    const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogueado"));
-
-    // Ya tiene sesión activa: se envía igual que siempre
-    if (usuarioLogueado) {
-        enviarYRedirigir(nuevaSolicitud);
+      if (!guardado) {
+        alert(
+          `Ya tienes una solicitud registrada para adoptar a ${mascota.nombre}.`
+        );
         return;
+      }
+
+      mostrarPopupYaRegistrado();
+      return;
     }
 
-    // No tiene sesión, pero el correo ya está registrado:
-    // la solicitud se envía igual y solo se le pide iniciar sesión para ver el estado
-    if (existeUsuario(nuevaSolicitud.propietario.correo)) {
-
-        const guardado = agregarSolicitud(nuevaSolicitud);
-
-        if (!guardado) {
-            alert(`Ya tienes una solicitud registrada para adoptar a ${mascota.nombre}.`);
-            return;
-        }
-
-        mostrarPopupYaRegistrado();
-        return;
-    }
-
-    // Correo nuevo: se pide crear una cuenta antes de enviar la solicitud
     mostrarPopupCrearCuenta(nuevaSolicitud);
-
+  } catch (error) {
+    console.error(error);
+    // Si el chequeo de correo falla (p. ej. tabla usuarios), igual se permite crear cuenta.
+    alert(
+      "No se pudo verificar el correo en el servidor. Puedes crear la cuenta para continuar."
+    );
+    mostrarPopupCrearCuenta(nuevaSolicitud);
+  }
 });
 
 function enviarYRedirigir(nuevaSolicitud) {
     const guardado = agregarSolicitud(nuevaSolicitud);
 
     if (!guardado) {
-        alert(`Ya tienes una solicitud registrada para adoptar a ${mascota.nombre}.`);
-        return;
+      alert(
+        `Ya tienes una solicitud registrada para adoptar a ${mascota.nombre}.`
+      );
+      return;
     }
 
     formulario.reset();
@@ -177,11 +221,10 @@ function mostrarPopupSolicitudEnviada(mensaje) {
 
 
 function mostrarPopupCrearCuenta(nuevaSolicitud) {
+  solicitudPendiente = nuevaSolicitud;
+  cuentaCreada = false;
 
-    solicitudPendiente = nuevaSolicitud;
-    cuentaCreada = false;
-
-    modalCuentaBody.innerHTML = `
+  modalCuentaBody.innerHTML = `
         <div class="text-center mb-3">
             <div class="popup-icon">
                 <i class="bi bi-lock-fill"></i>
@@ -224,44 +267,53 @@ function mostrarPopupCrearCuenta(nuevaSolicitud) {
         </div>
     `;
 
-    document.getElementById("btnCrearCuenta")
-        .addEventListener("click", confirmarCreacionCuenta);
+  document
+    .getElementById("btnCrearCuenta")
+    .addEventListener("click", confirmarCreacionCuenta);
 
-    document.getElementById("btnCancelarRegistro")
-        .addEventListener("click", () => modalCuenta.hide());
+  document
+    .getElementById("btnCancelarRegistro")
+    .addEventListener("click", () => modalCuenta.hide());
 
-    modalCuenta.show();
+  modalCuenta.show();
 }
 
-function confirmarCreacionCuenta() {
+async function confirmarCreacionCuenta() {
+  const password = document.getElementById("popupPassword").value;
+  const passwordConfirm = document.getElementById(
+    "popupPasswordConfirm"
+  ).value;
+  const popupError = document.getElementById("popupError");
 
-    const password = document.getElementById("popupPassword").value;
-    const passwordConfirm = document.getElementById("popupPasswordConfirm").value;
-    const popupError = document.getElementById("popupError");
+  if (password.length < 6) {
+    popupError.textContent = "La contraseña debe tener mínimo 6 caracteres.";
+    return;
+  }
 
-    if (password.length < 6) {
-        popupError.textContent = "La contraseña debe tener mínimo 6 caracteres.";
-        return;
-    }
+  if (password !== passwordConfirm) {
+    popupError.textContent = "Las contraseñas no coinciden.";
+    return;
+  }
 
-    if (password !== passwordConfirm) {
-        popupError.textContent = "Las contraseñas no coinciden.";
-        return;
-    }
+  const propietario = solicitudPendiente.propietario;
 
-    const propietario = solicitudPendiente.propietario;
-
-    registrarUsuario({
-        email: propietario.correo,
-        password,
-        nombre: propietario.nombre,
-        apellido: propietario.apellido,
-        telefono: propietario.telefono
+  try {
+    const creado = await registrarUsuario({
+      email: propietario.correo,
+      password,
+      nombre: propietario.nombre,
+      apellido: propietario.apellido,
+      telefono: propietario.telefono,
     });
+
+    if (!creado) {
+      popupError.textContent = "Ya existe una cuenta con este correo.";
+      return;
+    }
 
     cuentaCreada = true;
 
-    const guardado = agregarSolicitud(solicitudPendiente);
+    const guardado = await agregarSolicitud(solicitudPendiente);
 
     modalCuenta.hide();
 
@@ -278,10 +330,9 @@ function confirmarCreacionCuenta() {
 }
 
 function mostrarPopupYaRegistrado() {
+  solicitudPendiente = null;
 
-    solicitudPendiente = null;
-
-    modalCuentaBody.innerHTML = `
+  modalCuentaBody.innerHTML = `
         <div class="text-center mb-3">
             <div class="popup-icon">
                 <i class="bi bi-check-circle-fill"></i>
@@ -303,17 +354,16 @@ function mostrarPopupYaRegistrado() {
         </div>
     `;
 
-    modalCuenta.show();
+  modalCuenta.show();
 }
 
-// Si el popup de "crear cuenta" se cierra sin haber creado la cuenta,
-// la solicitud de adopción queda cancelada.
 modalCuentaEl.addEventListener("hidden.bs.modal", () => {
+  if (solicitudPendiente && !cuentaCreada) {
+    alert(
+      `Tu solicitud para adoptar a ${solicitudPendiente.mascota.nombre} fue cancelada porque no creaste una cuenta.`
+    );
+  }
 
-    if (solicitudPendiente && !cuentaCreada) {
-        alert(`Tu solicitud para adoptar a ${solicitudPendiente.mascota.nombre} fue cancelada porque no creaste una cuenta.`);
-    }
-
-    solicitudPendiente = null;
-    cuentaCreada = false;
+  solicitudPendiente = null;
+  cuentaCreada = false;
 });

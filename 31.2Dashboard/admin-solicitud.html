@@ -169,17 +169,17 @@
               <input type="text" class="form-control" id="direccionEntrega" />
               <small class="field-help">Obligatoria únicamente para entrega a domicilio.</small>
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="grupoOrigenEntrega">
               <label for="origenEntrega" class="form-label">Origen</label>
               <input type="text" class="form-control" id="origenEntrega" placeholder="Ej. Fundación Hogar Amigo Peludo" />
             </div>
 
             <div class="mb-3">
-              <label for="fechaEntrega" class="form-label">Fecha de entrega</label>
+              <label for="fechaEntrega" class="form-label">Fecha de entrega / recogida</label>
               <input type="date" class="form-control" id="fechaEntrega" />
             </div>
 
-            <div class="delivery-tracking-fields">
+            <div class="delivery-tracking-fields" id="grupoTrackingEntrega">
               <div>
                 <label for="horaEstimadaEntrega" class="form-label">Horario estimado</label>
                 <input type="time" class="form-control" id="horaEstimadaEntrega" />
@@ -194,7 +194,7 @@
               </div>
             </div>
 
-            <div class="delivery-transporter-fields">
+            <div class="delivery-transporter-fields" id="grupoTransportistaEntrega">
               <div>
                 <label for="transportistaNombreEntrega" class="form-label">Nombre del transportista</label>
                 <input type="text" class="form-control" id="transportistaNombreEntrega" value="Hogar Amigo Peludo" autocomplete="name" />
@@ -205,6 +205,9 @@
               </div>
             </div>
 
+            <p class="field-help mb-3" id="ayudaRecogerFundacion" hidden>
+              En recogida en fundación no se solicita dirección ni datos de transportadora.
+            </p>
 
             <div>
               <label for="estadoEntrega" class="form-label">Estado del envío</label>
@@ -212,7 +215,7 @@
                 <option value="No enviado">No enviado</option>
                 <option value="De camino">De camino</option>
                 <option value="En proceso de entrega">En proceso de entrega</option>
-                <option value="Recibido">Recibido</option>
+                <option value="Recibido">Recibido / Recogido</option>
               </select>
             </div>
           </div>

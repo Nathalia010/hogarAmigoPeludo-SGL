@@ -23,9 +23,22 @@ const dashboardElements = {
 
 let selectedDonationView = "money";
 
-function renderDashboard() {
-  const solicitudes = obtenerSolicitudes();
-  const mascotas = obtenerMascotas();
+async function renderDashboard() {
+  let solicitudes = [];
+  let mascotas = [];
+
+  try {
+    [solicitudes, mascotas] = await Promise.all([
+      obtenerSolicitudes(),
+      obtenerMascotas(),
+    ]);
+  } catch (error) {
+    console.error("Error al cargar el dashboard:", error);
+  }
+
+  if (!Array.isArray(solicitudes)) solicitudes = [];
+  if (!Array.isArray(mascotas)) mascotas = [];
+
   const resumen = calcularResumen(solicitudes);
 
   setText(dashboardElements.metricRequests, resumen.pendientes);

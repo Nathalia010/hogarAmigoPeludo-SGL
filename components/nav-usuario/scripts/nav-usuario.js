@@ -14,7 +14,7 @@ function projectUrl(relativePath) {
   return new URL(String(relativePath).replace(/^\/+/, ""), projectRootUrl).href;
 }
 
-const navUsuarioStylesUrl = new URL("../styles/nav-usuario.css", import.meta.url).href;
+const navUsuarioStylesUrl = new URL("../css/nav-usuario.css", import.meta.url).href;
 
 if (!document.querySelector('link[data-nav-usuario-styles="true"]')) {
   const styles = document.createElement("link");
@@ -142,7 +142,7 @@ export class NavUsuario extends HTMLElement {
             >
               <span class="user-nav-icon"><i class="${icon}"></i></span>
               <span>${label}</span>
-              
+            </a>
           `).join("")}
         </nav>
 

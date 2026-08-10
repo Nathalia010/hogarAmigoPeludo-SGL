@@ -17,24 +17,53 @@ const dateFilter = $("#dateFilter");
 const toastElement = $("#deliveryToast");
 const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
 
-const state = { deliveries: [], filtered: [], selectedId: null, page: 1, perPage: 5 };
+const state = {
+  deliveries: [],
+  filtered: [],
+  selectedId: null,
+  page: 1,
+  perPage: 5,
+};
 
-function loadDeliveries() {
-  state.deliveries = obtenerSolicitudes().filter((request) =>
-    ["Coordinando entrega", "Adoptada"].includes(request.estadoSolicitud),
-  );
+async function loadDeliveries() {
+  try {
+    const solicitudes = await obtenerSolicitudes();
+    state.deliveries = (Array.isArray(solicitudes) ? solicitudes : []).filter(
+      (request) =>
+        ["Coordinando entrega", "Adoptada"].includes(request.estadoSolicitud) ||
+        Boolean(request.envio?.id)
+    );
+  } catch (error) {
+    console.error("Error al cargar entregas:", error);
+    state.deliveries = [];
+    showToast(
+      "No se pudieron cargar las entregas. Verifica el backend en :8080",
+      false
+    );
+  }
+
   fillCarriers();
   applyFilters();
 }
 
 function fillCarriers() {
   const selected = carrierFilter.value;
-  const carriers = [...new Set(state.deliveries
-    .map((request) => request.envio?.transportistaNombre)
-    .filter(Boolean))].sort((a, b) => a.localeCompare(b, "es"));
+  const carriers = [
+    ...new Set(
+      state.deliveries
+        .map((request) => request.envio?.transportistaNombre)
+        .filter(Boolean)
+    ),
+  ].sort((a, b) => a.localeCompare(b, "es"));
 
-  carrierFilter.innerHTML = '<option value="">Todos los transportistas</option>' +
-    carriers.map((name) => `<option value="${escapeHTML(name)}">${escapeHTML(name)}</option>`).join("");
+  carrierFilter.innerHTML =
+    '<option value="">Todos los transportistas</option>' +
+    carriers
+      .map(
+        (name) =>
+          `<option value="${escapeHTML(name)}">${escapeHTML(name)}</option>`
+      )
+      .join("");
   carrierFilter.value = carriers.includes(selected) ? selected : "";
 }
 
@@ -48,22 +77,33 @@ function applyFilters() {
     const pet = request.mascota ?? {};
     const owner = request.propietario ?? {};
     const shipping = request.envio ?? {};
-    const searchable = normalize([
-      pet.nombre, owner.nombre, owner.apellido, owner.documento,
-      shipping.direccion, shipping.origen, shipping.transportistaNombre,
-    ].join(" "));
+    const searchable = normalize(
+      [
+        pet.nombre,
+        owner.nombre,
+        owner.apellido,
+        owner.documento,
+        shipping.direccion,
+        shipping.origen,
+        shipping.transportistaNombre,
+      ].join(" ")
+    );
 
-    return (!term || searchable.includes(term)) &&
+    return (
+      (!term || searchable.includes(term)) &&
       (!status || shipping.estadoEntrega === status) &&
       (!carrier || shipping.transportistaNombre === carrier) &&
-      (!date || normalizeDate(shipping.fechaEntrega) === date);
+      (!date || normalizeDate(shipping.fechaEntrega) === date)
+    );
   });
 
   const pages = Math.max(1, Math.ceil(state.filtered.length / state.perPage));
   state.page = Math.min(state.page, pages);
   renderTable();
   renderPagination(pages);
-  $("#deliveryTotal").textContent = `${state.filtered.length} ${state.filtered.length === 1 ? "entrega" : "entregas"}`;
+  $("#deliveryTotal").textContent = `${state.filtered.length} ${
+    state.filtered.length === 1 ? "entrega" : "entregas"
+  }`;
 }
 
 function renderTable() {
@@ -77,12 +117,15 @@ function renderTable() {
 
   const start = (state.page - 1) * state.perPage;
   const rows = state.filtered.slice(start, start + state.perPage);
-  $("#deliveryRange").textContent = `Mostrando ${start + 1} a ${start + rows.length} de ${state.filtered.length} entregas`;
-  table.innerHTML = rows.map((request) => {
-    const pet = request.mascota ?? {};
-    const owner = request.propietario ?? {};
-    const shipping = request.envio ?? {};
-    return `<tr>
+  $("#deliveryRange").textContent = `Mostrando ${start + 1} a ${
+    start + rows.length
+  } de ${state.filtered.length} entregas`;
+  table.innerHTML = rows
+    .map((request) => {
+      const pet = request.mascota ?? {};
+      const owner = request.propietario ?? {};
+      const shipping = request.envio ?? {};
+      return `<tr>
       <td><div class="pet-cell">${petImage(pet)}<span class="cell-copy">
         <strong>${escapeHTML(pet.nombre ?? "Mascota")}</strong><small>${escapeHTML(pet.especie ?? "")}</small>
       </span></div></td>
@@ -93,13 +136,16 @@ function renderTable() {
       <td>${statusBadge(shipping.estadoEntrega)}</td>
       <td class="text-end"><button class="btn btn-sm view-delivery" type="button" data-view-delivery="${Number(request.idSolicitud)}">Ver</button></td>
     </tr>`;
-  }).join("");
+    })
+    .join("");
 }
 
 function renderPagination(pages) {
   const items = [];
   items.push(pageButton(state.page - 1, "‹", state.page === 1));
-  for (let page = 1; page <= pages; page += 1) items.push(pageButton(page, page, false, page === state.page));
+  for (let page = 1; page <= pages; page += 1) {
+    items.push(pageButton(page, page, false, page === state.page));
+  }
   items.push(pageButton(state.page + 1, "›", state.page === pages));
   pagination.innerHTML = items.join("");
 }
@@ -115,6 +161,9 @@ function showDetail(request, scrollToDetail = false) {
   const pet = request.mascota ?? {};
   const owner = request.propietario ?? {};
   const shipping = request.envio ?? {};
+  const esRecoger = String(shipping.modalidad || "")
+    .toLowerCase()
+    .includes("recoger");
   $("#deliveryDetail").hidden = false;
 
   detail.innerHTML = `<article class="card border-0 shadow-sm detail-card">
@@ -126,16 +175,67 @@ function showDetail(request, scrollToDetail = false) {
       <div class="detail-list">
         ${detailRow("fa-regular fa-user", "Adoptante", fullName(owner))}
         ${detailRow("fa-solid fa-phone", "Teléfono", owner.telefono ?? "Sin registrar")}
-        ${detailRow("fa-solid fa-location-dot", "Dirección", shipping.direccion || shipping.modalidad || "Pendiente")}
-        ${detailRow("fa-regular fa-calendar", "Fecha de entrega", `${formatDate(shipping.fechaEntrega)} · ${formatTime(shipping.horaEstimada)}`)}
-        ${detailRow("fa-solid fa-truck", "Transportista", `${shipping.transportistaNombre || "Sin asignar"} · ${shipping.transportistaTelefono || "Sin teléfono"}`)}
-        ${detailRow("fa-solid fa-route", "Distancia y tiempo", `${Number(shipping.distanciaRestante) || 0} km · ${Number(shipping.tiempoRestante) || 0} min`)}
+        ${detailRow(
+          "fa-solid fa-location-dot",
+          esRecoger ? "Lugar de recogida" : "Dirección",
+          esRecoger
+            ? shipping.origen || "Fundación Hogar Amigo Peludo"
+            : shipping.direccion || shipping.modalidad || "Pendiente"
+        )}
+        ${detailRow(
+          "fa-regular fa-calendar",
+          esRecoger ? "Fecha de recogida" : "Fecha de entrega",
+          `${formatDate(shipping.fechaEntrega)}${
+            esRecoger ? "" : ` · ${formatTime(shipping.horaEstimada)}`
+          }`
+        )}
+        ${
+          esRecoger
+            ? detailRow(
+                "fa-solid fa-house",
+                "Modalidad",
+                "Recoger en fundación (sin transportadora)"
+              )
+            : detailRow(
+                "fa-solid fa-truck",
+                "Transportista",
+                `${shipping.transportistaNombre || "Sin asignar"} · ${
+                  shipping.transportistaTelefono || "Sin teléfono"
+                }`
+              )
+        }
+        ${
+          esRecoger
+            ? ""
+            : detailRow(
+                "fa-solid fa-route",
+                "Distancia y tiempo",
+                `${Number(shipping.distanciaRestante) || 0} km · ${
+                  Number(shipping.tiempoRestante) || 0
+                } min`
+              )
+        }
       </div>
       ${timeline(shipping.estadoEntrega)}
       <label class="form-label fw-bold" for="detailStatus">Cambiar estado</label>
       <select class="form-select mb-3" id="detailStatus">
-        ${["No enviado", "De camino", "Recibido"].map((value) =>
-          `<option value="${value}" ${value === shipping.estadoEntrega ? "selected" : ""}>${value}</option>`).join("")}
+        ${[
+          ["No enviado", "No enviado"],
+          ["De camino", "De camino"],
+          [
+            "Recibido",
+            String(shipping.modalidad || "").toLowerCase().includes("recoger")
+              ? "Recibido / Recogido"
+              : "Recibido",
+          ],
+        ]
+          .map(
+            ([value, label]) =>
+              `<option value="${value}" ${
+                value === shipping.estadoEntrega ? "selected" : ""
+              }>${label}</option>`
+          )
+          .join("")}
       </select>
       <button class="btn btn-save w-100" id="saveDeliveryStatus" type="button">
         <i class="fa-regular fa-floppy-disk me-1"></i> Guardar cambios
@@ -143,7 +243,9 @@ function showDetail(request, scrollToDetail = false) {
     </div>
   </article>`;
 
-  $("#saveDeliveryStatus").addEventListener("click", saveStatus);
+  $("#saveDeliveryStatus").addEventListener("click", () => {
+    void saveStatus();
+  });
   if (scrollToDetail) {
     requestAnimationFrame(() => {
       $("#deliveryDetail").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -151,43 +253,103 @@ function showDetail(request, scrollToDetail = false) {
   }
 }
 
-function saveStatus() {
-  const request = state.deliveries.find((item) => Number(item.idSolicitud) === state.selectedId);
+async function saveStatus() {
+  const request = state.deliveries.find(
+    (item) => Number(item.idSolicitud) === state.selectedId
+  );
   const status = $("#detailStatus")?.value;
   if (!request || !status) return;
 
-  actualizarEnvio(request.idSolicitud, {
-    estadoEntrega: status,
-    estadoProceso: statusMessage(status),
-    ...(status === "Recibido" ? { tiempoRestante: 0, distanciaRestante: 0 } : {}),
-  });
-  syncAdoption(request, status);
-  document.dispatchEvent(new CustomEvent("admin-requests-updated"));
-  showToast("Entrega actualizada correctamente.", true);
-  loadDeliveries();
-  const updated = state.deliveries.find((item) => Number(item.idSolicitud) === state.selectedId);
-  if (updated) showDetail(updated);
+  const esRecoger = String(request.envio?.modalidad || "")
+    .toLowerCase()
+    .includes("recoger");
+
+  try {
+    await actualizarEnvio(request.idSolicitud, {
+      ...request.envio,
+      // En recogida no se exige dirección ni transportadora.
+      ...(esRecoger
+        ? {
+            direccion: "",
+            transportistaNombre: "Recogida en fundación",
+            transportistaTelefono: "",
+          }
+        : {}),
+      estadoEntrega: status,
+      estadoProceso: statusMessage(status, request.envio?.modalidad),
+      ...(esEntregaFinalizada(status)
+        ? { tiempoRestante: 0, distanciaRestante: 0 }
+        : {}),
+    });
+    await syncAdoption(request, status);
+    document.dispatchEvent(new CustomEvent("admin-requests-updated"));
+    showToast("Entrega actualizada y guardada en la base de datos.", true);
+    await loadDeliveries();
+    const updated = state.deliveries.find(
+      (item) => Number(item.idSolicitud) === state.selectedId
+    );
+    if (updated) showDetail(updated);
+  } catch (error) {
+    console.error(error);
+    showToast("No se pudo guardar la entrega en el servidor.", false);
+  }
 }
 
-function syncAdoption(request, status) {
-  const received = status === "Recibido";
-  cambiarEstadoSolicitud(request.idSolicitud, received ? "Adoptada" : "Coordinando entrega");
+function esEntregaFinalizada(status) {
+  const valor = String(status || "").trim().toLowerCase();
+  return ["recibido", "recogido", "entregado"].includes(valor);
+}
+
+async function syncAdoption(request, status) {
+  const received = esEntregaFinalizada(status);
+  await cambiarEstadoSolicitud(
+    request.idSolicitud,
+    received ? "Adoptada" : "Coordinando entrega"
+  );
+
   const requestedPet = request.mascota ?? {};
   const petId = requestedPet.id ?? requestedPet.idMascota;
-  const pet = obtenerMascotas().find((item) => Number(item.id) === Number(petId)) ??
-    obtenerMascotas().find((item) => normalize(item.nombre) === normalize(requestedPet.nombre));
+  let pets = [];
+  try {
+    pets = await obtenerMascotas();
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+
+  const pet =
+    pets.find((item) => Number(item.id) === Number(petId)) ??
+    pets.find(
+      (item) => normalize(item.nombre) === normalize(requestedPet.nombre)
+    );
   if (!pet) return;
-  actualizarMascota(pet.id, received
-    ? { estado: "Adoptada", fechaAdopcion: new Date().toISOString(), solicitudAdopcionId: request.idSolicitud }
-    : { estado: "Disponible", fechaAdopcion: null, solicitudAdopcionId: null });
+
+  // Backend espera "Adoptado" para que deje de salir en el catálogo.
+  await actualizarMascota(
+    pet.id,
+    received
+      ? {
+          estado: "Adoptado",
+          fechaAdopcion: new Date().toISOString(),
+          solicitudAdopcionId: request.idSolicitud,
+        }
+      : {
+          estado: "Disponible",
+          fechaAdopcion: null,
+          solicitudAdopcionId: null,
+        }
+  );
 }
 
 function timeline(status) {
-  const level = { "No enviado": 1, "De camino": 2, "Recibido": 3 }[status] ?? 1;
+  const level = esEntregaFinalizada(status)
+    ? 3
+    : { "No enviado": 1, "De camino": 2, Recibido: 3, Recogido: 3 }[status] ??
+      1;
   return `<div class="timeline">
     ${timelineStep("Solicitud aprobada", "Lista para coordinar", level >= 1)}
-    ${timelineStep("En camino", "La mascota está en ruta", level >= 2)}
-    ${timelineStep("Entregada", "Adopción finalizada", level >= 3)}
+    ${timelineStep("En camino / lista", "Coordinación en curso", level >= 2)}
+    ${timelineStep("Finalizada", "Adopción completada", level >= 3)}
   </div>`;
 }
 
@@ -201,7 +363,12 @@ function detailRow(icon, label, value) {
 }
 
 function statusBadge(status = "No enviado") {
-  const className = status === "Recibido" ? "status-received" : status === "De camino" ? "status-route" : "status-pending";
+  const className =
+    status === "Recibido"
+      ? "status-received"
+      : status === "De camino"
+        ? "status-route"
+        : "status-pending";
   return `<span class="status-badge ${className}"><i class="fa-solid fa-circle"></i>${escapeHTML(status)}</span>`;
 }
 
@@ -213,20 +380,28 @@ function petImage(pet) {
 }
 
 function fullName(owner) {
-  return `${owner.nombre ?? ""} ${owner.apellido ?? ""}`.trim() || "Sin registrar";
+  return (
+    `${owner.nombre ?? ""} ${owner.apellido ?? ""}`.trim() || "Sin registrar"
+  );
 }
 
 function formatDate(value) {
   const normalized = normalizeDate(value);
   if (!normalized) return "Pendiente";
-  return new Intl.DateTimeFormat("es-CO", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })
-    .format(new Date(`${normalized}T00:00:00Z`));
+  return new Intl.DateTimeFormat("es-CO", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${normalized}T00:00:00Z`));
 }
 
 function normalizeDate(value) {
   if (!value) return "";
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
-  const parts = String(value).split(/[/-]/).map(Number);
+  const parts = String(value)
+    .split(/[/-]/)
+    .map(Number);
   if (parts.length !== 3) return "";
   const [day, month, year] = parts;
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
@@ -236,33 +411,58 @@ function formatTime(value) {
   if (!value) return "Hora pendiente";
   const [hour, minute] = String(value).split(":").map(Number);
   if (!Number.isFinite(hour)) return value;
-  return new Intl.DateTimeFormat("es-CO", { hour: "numeric", minute: "2-digit" })
-    .format(new Date(2000, 0, 1, hour, minute || 0));
+  return new Intl.DateTimeFormat("es-CO", {
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(2000, 0, 1, hour, minute || 0));
 }
 
-function statusMessage(status) {
-  return ({
+function statusMessage(status, modalidad = "") {
+  const esRecoger = String(modalidad || "")
+    .toLowerCase()
+    .includes("recoger");
+
+  if (esRecoger && esEntregaFinalizada(status)) {
+    return "La mascota fue recogida en la fundación.";
+  }
+
+  return {
     "No enviado": "Estamos preparando la entrega.",
     "De camino": "La mascota está en ruta.",
     Recibido: "La mascota fue recibida en su nuevo hogar.",
-  })[status];
+    Recogido: "La mascota fue recogida en la fundación.",
+  }[status];
 }
 
 function safeImage(value) {
   try {
     const url = new URL(value, window.location.href);
     return ["http:", "https:", "data:"].includes(url.protocol) ? url.href : "";
-  } catch { return ""; }
+  } catch {
+    return "";
+  }
 }
 
 function normalize(value) {
-  return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
 }
 
 function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>'"]/g, (character) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;",
-  })[character]);
+  return String(value ?? "").replace(
+    /[&<>'"]/g,
+    (character) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#39;",
+        '"': "&quot;",
+      })[character]
+  );
 }
 
 function showToast(message, success) {
@@ -272,12 +472,26 @@ function showToast(message, success) {
   toast.show();
 }
 
-filters.addEventListener("input", () => { state.page = 1; applyFilters(); });
-filters.addEventListener("change", () => { state.page = 1; applyFilters(); });
-$("#clearFilters").addEventListener("click", () => { filters.reset(); state.page = 1; applyFilters(); });
+filters.addEventListener("input", () => {
+  state.page = 1;
+  applyFilters();
+});
+filters.addEventListener("change", () => {
+  state.page = 1;
+  applyFilters();
+});
+$("#clearFilters").addEventListener("click", () => {
+  filters.reset();
+  state.page = 1;
+  applyFilters();
+});
 table.addEventListener("click", (event) => {
   const button = event.target.closest("[data-view-delivery]");
-  const request = button && state.deliveries.find((item) => Number(item.idSolicitud) === Number(button.dataset.viewDelivery));
+  const request =
+    button &&
+    state.deliveries.find(
+      (item) => Number(item.idSolicitud) === Number(button.dataset.viewDelivery)
+    );
   if (request) showDetail(request, true);
 });
 pagination.addEventListener("click", (event) => {
@@ -285,8 +499,13 @@ pagination.addEventListener("click", (event) => {
   if (!button || button.disabled) return;
   state.page = Number(button.dataset.page);
   renderTable();
-  renderPagination(Math.max(1, Math.ceil(state.filtered.length / state.perPage)));
+  renderPagination(
+    Math.max(1, Math.ceil(state.filtered.length / state.perPage))
+  );
 });
-window.addEventListener("storage", (event) => { if (event.key === "solicitudes") loadDeliveries(); });
+
+document.addEventListener("admin-requests-updated", () => {
+  void loadDeliveries();
+});
 
 loadDeliveries();
