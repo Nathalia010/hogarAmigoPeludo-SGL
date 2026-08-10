@@ -2,10 +2,22 @@ import { obtenerSolicitudes } from "../../31.2Dashboard/scripts/solicitudes.js";
 
 const contenedor = document.getElementById("contenedorSolicitudes");
 
-mostrarSolicitudes();
+async function mostrarSolicitudes() {
+  let solicitudes = [];
 
-function mostrarSolicitudes() {
-  const solicitudes = obtenerSolicitudes();
+  try {
+    solicitudes = await obtenerSolicitudes();
+  } catch (error) {
+    console.error(error);
+    contenedor.innerHTML = `
+      <div class="col-12 text-center py-5">
+        <div class="alert alert-danger">
+          No se pudieron cargar las solicitudes. Verifica el backend en :8080.
+        </div>
+      </div>
+    `;
+    return;
+  }
 
   contenedor.innerHTML = "";
 
@@ -186,3 +198,5 @@ function mostrarSolicitudes() {
         `;
   });
 }
+
+mostrarSolicitudes();

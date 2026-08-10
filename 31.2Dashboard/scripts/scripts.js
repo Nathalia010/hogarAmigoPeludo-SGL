@@ -35,12 +35,23 @@ if (!btnGuardar) {
   );
 }
 
-function cargarPublicaciones() {
-  publicaciones = obtenerMascotas();
-  renderPublicaciones();
+async function cargarPublicaciones() {
+  try {
+    publicaciones = await obtenerMascotas();
+    renderPublicaciones();
+  } catch (error) {
+    console.error(error);
+    tablaPublicaciones.innerHTML = `
+      <tr>
+        <td colspan="6">
+          No se pudieron cargar las mascotas. ¿Está corriendo el backend en :8080?
+        </td>
+      </tr>
+    `;
+  }
 }
 
-formPublicacion.addEventListener("submit", function (event) {
+formPublicacion.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   const datosPublicacion = {
@@ -79,21 +90,32 @@ formPublicacion.addEventListener("submit", function (event) {
     return;
   }
 
-  if (idEditando !== null) {
-    actualizarMascota(
-      idEditando,
-      datosPublicacion
+  try {
+    btnGuardar.disabled = true;
+
+    if (idEditando !== null) {
+      await actualizarMascota(
+        idEditando,
+        datosPublicacion
+      );
+
+      idEditando = null;
+      btnGuardar.textContent = "Guardar publicación";
+    } else {
+      await agregarMascota(datosPublicacion);
+    }
+
+    formPublicacion.reset();
+    await cargarPublicaciones();
+    mostrarJsonConsola();
+  } catch (error) {
+    console.error(error);
+    alert(
+      "No se pudo guardar la mascota. Revisa la consola y que el backend esté activo."
     );
-
-    idEditando = null;
-    btnGuardar.textContent = "Guardar publicación";
-  } else {
-    agregarMascota(datosPublicacion);
+  } finally {
+    btnGuardar.disabled = false;
   }
-
-  formPublicacion.reset();
-  cargarPublicaciones();
-  mostrarJsonConsola();
 });
 
 function validarPublicacion(publicacion) {
@@ -198,7 +220,7 @@ function renderPublicaciones() {
     .join("");
 }
 
-tablaPublicaciones.addEventListener("click", function (event) {
+tablaPublicaciones.addEventListener("click", async function (event) {
   const boton = event.target.closest("button[data-accion]");
 
   if (!boton) {
@@ -213,7 +235,7 @@ tablaPublicaciones.addEventListener("click", function (event) {
   }
 
   if (accion === "eliminar") {
-    eliminarPublicacion(id);
+    await eliminarPublicacion(id);
   }
 });
 
@@ -256,7 +278,7 @@ function editarPublicacion(id) {
   });
 }
 
-function eliminarPublicacion(id) {
+async function eliminarPublicacion(id) {
   const publicacion = publicaciones.find(
     (item) => Number(item.id) === Number(id)
   );
@@ -273,26 +295,35 @@ function eliminarPublicacion(id) {
     return;
   }
 
-  eliminarMascota(id);
+  try {
+    await eliminarMascota(id);
 
-  if (idEditando === Number(id)) {
-    idEditando = null;
-    formPublicacion.reset();
-    btnGuardar.textContent = "Guardar publicación";
+    if (idEditando === Number(id)) {
+      idEditando = null;
+      formPublicacion.reset();
+      btnGuardar.textContent = "Guardar publicación";
+    }
+
+    await cargarPublicaciones();
+    mostrarJsonConsola();
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo eliminar la mascota.");
   }
-
-  cargarPublicaciones();
-  mostrarJsonConsola();
 }
 
-function mostrarJsonConsola() {
+async function mostrarJsonConsola() {
   console.log(
     "LISTA DE PUBLICACIONES EN JSON:"
   );
 
-  console.log(
-    JSON.stringify(obtenerMascotas(), null, 2)
-  );
+  try {
+    console.log(
+      JSON.stringify(await obtenerMascotas(), null, 2)
+    );
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 cargarPublicaciones();

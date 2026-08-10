@@ -1,136 +1,96 @@
-const MASCOTAS_KEY = "mascotas";
+import { apiRequest } from "../../js/api/client.js";
+import { mascotaFromApi, mascotaToApi } from "../../js/api/adapters.js";
 
-const mascotasIniciales = [
-  {
-    id: 1,
-    nombre: "Max",
-    especie: "Perro",
-    edad: "2 años",
-    sexo: "Macho",
-    tamano: "Mediano",
-    descripcion: "Muy juguetón y cariñoso.",
-    estado: "Disponible",
-    imagen:
-      "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 2,
-    nombre: "Luna",
-    especie: "Gato",
-    edad: "1 año",
-    sexo: "Hembra",
-    tamano: "Pequeño",
-    descripcion: "Le encanta dormir y recibir cariño.",
-    estado: "Disponible",
-    imagen:
-      "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 3,
-    nombre: "Rocky",
-    especie: "Perro",
-    edad: "3 años",
-    sexo: "Macho",
-    tamano: "Grande",
-    descripcion: "Protector y muy obediente.",
-    estado: "Disponible",
-    imagen:
-      "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80",
-  },
-];
-
-export function inicializarMascotas() {
-  const mascotasGuardadas = localStorage.getItem(MASCOTAS_KEY);
-
-  if (mascotasGuardadas === null) {
-    guardarMascotas(mascotasIniciales);
-  }
-}
-
-export function obtenerMascotas() {
-  inicializarMascotas();
-
+/**
+ * Lista todas las mascotas desde el backend.
+ * @returns {Promise<object[]>}
+ */
+export async function obtenerMascotas() {
   try {
-    const mascotas = JSON.parse(
-      localStorage.getItem(MASCOTAS_KEY)
-    );
-
-    return Array.isArray(mascotas) ? mascotas : [];
+    const data = await apiRequest("/api/mascotas");
+    return Array.isArray(data) ? data.map(mascotaFromApi) : [];
   } catch (error) {
     console.error("Error al leer las mascotas:", error);
-    return [];
+    throw error;
   }
 }
 
-export function guardarMascotas(mascotas) {
-  if (!Array.isArray(mascotas)) {
-    throw new Error("Las mascotas deben guardarse como un arreglo.");
+/**
+ * @param {number|string} id
+ * @returns {Promise<object|undefined>}
+ */
+export async function obtenerMascotaPorId(id) {
+  try {
+    const data = await apiRequest(`/api/mascotas/${Number(id)}`);
+    return mascotaFromApi(data);
+  } catch (error) {
+    if (error.status === 404) {
+      return undefined;
+    }
+    console.error("Error al obtener la mascota:", error);
+    throw error;
   }
-
-  localStorage.setItem(
-    MASCOTAS_KEY,
-    JSON.stringify(mascotas)
-  );
 }
 
-export function obtenerMascotaPorId(id) {
-  const mascotas = obtenerMascotas();
-  const idNumerico = Number(id);
-
-  return mascotas.find(
-    (mascota) => Number(mascota.id) === idNumerico
-  );
-}
-
-export function agregarMascota(datosMascota) {
-  const mascotas = obtenerMascotas();
-
-  const nuevaMascota = {
-    id: Date.now(),
-    nombre: datosMascota.nombre,
-    especie: datosMascota.especie,
-    edad: datosMascota.edad,
-    sexo: datosMascota.sexo,
-    tamano: datosMascota.tamano,
-    imagen: datosMascota.imagen,
-    descripcion: datosMascota.descripcion,
+/**
+ * @param {object} datosMascota
+ * @returns {Promise<object>}
+ */
+export async function agregarMascota(datosMascota) {
+  const body = mascotaToApi({
+    ...datosMascota,
     estado: datosMascota.estado || "Disponible",
-  };
-
-  mascotas.push(nuevaMascota);
-  guardarMascotas(mascotas);
-
-  return nuevaMascota;
+  });
+  delete body.id;
+  const creada = await apiRequest("/api/mascotas", {
+    method: "POST",
+    body,
+  });
+  return mascotaFromApi(creada);
 }
 
-export function actualizarMascota(id, datosActualizados) {
-  const mascotas = obtenerMascotas();
-  const idNumerico = Number(id);
-
-  const indice = mascotas.findIndex(
-    (mascota) => Number(mascota.id) === idNumerico
-  );
-
-  if (indice === -1) {
+/**
+ * @param {number|string} id
+ * @param {object} datosActualizados
+ * @returns {Promise<boolean>}
+ */
+export async function actualizarMascota(id, datosActualizados) {
+  const actual = await obtenerMascotaPorId(id);
+  if (!actual) {
     return false;
   }
 
-  mascotas[indice] = {
-    ...mascotas[indice],
+  const body = mascotaToApi({
+    ...actual,
     ...datosActualizados,
-    id: mascotas[indice].id,
-  };
+    id: Number(id),
+  });
 
-  guardarMascotas(mascotas);
+  await apiRequest(`/api/mascotas/${Number(id)}`, {
+    method: "PUT",
+    body,
+  });
   return true;
 }
 
-export function eliminarMascota(id) {
-  const idNumerico = Number(id);
+/**
+ * @param {number|string} id
+ * @returns {Promise<void>}
+ */
+export async function eliminarMascota(id) {
+  await apiRequest(`/api/mascotas/${Number(id)}`, {
+    method: "DELETE",
+  });
+}
 
-  const mascotasActualizadas = obtenerMascotas().filter(
-    (mascota) => Number(mascota.id) !== idNumerico
+/** @deprecated Ya no usa localStorage; se mantiene por compatibilidad. */
+export function inicializarMascotas() {
+  // no-op: los datos viven en el backend
+}
+
+/** @deprecated */
+export function guardarMascotas() {
+  throw new Error(
+    "guardarMascotas ya no está disponible: usa agregarMascota/actualizarMascota contra el API."
   );
-
-  guardarMascotas(mascotasActualizadas);
 }

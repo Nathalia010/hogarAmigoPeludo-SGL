@@ -46,9 +46,23 @@ function verMascota(id) {
 
 window.verMascota = verMascota;
 
-document.addEventListener("DOMContentLoaded", () => {
-  const mascotas = obtenerMascotas();
-  const primerasTres = mascotas.slice(0, 3);
-
-  renderMascotas(primerasTres);
+document.addEventListener("DOMContentLoaded", async () => {
+  const contenedor = document.getElementById("contenedorMascotas");
+  try {
+    const mascotas = await obtenerMascotas();
+    const primerasTres = mascotas.slice(0, 3);
+    renderMascotas(primerasTres);
+  } catch (error) {
+    console.error(error);
+    if (contenedor) {
+      contenedor.innerHTML = `
+        <div class="col-12">
+          <div class="alert alert-warning text-center">
+            No se pudieron cargar las mascotas. Verifica que el backend esté en
+            <code>http://localhost:8080</code>.
+          </div>
+        </div>
+      `;
+    }
+  }
 });

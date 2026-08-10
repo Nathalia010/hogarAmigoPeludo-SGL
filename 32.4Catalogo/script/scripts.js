@@ -6,7 +6,7 @@ const contenedorCatalogo = document.getElementById(
   "contenedorCatalogo"
 );
 
-function renderCatalogo() {
+async function renderCatalogo() {
   if (!contenedorCatalogo) {
     console.error(
       'No se encontró el elemento con id="contenedorCatalogo".'
@@ -15,7 +15,7 @@ function renderCatalogo() {
   }
 
   try {
-    const mascotas = obtenerMascotas();
+    const mascotas = await obtenerMascotas();
 
     if (!Array.isArray(mascotas)) {
       throw new Error(
@@ -103,7 +103,8 @@ function renderCatalogo() {
       <div class="col-12">
         <div class="alert alert-danger text-center">
           No fue posible cargar las mascotas.
-          Revisa la consola del navegador.
+          Verifica que el backend esté en
+          <code>http://localhost:8080</code>.
         </div>
       </div>
     `;
@@ -134,12 +135,6 @@ contenedorCatalogo?.addEventListener(
     irAdopcion(idMascota);
   }
 );
-
-window.addEventListener("storage", function (event) {
-  if (event.key === "mascotas") {
-    renderCatalogo();
-  }
-});
 
 window.addEventListener("pageshow", function (event) {
   if (event.persisted) {

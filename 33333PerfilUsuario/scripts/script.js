@@ -16,12 +16,34 @@ const miembroDesde = document.getElementById("miembroDesde");
 
 const usuarioLogueado = obtenerUsuarioLogueado();
 
-let solicitudes = obtenerSolicitudes().filter(
-    (solicitud) => solicitud.propietario?.correo?.toLowerCase() === usuarioLogueado?.email?.toLowerCase()
-);
+let solicitudes = [];
 
-mostrarAdopciones();
-cargarInformacionUsuario();
+async function iniciarPerfil() {
+    try {
+        const todas = await obtenerSolicitudes();
+        solicitudes = todas.filter(
+            (solicitud) =>
+                solicitud.propietario?.correo?.toLowerCase() ===
+                usuarioLogueado?.email?.toLowerCase()
+        );
+    } catch (error) {
+        console.error(error);
+        solicitudes = [];
+        if (listaAdopciones) {
+            listaAdopciones.innerHTML = `
+                <div class="alert alert-warning">
+                    No se pudieron cargar las solicitudes. Verifica el backend en :8080.
+                </div>
+            `;
+        }
+        return;
+    }
+
+    mostrarAdopciones();
+    cargarInformacionUsuario();
+}
+
+iniciarPerfil();
 
 function cargarInformacionUsuario() {
     if (solicitudes.length === 0) {
@@ -71,7 +93,7 @@ function mostrarAdopciones() {
                             <h4> ${mascota.nombre} </h4>
                             <p class="descripcion-mascota"> ${mascota.descripcion} </p>
                             <p class="mb-2"><strong>Fecha de solicitud :</strong> ${solicitud.fechaSolicitud} </p>
-                            <p class="mb-3"><strong>Proceso:</strong>${solicitud.envio.estadoProceso} </p>
+                            <p class="mb-3"><strong>Proceso:</strong>${solicitud.envio?.estadoProceso ?? ""} </p>
                             <div class="row">
                                 <div class="col-6">
                                     <strong>Especie</strong>
@@ -215,22 +237,22 @@ function mostrarAdopciones() {
 
                                 <div class="col-md-6 mb-3">
                                     <strong>Modalidad</strong><br>
-                                    ${solicitud.envio.modalidad}
+                                    ${solicitud.envio?.modalidad ?? "Pendiente"}
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <strong>Estado de entrega</strong><br>
-                                    ${solicitud.envio.estadoEntrega}
+                                    ${solicitud.envio?.estadoEntrega ?? "Pendiente"}
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <strong>Fecha de entrega</strong><br>
-                                    ${solicitud.envio.fechaEntrega || "Pendiente"}
+                                    ${solicitud.envio?.fechaEntrega || "Pendiente"}
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <strong>Dirección</strong><br>
-                                    ${solicitud.envio.direccion || "Pendiente"}
+                                    ${solicitud.envio?.direccion || "Pendiente"}
                                 </div>
 
                             </div>
@@ -258,16 +280,24 @@ function mostrarAdopciones() {
         `;
     });
 }
-function cancelarSolicitud(idSolicitud){
+async function cancelarSolicitud(idSolicitud){
     const confirmar = confirm("¿Deseas cancelar esta solicitud de adopción?");
     if(!confirmar){
         return;
     }
-    eliminarSolicitud(idSolicitud);
-    solicitudes = obtenerSolicitudes().filter(
-        (solicitud) => solicitud.propietario?.correo?.toLowerCase() === usuarioLogueado?.email?.toLowerCase()
-    );
-    mostrarAdopciones();
+    try {
+        await eliminarSolicitud(idSolicitud);
+        const todas = await obtenerSolicitudes();
+        solicitudes = todas.filter(
+            (solicitud) =>
+                solicitud.propietario?.correo?.toLowerCase() ===
+                usuarioLogueado?.email?.toLowerCase()
+        );
+        mostrarAdopciones();
+    } catch (error) {
+        console.error(error);
+        alert("No se pudo cancelar la solicitud.");
+    }
 }
 window.cancelarSolicitud = cancelarSolicitud;
 

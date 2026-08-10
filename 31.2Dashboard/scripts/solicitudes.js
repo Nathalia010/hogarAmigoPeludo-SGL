@@ -1,137 +1,224 @@
-const SOLICITUDES_KEY = "solicitudes";
+import { apiRequest } from "../../js/api/client.js";
+import {
+  entregaToApi,
+  mascotaFromApi,
+  solicitudFromApi,
+  solicitudToApi,
+  estadoSolicitudToApi,
+} from "../../js/api/adapters.js";
 
-/**
- * Obtiene todas las solicitudes
- */
-export function obtenerSolicitudes() {
-    return JSON.parse(localStorage.getItem(SOLICITUDES_KEY)) || [];
+async function cargarMascotasMap() {
+  const mascotas = await apiRequest("/api/mascotas");
+  const map = new Map();
+  (Array.isArray(mascotas) ? mascotas : []).forEach((dto) => {
+    map.set(Number(dto.id), mascotaFromApi(dto));
+  });
+  return map;
 }
 
-/**
- * Guarda todas las solicitudes
- */
-export function guardarSolicitudes(solicitudes) {
-    localStorage.setItem(SOLICITUDES_KEY, JSON.stringify(solicitudes));
-}
-
-/**
- * Agrega una nueva solicitud
- */
-export function agregarSolicitud(solicitud) {
-
-    const solicitudes = obtenerSolicitudes();
-    const existe = solicitudes.find(
-        item => item.mascota.id == solicitud.mascota.id
-    );
-    if (existe){
-        return false;
+async function cargarEntregasPorSolicitud() {
+  const entregas = await apiRequest("/api/entregas");
+  const map = new Map();
+  (Array.isArray(entregas) ? entregas : []).forEach((entrega) => {
+    const key = Number(entrega.solicitudId);
+    const actual = map.get(key);
+    if (!actual || Number(entrega.id) > Number(actual.id)) {
+      map.set(key, entrega);
     }
+  });
+  return map;
+}
 
-    solicitud.idSolicitud = Date.now();
-    solicitud.fechaSolicitud = new Date().toLocaleDateString();
-    solicitud.estadoSolicitud = "Solicitud llenada";
-    solicitud.envio = {
-        modalidad: "Recoger en fundación",
-        direccion: "",
-        fechaEntrega: "",
-        estadoEntrega: "No enviado",
-        estadoProceso: "Nos estaremos contactando para coordinar la fecha."
-    };
+async function hidratarSolicitudes(listaDto) {
+  const [mascotasMap, entregasMap] = await Promise.all([
+    cargarMascotasMap(),
+    cargarEntregasPorSolicitud(),
+  ]);
 
-    solicitudes.push(solicitud);
-
-    guardarSolicitudes(solicitudes);
-    return true;
-
+  return listaDto.map((dto) =>
+    solicitudFromApi(
+      dto,
+      mascotasMap.get(Number(dto.mascotaId)),
+      entregasMap.get(Number(dto.id))
+    )
+  );
 }
 
 /**
- * Busca una solicitud por id
+ * Obtiene todas las solicitudes hidratadas (mascota + envío).
+ * @returns {Promise<object[]>}
  */
-export function obtenerSolicitudPorId(idSolicitud) {
-
-    return obtenerSolicitudes().find(
-        solicitud => solicitud.idSolicitud == idSolicitud
-    );
-
+export async function obtenerSolicitudes() {
+  try {
+    const data = await apiRequest("/api/solicitudes");
+    const lista = Array.isArray(data) ? data : [];
+    return hidratarSolicitudes(lista);
+  } catch (error) {
+    console.error("Error al leer solicitudes:", error);
+    throw error;
+  }
 }
 
 /**
- * Actualiza una solicitud
+ * @param {number|string} idSolicitud
+ * @returns {Promise<object|undefined>}
  */
-export function actualizarSolicitud(solicitudActualizada) {
-
-    const solicitudes = obtenerSolicitudes();
-
-    const indice = solicitudes.findIndex(
-        solicitud => solicitud.idSolicitud == solicitudActualizada.idSolicitud
+export async function obtenerSolicitudPorId(idSolicitud) {
+  try {
+    const dto = await apiRequest(`/api/solicitudes/${Number(idSolicitud)}`);
+    const mascota = await apiRequest(`/api/mascotas/${dto.mascotaId}`)
+      .then(mascotaFromApi)
+      .catch(() => null);
+    const entregas = await apiRequest(
+      `/api/entregas?solicitudId=${Number(idSolicitud)}`
     );
-
-    if (indice !== -1) {
-
-        solicitudes[indice] = solicitudActualizada;
-
-        guardarSolicitudes(solicitudes);
-
+    const entrega = Array.isArray(entregas) && entregas.length
+      ? entregas[entregas.length - 1]
+      : null;
+    return solicitudFromApi(dto, mascota, entrega);
+  } catch (error) {
+    if (error.status === 404) {
+      return undefined;
     }
-
+    throw error;
+  }
 }
 
 /**
- * Cambia únicamente el estado de la solicitud
+ * Crea una solicitud en el backend.
+ * @returns {Promise<boolean>} false si ya existe una para la misma mascota
  */
-export function cambiarEstadoSolicitud(idSolicitud, nuevoEstado) {
-
-    const solicitudes = obtenerSolicitudes();
-
-    const solicitud = solicitudes.find(
-        s => s.idSolicitud == idSolicitud
-    );
-
-    if (solicitud) {
-
-        solicitud.estadoSolicitud = nuevoEstado;
-
-        guardarSolicitudes(solicitudes);
-
-    }
-
-}
-
-/**
- * Actualiza toda la información del envío
- */
-export function actualizarEnvio(idSolicitud, envioActualizado) {
-  const solicitudes = obtenerSolicitudes();
-
-  const solicitud = solicitudes.find(
-    (item) =>
-      Number(item.idSolicitud) === Number(idSolicitud)
+export async function agregarSolicitud(solicitud) {
+  const mascotaId = Number(solicitud.mascota?.id ?? solicitud.mascotaId);
+  const existentes = await apiRequest("/api/solicitudes");
+  const duplicada = (Array.isArray(existentes) ? existentes : []).some(
+    (item) => Number(item.mascotaId) === mascotaId
   );
 
-  if (!solicitud) {
+  if (duplicada) {
     return false;
   }
 
-  solicitud.envio = {
-    ...solicitud.envio,
-    ...envioActualizado,
+  const body = solicitudToApi(solicitud);
+  delete body.id;
+  delete body.estado;
+
+  const creada = await apiRequest("/api/solicitudes", {
+    method: "POST",
+    body,
+  });
+
+  const envioInicial = solicitud.envio || {
+    modalidad: "Recoger en fundación",
+    direccion: "",
+    fechaEntrega: "",
+    estadoEntrega: "No enviado",
+    estadoProceso:
+      "Nos estaremos contactando para coordinar la fecha.",
   };
 
-  guardarSolicitudes(solicitudes);
+  try {
+    await apiRequest("/api/entregas", {
+      method: "POST",
+      body: entregaToApi(creada.id, envioInicial),
+    });
+  } catch (error) {
+    console.warn("Solicitud creada, pero falló la entrega inicial:", error);
+  }
 
   return true;
 }
 
 /**
- * Elimina una solicitud
+ * Actualiza una solicitud completa (shape frontend).
  */
-export function eliminarSolicitud(idSolicitud) {
+export async function actualizarSolicitud(solicitudActualizada) {
+  const id = Number(solicitudActualizada.idSolicitud);
+  const body = solicitudToApi(solicitudActualizada);
+  await apiRequest(`/api/solicitudes/${id}`, {
+    method: "PUT",
+    body,
+  });
+}
 
-    const solicitudes = obtenerSolicitudes().filter(
-        solicitud => solicitud.idSolicitud != idSolicitud
-    );
+/**
+ * Cambia únicamente el estado de la solicitud.
+ */
+export async function cambiarEstadoSolicitud(idSolicitud, nuevoEstado) {
+  const actual = await apiRequest(`/api/solicitudes/${Number(idSolicitud)}`);
+  await apiRequest(`/api/solicitudes/${Number(idSolicitud)}`, {
+    method: "PUT",
+    body: {
+      ...actual,
+      estado: estadoSolicitudToApi(nuevoEstado),
+    },
+  });
+}
 
-    guardarSolicitudes(solicitudes);
+/**
+ * Crea o actualiza la entrega asociada a una solicitud.
+ */
+export async function actualizarEnvio(idSolicitud, envioActualizado) {
+  const entregas = await apiRequest(
+    `/api/entregas?solicitudId=${Number(idSolicitud)}`
+  );
+  const existente =
+    Array.isArray(entregas) && entregas.length
+      ? entregas[entregas.length - 1]
+      : null;
 
+  const body = entregaToApi(
+    idSolicitud,
+    {
+      modalidad: "Recoger en fundación",
+      direccion: "",
+      fechaEntrega: "",
+      estadoEntrega: "No enviado",
+      estadoProceso:
+        "Nos estaremos contactando para coordinar la fecha.",
+      ...envioActualizado,
+    },
+    existente?.id ?? null
+  );
+
+  if (existente) {
+    await apiRequest(`/api/entregas/${existente.id}`, {
+      method: "PUT",
+      body,
+    });
+  } else {
+    delete body.id;
+    await apiRequest("/api/entregas", {
+      method: "POST",
+      body,
+    });
+  }
+
+  return true;
+}
+
+/**
+ * Elimina una solicitud.
+ */
+export async function eliminarSolicitud(idSolicitud) {
+  const entregas = await apiRequest(
+    `/api/entregas?solicitudId=${Number(idSolicitud)}`
+  ).catch(() => []);
+
+  for (const entrega of Array.isArray(entregas) ? entregas : []) {
+    await apiRequest(`/api/entregas/${entrega.id}`, {
+      method: "DELETE",
+    }).catch(() => {});
+  }
+
+  await apiRequest(`/api/solicitudes/${Number(idSolicitud)}`, {
+    method: "DELETE",
+  });
+}
+
+/** @deprecated */
+export function guardarSolicitudes() {
+  throw new Error(
+    "guardarSolicitudes ya no está disponible: usa el API de solicitudes."
+  );
 }

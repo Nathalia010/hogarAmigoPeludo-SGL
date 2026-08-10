@@ -15,7 +15,7 @@ let solicitudes = [];
    INICIALIZACIÓN
 ===================================================== */
 
-function iniciar() {
+async function iniciar() {
   if (!tbody) {
     console.error(
       'No se encontró el elemento con id="tablaSolicitudes".'
@@ -30,15 +30,26 @@ function iniciar() {
     return;
   }
 
-  solicitudes = obtenerSolicitudes();
-  mostrarSolicitudes(solicitudes);
+  try {
+    solicitudes = await obtenerSolicitudes();
+    mostrarSolicitudes(solicitudes);
+  } catch (error) {
+    console.error(error);
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" class="text-center text-danger">
+          No se pudieron cargar las solicitudes. ¿Backend en :8080?
+        </td>
+      </tr>
+    `;
+  }
 
   filtroFecha?.addEventListener("change", filtrar);
   filtroEstado?.addEventListener("change", filtrar);
 }
 
-function refrescarSolicitudes() {
-  solicitudes = obtenerSolicitudes();
+async function refrescarSolicitudes() {
+  solicitudes = await obtenerSolicitudes();
   filtrar();
 }
 
@@ -581,7 +592,7 @@ function agregarEventosDetalle(solicitud) {
   const botonGuardarEstado =
     document.getElementById("guardarEstado");
 
-  botonGuardarEstado?.addEventListener("click", () => {
+  botonGuardarEstado?.addEventListener("click", async () => {
     const selectorEstado =
       document.getElementById("nuevoEstado");
 
@@ -591,31 +602,36 @@ function agregarEventosDetalle(solicitud) {
 
     const nuevoEstado = selectorEstado.value;
 
-    cambiarEstadoSolicitud(
-      solicitud.idSolicitud,
-      nuevoEstado
-    );
-
-    refrescarSolicitudes();
-
-    const solicitudActualizada = solicitudes.find((item) => {
-      return (
-        Number(item.idSolicitud) ===
-        Number(solicitud.idSolicitud)
+    try {
+      await cambiarEstadoSolicitud(
+        solicitud.idSolicitud,
+        nuevoEstado
       );
-    });
 
-    if (solicitudActualizada) {
-      mostrarDetalle(solicitudActualizada);
+      await refrescarSolicitudes();
+
+      const solicitudActualizada = solicitudes.find((item) => {
+        return (
+          Number(item.idSolicitud) ===
+          Number(solicitud.idSolicitud)
+        );
+      });
+
+      if (solicitudActualizada) {
+        mostrarDetalle(solicitudActualizada);
+      }
+
+      alert("Estado de la solicitud actualizado.");
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo actualizar el estado.");
     }
-
-    alert("Estado de la solicitud actualizado.");
   });
 
   const botonGuardarEntrega =
     document.getElementById("guardarEntrega");
 
-  botonGuardarEntrega?.addEventListener("click", () => {
+  botonGuardarEntrega?.addEventListener("click", async () => {
     const modalidad =
       document.getElementById("modalidadEntrega")?.value;
 
@@ -657,25 +673,30 @@ function agregarEventosDetalle(solicitud) {
           : "Nos estaremos contactando para coordinar la fecha.",
     };
 
-    actualizarEnvio(
-      solicitud.idSolicitud,
-      envioActualizado
-    );
-
-    refrescarSolicitudes();
-
-    const solicitudActualizada = solicitudes.find((item) => {
-      return (
-        Number(item.idSolicitud) ===
-        Number(solicitud.idSolicitud)
+    try {
+      await actualizarEnvio(
+        solicitud.idSolicitud,
+        envioActualizado
       );
-    });
 
-    if (solicitudActualizada) {
-      mostrarDetalle(solicitudActualizada);
+      await refrescarSolicitudes();
+
+      const solicitudActualizada = solicitudes.find((item) => {
+        return (
+          Number(item.idSolicitud) ===
+          Number(solicitud.idSolicitud)
+        );
+      });
+
+      if (solicitudActualizada) {
+        mostrarDetalle(solicitudActualizada);
+      }
+
+      alert("Información de entrega actualizada.");
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo actualizar la entrega.");
     }
-
-    alert("Información de entrega actualizada.");
   });
 }
 

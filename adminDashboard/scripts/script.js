@@ -1,34 +1,45 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const tabs = document.querySelectorAll('.sidebar-tab');
-    const iframe = document.getElementById('dashboard-iframe');
+import { requerirAdmin } from "../../js/auth-guard.js";
 
-    function ajustarAlturaIframe() {
-        if (iframe) {
-            try {
-                iframe.style.height = "0px";
-                const nuevaAltura = iframe.contentWindow.document.documentElement.scrollHeight;
-                iframe.style.height = nuevaAltura + "px";
-            } catch (error) {
-                console.warn("Error", error);
-            }
-        }
-    }
+document.addEventListener("DOMContentLoaded", () => {
+  const usuario = requerirAdmin({
+    loginPath: "../login/login.html",
+  });
 
+  if (!usuario) {
+    return;
+  }
+
+  const tabs = document.querySelectorAll(".sidebar-tab");
+  const iframe = document.getElementById("dashboard-iframe");
+
+  function ajustarAlturaIframe() {
     if (iframe) {
-        iframe.addEventListener('load', ajustarAlturaIframe);
-        window.addEventListener('resize', ajustarAlturaIframe);
+      try {
+        iframe.style.height = "0px";
+        const nuevaAltura =
+          iframe.contentWindow.document.documentElement.scrollHeight;
+        iframe.style.height = nuevaAltura + "px";
+      } catch (error) {
+        console.warn("Error", error);
+      }
     }
+  }
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const targetUrl = tab.getAttribute('data-url');
-            
-            if (targetUrl && iframe) {
-                iframe.src = targetUrl;
-                
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-            }
-        });
+  if (iframe) {
+    iframe.addEventListener("load", ajustarAlturaIframe);
+    window.addEventListener("resize", ajustarAlturaIframe);
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const targetUrl = tab.getAttribute("data-url");
+
+      if (targetUrl && iframe) {
+        iframe.src = targetUrl;
+
+        tabs.forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+      }
     });
+  });
 });
