@@ -1,57 +1,45 @@
-
-
-if (!localStorage.getItem("usuarios")) {
-
-    const usuarios = [
-        {
-            email: "admin@hogaramigo.com",
-            password: "123456",
-            nombre: "Administrador"
-        }
-    ];
-
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-}
+import { loginUsuario } from "../../registro/scripts/usuarios.js";
 
 const btnLogin = document.getElementById("btnLogin");
 
-btnLogin.addEventListener("click", function () {
+btnLogin.addEventListener("click", async function () {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+  if (email === "" || password === "") {
+    alert("Completa todos los campos.");
+    return;
+  }
 
-    if (email === "" || password === "") {
-        alert("Completa todos los campos.");
-        return;
-    }
+  btnLogin.disabled = true;
 
-    const usuarios = JSON.parse(localStorage.getItem("usuarios"));
+  try {
+    const usuario = await loginUsuario(email, password);
 
-    const usuario = usuarios.find(u =>
-        u.email === email &&
-        u.password === password
-    );
+    alert("Bienvenido " + usuario.nombre);
 
-    if (usuario) {
+    const esAdmin =
+      usuario.rol === "admin" ||
+      usuario.rol === "transportista" ||
+      usuario.tipo === "administrador" ||
+      usuario.email === "admin@hogaramigo.com";
 
-        //Guardar la sesión
-        localStorage.setItem("usuarioLogueado", JSON.stringify(usuario));
-
-        alert("Bienvenido " + usuario.nombre);
-
-        //Redireccionar según el rol (admin vs cliente/adoptante)
-        const esAdmin = usuario.rol === "admin" || usuario.email === "admin@hogaramigo.com";
-
-        if (esAdmin) {
-            window.location.href = "../31.2Dashboard/dashboardAdmin.html";
-        } else {
-            window.location.href = "../33333PerfilUsuario/perfil.html";
-        }
-
+    // Admin usa nav-admin en el dashboard; cliente usa nav-usuario en perfil.
+    if (esAdmin) {
+      window.location.href = "../31.2Dashboard/dashboardAdmin.html";
     } else {
-
-        alert("Correo o contraseña incorrectos.");
-
+      window.location.href = "../33333PerfilUsuario/perfil.html";
     }
-
+  } catch (error) {
+    console.error(error);
+    if (error.status === 401) {
+      alert("Correo o contraseña incorrectos.");
+    } else {
+      alert(
+        "No se pudo iniciar sesión. Verifica que el backend esté en http://localhost:8080"
+      );
+    }
+  } finally {
+    btnLogin.disabled = false;
+  }
 });

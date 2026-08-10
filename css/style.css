@@ -236,6 +236,20 @@
   margin-bottom: 12px;
 }
 
+.pet-card .pet-status.is-adoptado,
+.pet-content .pet-status.is-adoptado,
+span.pet-status.is-adoptado {
+  background: rgba(34, 160, 83, 0.16) !important;
+  color: #1b7a3c !important;
+}
+
+.btn-pet.is-adoptado,
+.btn-pet:disabled {
+  background: #9aa3ad !important;
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
 .pet-content ul {
   padding-left: 0;
   list-style: none;

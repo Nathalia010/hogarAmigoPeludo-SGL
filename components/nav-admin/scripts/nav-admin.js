@@ -1,3 +1,9 @@
+import {
+  obtenerUsuarioLogueado,
+  cerrarSesion,
+} from "../../../registro/scripts/usuarios.js";
+import { obtenerSolicitudes } from "../../../31.2Dashboard/scripts/solicitudes.js";
+
 const scriptUrl = new URL(import.meta.url);
 const componentsMarker = "/components/";
 const componentsPosition = scriptUrl.pathname.indexOf(componentsMarker);
@@ -113,21 +119,39 @@ export class NavAdmin extends HTMLElement {
     `;
 
     this.querySelector("[data-nav-admin-logout]")?.addEventListener("click", () => {
-      localStorage.removeItem("usuarioActual");
+      cerrarSesion();
       window.location.href = projectUrl("login/login.html");
     });
   }
 
-  updateData() {
-    const solicitudes = safeJsonParse(localStorage.getItem("solicitudes"), []);
-    const pendientes = Array.isArray(solicitudes)
-      ? solicitudes.filter((solicitud) =>
-          !["Negada", "Adoptada"].includes(solicitud.estadoSolicitud),
-        ).length
-      : 0;
+  async updateData() {
+    const usuario = obtenerUsuarioLogueado();
+    let pendientes = 0;
+
+    try {
+      const solicitudes = await obtenerSolicitudes();
+      pendientes = Array.isArray(solicitudes)
+        ? solicitudes.filter(
+            (solicitud) =>
+              !["Negada", "Adoptada"].includes(solicitud.estadoSolicitud)
+          ).length
+        : 0;
+    } catch {
+      const solicitudes = safeJsonParse(localStorage.getItem("solicitudes"), []);
+      pendientes = Array.isArray(solicitudes)
+        ? solicitudes.filter(
+            (solicitud) =>
+              !["Negada", "Adoptada"].includes(solicitud.estadoSolicitud)
+          ).length
+        : 0;
+    }
+
     const profile = {
-      name: "Administrador",
-      role: "Administrador general",
+      name: usuario?.nombre || "Administrador",
+      role:
+        usuario?.rol === "transportista"
+          ? "Transportista"
+          : "Administrador general",
       ...safeJsonParse(localStorage.getItem("hogarAmigo.admin.profile"), {}),
     };
 
