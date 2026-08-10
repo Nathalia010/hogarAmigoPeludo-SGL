@@ -142,6 +142,11 @@ function mostrarSolicitudes(solicitudes = obtenerSolicitudes()) {
                     </p>
 
                     <p>
+                        <strong>Ciudad:</strong>
+                        ${solicitud.ciudad || "Sin registrar"}
+                    </p>
+
+                    <p>
                         <strong>Estado de salud:</strong>
                         ${solicitud.mascota.estado}
                     </p>

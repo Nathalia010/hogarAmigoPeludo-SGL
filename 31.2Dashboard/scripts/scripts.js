@@ -68,6 +68,10 @@ formPublicacion.addEventListener("submit", function (event) {
       .getElementById("tamano")
       .value,
 
+    ciudad: document
+      .getElementById("ciudad")
+      .value.trim(),
+
     imagen: document
       .getElementById("imagen")
       .value.trim(),
@@ -127,6 +131,11 @@ function validarPublicacion(publicacion) {
     return false;
   }
 
+  if (!publicacion.ciudad) {
+    alert("Debes escribir la ciudad donde se encuentra la mascota.");
+    return false;
+  }
+
   if (!publicacion.imagen) {
     alert("Debes ingresar la URL de una imagen.");
     return false;
@@ -172,6 +181,8 @@ function renderPublicaciones() {
 
           <td>${publicacion.edad}</td>
 
+          <td>${publicacion.ciudad || "Sin registrar"}</td>
+
           <td>
             <span class="pet-status">
               ${publicacion.estado}
@@ -181,7 +192,7 @@ function renderPublicaciones() {
           <td>
             <button
               type="button"
-              class="btn btn-warning btn-sm"
+              class="btn btn-warning btn-sm admin-action-btn"
               data-accion="editar"
               data-id="${publicacion.id}"
             >
@@ -190,7 +201,7 @@ function renderPublicaciones() {
 
             <button
               type="button"
-              class="btn btn-danger btn-sm"
+              class="btn btn-danger btn-sm admin-action-btn"
               data-accion="eliminar"
               data-id="${publicacion.id}"
             >
@@ -246,6 +257,9 @@ function editarPublicacion(id) {
 
   document.getElementById("tamano").value =
     publicacion.tamano;
+    
+  document.getElementById("ciudad").value =
+    publicacion.ciudad || "";
 
   document.getElementById("imagen").value =
     publicacion.imagen;

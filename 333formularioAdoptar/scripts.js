@@ -22,6 +22,7 @@ if (!mascota) {
         `${mascota.edad} • ${mascota.sexo}`;
 
     document.getElementById("tamanoMascota").textContent = mascota.tamano;
+    document.getElementById("ciudadMascota").textContent = mascota.ciudad || "Sin registrar";
     document.getElementById("especieMascota").textContent = mascota.especie;
     document.getElementById("sexoMascota").textContent = mascota.sexo;
     document.getElementById("descripcionMascota").textContent =
@@ -53,6 +54,7 @@ formulario.addEventListener("submit", (e) => {
             sexo: mascota.sexo,
             edad: mascota.edad,
             tamano: mascota.tamano,
+            ciudad: mascota.ciudad,
             estado: mascota.estado,
             descripcion: mascota.descripcion
         },
@@ -118,7 +120,6 @@ formulario.addEventListener("submit", (e) => {
 });
 
 function enviarYRedirigir(nuevaSolicitud) {
-
     const guardado = agregarSolicitud(nuevaSolicitud);
 
     if (!guardado) {
@@ -126,11 +127,54 @@ function enviarYRedirigir(nuevaSolicitud) {
         return;
     }
 
-    alert(`La solicitud para adoptar a ${mascota.nombre} fue enviada correctamente.`);
     formulario.reset();
-    window.location.href = "../Usuario/solicitudes/solicitudes-usuario.html";
 
+    mostrarPopupSolicitudEnviada(
+        `La solicitud para adoptar a ${mascota.nombre} fue enviada correctamente.`
+    );
 }
+
+
+function mostrarPopupSolicitudEnviada(mensaje) {
+    modalCuentaBody.innerHTML = `
+        <div class="text-center">
+            <div class="popup-icon">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
+
+            <h4>¡Solicitud enviada!</h4>
+
+            <p class="text-muted">
+                ${mensaje}
+            </p>
+
+            <p class="small text-muted mb-4">
+                Ahora puedes consultar el estado de tu solicitud.
+            </p>
+
+            <button
+                type="button"
+                class="btn-submit w-100"
+                id="btnVerSolicitud"
+            >
+                Ver mis solicitudes
+            </button>
+        </div>
+    `;
+
+    modalCuenta.show();
+
+    document
+        .getElementById("btnVerSolicitud")
+        .addEventListener("click", () => {
+            window.location.href =
+                "../Usuario/solicitudes/solicitudes-usuario.html";
+        });
+}
+
+
+
+
 
 function mostrarPopupCrearCuenta(nuevaSolicitud) {
 
@@ -139,7 +183,9 @@ function mostrarPopupCrearCuenta(nuevaSolicitud) {
 
     modalCuentaBody.innerHTML = `
         <div class="text-center mb-3">
-            <div class="popup-icon">🔒</div>
+            <div class="popup-icon">
+                <i class="bi bi-lock-fill"></i>
+            </div>
             <h4>Crea una cuenta para ver el estado de tu adopción</h4>
             <p class="text-muted">
                 Usaremos el nombre y correo que ya escribiste. Solo falta una contraseña.
@@ -220,13 +266,15 @@ function confirmarCreacionCuenta() {
     modalCuenta.hide();
 
     if (!guardado) {
-        alert(`Ya tienes una solicitud registrada para adoptar a ${solicitudPendiente.mascota.nombre}.`);
-        return;
+    alert(`Ya tienes una solicitud registrada para adoptar a ${solicitudPendiente.mascota.nombre}.`);
+    return;
     }
 
-    alert(`Cuenta creada. La solicitud para adoptar a ${solicitudPendiente.mascota.nombre} fue enviada correctamente.`);
     formulario.reset();
-    window.location.href = "../Usuario/solicitudes/solicitudes-usuario.html";
+
+    mostrarPopupSolicitudEnviada(
+        `Cuenta creada correctamente. La solicitud para adoptar a ${solicitudPendiente.mascota.nombre} fue enviada correctamente.`
+    );
 }
 
 function mostrarPopupYaRegistrado() {
@@ -235,7 +283,9 @@ function mostrarPopupYaRegistrado() {
 
     modalCuentaBody.innerHTML = `
         <div class="text-center mb-3">
-            <div class="popup-icon">✅</div>
+            <div class="popup-icon">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
             <h4>Usuario ya registrado</h4>
             <p class="text-muted">
                 Ya existe una cuenta con este correo. Tu solicitud para adoptar a

@@ -109,6 +109,7 @@ main .text-muted {
     height:100%;
     border-radius:20px;
     overflow:hidden;
+    border: 2px solid var(--orange);
 }
 
 /* Imagen */

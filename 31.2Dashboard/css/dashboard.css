@@ -681,6 +681,19 @@ textarea.form-control {
   }
 }
 
+
+.admin-action-btn {
+  min-width: 85px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
 /*==================================================
   RESPONSIVE
 ==================================================*/

@@ -49,8 +49,14 @@ export class footer extends HTMLElement {
 
           <div class="footer-contact">
             <h3>Contáctenos</h3>
-            <p>✉️ contacto@hogaramigopeludo.com</p>
-            <p>📞 +57 333 222 1111</p>
+            <p>
+              <i class="bi bi-envelope-fill"></i>
+              contacto@hogaramigopeludo.com
+            </p>
+            <p>
+              <i class="bi bi-telephone-fill"></i>
+              +57 333 222 1111
+            </p>
           </div>
 
           <div class="social-media">

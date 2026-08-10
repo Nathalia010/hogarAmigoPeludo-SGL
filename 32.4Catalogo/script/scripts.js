@@ -33,6 +33,7 @@ function renderCatalogo() {
               <li><strong>Edad:</strong> ${mascota.edad}</li>
               <li><strong>Sexo:</strong> ${mascota.sexo}</li>
               <li><strong>Tamaño:</strong> ${mascota.tamano}</li>
+              <li><strong>Ciudad:</strong> ${mascota.ciudad || "Sin registrar"}</li>
             </ul>
             <button type="button" class="btn-pet" data-id-mascota="${mascota.id}">Adoptar</button>
           </div>
