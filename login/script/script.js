@@ -21,11 +21,12 @@ btnLogin.addEventListener("click", async function () {
     const esAdmin =
       usuario.rol === "admin" ||
       usuario.rol === "transportista" ||
-      usuario.tipo === "administrador";
+      usuario.tipo === "administrador" ||
+      usuario.email === "admin@hogaramigo.com";
 
-    // Admin: panel completo (solicitudes + mascotas)
+    // Admin usa nav-admin en el dashboard; cliente usa nav-usuario en perfil.
     if (esAdmin) {
-      window.location.href = "../adminDashboard/adminDashboard.html";
+      window.location.href = "../31.2Dashboard/dashboardAdmin.html";
     } else {
       window.location.href = "../33333PerfilUsuario/perfil.html";
     }

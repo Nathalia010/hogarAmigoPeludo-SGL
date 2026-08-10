@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap");
+
+/* Tipografía y colores predeterminados de todo el proyecto. */
+:root {
+  --orange: #f97316;
+  --orange-dk: #ea6c0a;
+  --orange-lt: #fff4ed;
+  --orange-soft: var(--orange-lt);
+  --pink-soft: #f6f7fb;
+  --text: #1a1a1a;
+  --text-dark: var(--text);
+  --text-muted: #6b7280;
+  --border: #a5aab3;
+  --border-light: #e7e9f0;
+  --bg: #fafafa;
+  --white: #ffffff;
+  --radius: 14px;
+  --font: "Nunito", sans-serif;
+}
+
+html,
+body {
+  font-family: var(--font);
+}

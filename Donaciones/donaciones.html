@@ -3,12 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>donaciones</title>
-    <!-- navbar-footer style -->
-    <link
-      rel="stylesheet"
-      href="../components/navbar-footer/navbar-footer.css"
-    />
+    <title>Donaciones</title>
+    <!-- componentes style -->
+    <link rel="stylesheet" href="../components/components.css" />
 
     <link rel="stylesheet" href="css/style.css" />
 
@@ -32,19 +29,28 @@
   </head>
 
   <body>
+
+    <botones-flotantes></botones-flotantes>
     <nav-bar></nav-bar>
 
-    <section class="donation-section">
+    <section class="donation-header-section">
       <div class="container">
         <div class="donation-header">
-          <h2 class="fw-bold">Apoya nuestra causa</h2>
-          <p>
-            Ellos solo necesitan una oportunidad. Tú puedes dársela. Con tu
-            ayuda podemos alimentarlos, cuidarlos y acercarlos al hogar que
-            tanto merecen. Hoy, tú puedes cambiar una vida.
-          </p>
+          <div class="section-header text-center">
+            <span class="section-badge">Donaciones</span>
+            <h1>Apoya nuestra causa</h1>
+            <p>
+              Ellos solo necesitan una oportunidad. Tú puedes dársela. Con tu
+              ayuda podemos alimentarlos, cuidarlos y acercarlos al hogar que
+              tanto merecen. Hoy, tú puedes cambiar una vida.
+            </p>
+          </div>
+          
+          
         </div>
-
+</section>
+        
+<section class="donation-section">
         <!-- Tarjetas -->
         <ul
           class="nav nav-pills justify-content-center mb-4"
@@ -280,7 +286,7 @@
     ></script>
     <!-- navbar-footer script -->
     <script
-      src="../components/navbar-footer/navbar-footer.js"
+      src="../components/components.js"
       type="module"
     ></script>
   </body>

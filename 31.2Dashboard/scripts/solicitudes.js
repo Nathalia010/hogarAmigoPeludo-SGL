@@ -72,9 +72,10 @@ export async function obtenerSolicitudPorId(idSolicitud) {
     const entregas = await apiRequest(
       `/api/entregas?solicitudId=${Number(idSolicitud)}`
     );
-    const entrega = Array.isArray(entregas) && entregas.length
-      ? entregas[entregas.length - 1]
-      : null;
+    const entrega =
+      Array.isArray(entregas) && entregas.length
+        ? entregas[entregas.length - 1]
+        : null;
     return solicitudFromApi(dto, mascota, entrega);
   } catch (error) {
     if (error.status === 404) {
@@ -90,9 +91,20 @@ export async function obtenerSolicitudPorId(idSolicitud) {
  */
 export async function agregarSolicitud(solicitud) {
   const mascotaId = Number(solicitud.mascota?.id ?? solicitud.mascotaId);
+  const correo = String(
+    solicitud.propietario?.correo ?? solicitud.correo ?? ""
+  )
+    .trim()
+    .toLowerCase();
+
   const existentes = await apiRequest("/api/solicitudes");
+  // Evita duplicar la misma mascota para el mismo correo (no bloquea a otros adoptantes).
   const duplicada = (Array.isArray(existentes) ? existentes : []).some(
-    (item) => Number(item.mascotaId) === mascotaId
+    (item) =>
+      Number(item.mascotaId) === mascotaId &&
+      String(item.correo || "")
+        .trim()
+        .toLowerCase() === correo
   );
 
   if (duplicada) {
@@ -159,23 +171,37 @@ export async function cambiarEstadoSolicitud(idSolicitud, nuevoEstado) {
  * Crea o actualiza la entrega asociada a una solicitud.
  */
 export async function actualizarEnvio(idSolicitud, envioActualizado) {
-  const entregas = await apiRequest(
-    `/api/entregas?solicitudId=${Number(idSolicitud)}`
-  );
+  const [entregas, solicitudActual] = await Promise.all([
+    apiRequest(`/api/entregas?solicitudId=${Number(idSolicitud)}`),
+    apiRequest(`/api/solicitudes/${Number(idSolicitud)}`).catch(() => null),
+  ]);
+
   const existente =
     Array.isArray(entregas) && entregas.length
       ? entregas[entregas.length - 1]
       : null;
+
+  // Conserva lo ya guardado en BBDD y solo sobrescribe lo enviado.
+  const envioPrevio = solicitudActual
+    ? solicitudFromApi(solicitudActual, null, existente)?.envio || {}
+    : {};
 
   const body = entregaToApi(
     idSolicitud,
     {
       modalidad: "Recoger en fundación",
       direccion: "",
+      origen: "",
       fechaEntrega: "",
+      horaEstimada: "",
+      tiempoRestante: 0,
+      distanciaRestante: 0,
+      transportistaNombre: "Hogar Amigo Peludo",
+      transportistaTelefono: "",
       estadoEntrega: "No enviado",
       estadoProceso:
         "Nos estaremos contactando para coordinar la fecha.",
+      ...envioPrevio,
       ...envioActualizado,
     },
     existente?.id ?? null

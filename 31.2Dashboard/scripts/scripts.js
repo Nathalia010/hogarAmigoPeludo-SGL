@@ -54,6 +54,10 @@ async function cargarPublicaciones() {
 formPublicacion.addEventListener("submit", async function (event) {
   event.preventDefault();
 
+  const publicacionEditada = idEditando !== null
+    ? publicaciones.find((item) => Number(item.id) === Number(idEditando))
+    : null;
+
   const datosPublicacion = {
     nombre: document
       .getElementById("nombre")
@@ -83,7 +87,8 @@ formPublicacion.addEventListener("submit", async function (event) {
       .getElementById("descripcion")
       .value.trim(),
 
-    estado: "Disponible",
+    // Las nuevas comienzan disponibles; al editar se conserva el estado actual.
+    estado: publicacionEditada?.estado ?? "Disponible",
   };
 
   if (!validarPublicacion(datosPublicacion)) {
@@ -190,8 +195,17 @@ function renderPublicaciones() {
           <td>${publicacion.edad}</td>
 
           <td>
-            <span class="pet-status">
-              ${publicacion.estado}
+            <span class="pet-status ${
+              publicacion.estado === "Adoptado" ||
+              publicacion.estado === "Adoptada"
+                ? "is-adoptado"
+                : ""
+            }">
+              ${
+                publicacion.estado === "Adoptada"
+                  ? "Adoptado"
+                  : publicacion.estado
+              }
             </span>
           </td>
 
@@ -326,4 +340,14 @@ async function mostrarJsonConsola() {
   }
 }
 
+window.addEventListener("pageshow", cargarPublicaciones);
+window.addEventListener("focus", cargarPublicaciones);
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    cargarPublicaciones();
+  }
+});
+
 cargarPublicaciones();
+

@@ -91,7 +91,9 @@ formulario.addEventListener("submit", async (e) => {
   }
 
   try {
-    if (await existeUsuario(nuevaSolicitud.propietario.correo)) {
+    const yaExiste = await existeUsuario(nuevaSolicitud.propietario.correo);
+
+    if (yaExiste) {
       const guardado = await agregarSolicitud(nuevaSolicitud);
 
       if (!guardado) {
@@ -104,13 +106,16 @@ formulario.addEventListener("submit", async (e) => {
       mostrarPopupYaRegistrado();
       return;
     }
+
+    mostrarPopupCrearCuenta(nuevaSolicitud);
   } catch (error) {
     console.error(error);
-    alert("No se pudo verificar el correo. Revisa la consola.");
-    return;
+    // Si el chequeo de correo falla (p. ej. tabla usuarios), igual se permite crear cuenta.
+    alert(
+      "No se pudo verificar el correo en el servidor. Puedes crear la cuenta para continuar."
+    );
+    mostrarPopupCrearCuenta(nuevaSolicitud);
   }
-
-  mostrarPopupCrearCuenta(nuevaSolicitud);
 });
 
 async function enviarYRedirigir(nuevaSolicitud) {
@@ -128,7 +133,7 @@ async function enviarYRedirigir(nuevaSolicitud) {
       `La solicitud para adoptar a ${mascota.nombre} fue enviada correctamente.`
     );
     formulario.reset();
-    window.location.href = "../33333PerfilUsuario/perfil.html";
+    window.location.href = "../Usuario/solicitudes/solicitudes-usuario.html";
   } catch (error) {
     console.error(error);
     alert("No se pudo enviar la solicitud. Revisa la consola.");
@@ -241,7 +246,7 @@ async function confirmarCreacionCuenta() {
       `Cuenta creada. La solicitud para adoptar a ${solicitudPendiente.mascota.nombre} fue enviada correctamente.`
     );
     formulario.reset();
-    window.location.href = "../33333PerfilUsuario/perfil.html";
+    window.location.href = "../Usuario/solicitudes/solicitudes-usuario.html";
   } catch (error) {
     console.error(error);
     popupError.textContent =
@@ -263,7 +268,7 @@ function mostrarPopupYaRegistrado() {
         </div>
 
         <div class="d-flex gap-2">
-            <a href="../login/login.html" class="btn-submit flex-fill text-center">
+            <a href="../../login/login.html" class="btn-submit flex-fill text-center">
                 Iniciar sesión
             </a>
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">

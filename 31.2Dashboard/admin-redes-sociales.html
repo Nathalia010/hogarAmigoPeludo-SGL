@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Administración de redes sociales de Hogar Amigo Peludo" />
+    <title>Redes sociales | Hogar Amigo Peludo</title>
+    <link rel="stylesheet" href="../components/navbar-footer/navbar-footer.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/admin-redes-sociales.css" />
+  </head>
+  <body>
+    <nav-bar></nav-bar>
+    <div class="admin-shell" id="adminShell">
+      <nav-admin active="redes"></nav-admin>
+
+      <div class="admin-workspace">
+        <header class="admin-topbar">
+          <div class="topbar-start">
+            <button
+              type="button"
+              class="icon-button sidebar-toggle"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#adminSidebar"
+              aria-controls="adminSidebar"
+              aria-label="Abrir menú lateral"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="page-context">
+              <span>Panel administrador</span>
+              <strong>Redes sociales</strong>
+            </div>
+          </div>
+        </header>
+
+        <main class="admin-main admin-page">
+          <div class="page-heading">
+            <div>
+              <span class="section-badge">Configuración</span>
+              <h1>Administrar redes sociales</h1>
+              <p>Guarda los enlaces que aparecerán en el pie de página del sitio.</p>
+            </div>
+          </div>
+
+          <form class="admin-card social-settings-card" id="socialLinksForm">
+            <div class="card-heading">
+              <span class="heading-icon"><i class="fa-solid fa-share-nodes"></i></span>
+              <div>
+                <h2>Enlaces públicos</h2>
+                <p>Los campos pueden quedar vacíos si una red todavía no está disponible.</p>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <div class="col-12">
+                <label class="form-label" for="facebookUrl"><i class="fa-brands fa-facebook me-2"></i>Facebook</label>
+                <input class="form-control" id="facebookUrl" name="facebook" type="url" placeholder="https://facebook.com/..." />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="instagramUrl"><i class="fa-brands fa-instagram me-2"></i>Instagram</label>
+                <input class="form-control" id="instagramUrl" name="instagram" type="url" placeholder="https://instagram.com/..." />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="tiktokUrl"><i class="fa-brands fa-tiktok me-2"></i>TikTok</label>
+                <input class="form-control" id="tiktokUrl" name="tiktok" type="url" placeholder="https://tiktok.com/@..." />
+              </div>
+              <div class="col-12 form-actions">
+                <a class="secondary-button" href="dashboardAdmin.html">Volver</a>
+                <button class="primary-button" type="submit">
+                  <i class="fa-regular fa-floppy-disk"></i>
+                  Guardar enlaces
+                </button>
+              </div>
+            </div>
+          </form>
+        </main>
+      </div>
+    </div>
+
+    <div class="admin-toast" id="socialToast" role="status" aria-live="polite">
+      <i class="fa-solid fa-circle-check"></i>
+      <span>Redes sociales actualizadas.</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../components/nav-admin/nav-admin.js" type="module"></script>
+    <script src="scripts/admin-redes-sociales.js" type="module"></script>
+    <script src="../components/navbar-footer/navbar-footer.js" type="module"></script>
+  </body>
+</html>

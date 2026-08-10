@@ -43,6 +43,13 @@ export function mascotaFromApi(dto) {
   };
 }
 
+/** Normaliza estado de mascota al valor del backend (Adoptado, no Adoptada). */
+export function estadoMascotaToApi(estado) {
+  if (!estado) return "Disponible";
+  if (estado === "Adoptada" || estado === "adoptada") return "Adoptado";
+  return estado;
+}
+
 /** Shape frontend → body para POST/PUT /api/mascotas. */
 export function mascotaToApi(mascota) {
   const especie =
@@ -60,7 +67,7 @@ export function mascotaToApi(mascota) {
     salud: mascota.salud || "Buena",
     descripcion: mascota.descripcion || "",
     foto: mascota.imagen || mascota.foto || "",
-    estado: mascota.estado || "Disponible",
+    estado: estadoMascotaToApi(mascota.estado || "Disponible"),
   };
 }
 
@@ -96,7 +103,9 @@ const ESTADO_ENTREGA_A_API = {
   Pendiente: "Pendiente",
   "De camino": "En camino",
   "En camino": "En camino",
+  "En proceso de entrega": "En camino",
   Recibido: "Entregado",
+  Recogido: "Entregado",
   Entregado: "Entregado",
   Cancelado: "Cancelado",
 };
@@ -108,6 +117,12 @@ const ESTADO_ENTREGA_A_UI = {
   Cancelado: "Cancelado",
 };
 
+/** True si la entrega ya finalizó (recibido/recogido/entregado). */
+export function esEntregaFinalizada(estado) {
+  const valor = String(estado || "").trim().toLowerCase();
+  return ["recibido", "recogido", "entregado"].includes(valor);
+}
+
 export function estadoEntregaToApi(estado) {
   return ESTADO_ENTREGA_A_API[estado] || estado || "Pendiente";
 }
@@ -116,27 +131,83 @@ export function estadoEntregaFromApi(estado) {
   return ESTADO_ENTREGA_A_UI[estado] || estado || "No enviado";
 }
 
+function leerCampoObs(texto, clave) {
+  const regex = new RegExp(`${clave}:\\s*([^|]+)`, "i");
+  const match = String(texto || "").match(regex);
+  return match ? match[1].trim() : "";
+}
+
 function parseObservaciones(observaciones) {
   const texto = observaciones || "";
-  const modalidadMatch = texto.match(/Modalidad:\s*([^|]+)/i);
-  const direccionMatch = texto.match(/Dirección:\s*([^|]+)/i);
-  const procesoMatch = texto.match(/Proceso:\s*(.+)$/i);
-
   return {
-    modalidad: (modalidadMatch?.[1] || "Recoger en fundación").trim(),
-    direccion: (direccionMatch?.[1] || "").trim(),
-    estadoProceso: (procesoMatch?.[1] ||
-      "Nos estaremos contactando para coordinar la fecha.").trim(),
+    modalidad: leerCampoObs(texto, "Modalidad") || "Recoger en fundación",
+    direccion: leerCampoObs(texto, "Dirección"),
+    origen: leerCampoObs(texto, "Origen"),
+    horaEstimada: leerCampoObs(texto, "Hora"),
+    tiempoRestante: Number(leerCampoObs(texto, "Tiempo") || 0),
+    distanciaRestante: Number(leerCampoObs(texto, "Distancia") || 0),
+    transportistaNombre:
+      leerCampoObs(texto, "Transportista") || "Hogar Amigo Peludo",
+    transportistaTelefono: leerCampoObs(texto, "TelTransportista") || "",
+    estadoProceso:
+      leerCampoObs(texto, "Proceso") ||
+      "Nos estaremos contactando para coordinar la fecha.",
   };
 }
 
 export function buildObservacionesEntrega(envio) {
   const modalidad = envio.modalidad || "Recoger en fundación";
   const direccion = envio.direccion || "";
+  const origen = envio.origen || "";
+  const horaEstimada = envio.horaEstimada || "";
+  const tiempoRestante = Number(envio.tiempoRestante) || 0;
+  const distanciaRestante = Number(envio.distanciaRestante) || 0;
+  const transportistaNombre =
+    envio.transportistaNombre || "Hogar Amigo Peludo";
+  const transportistaTelefono = envio.transportistaTelefono || "";
   const proceso =
     envio.estadoProceso ||
     "Nos estaremos contactando para coordinar la fecha.";
-  return `Modalidad: ${modalidad} | Dirección: ${direccion} | Proceso: ${proceso}`;
+
+  return [
+    `Modalidad: ${modalidad}`,
+    `Dirección: ${direccion}`,
+    `Origen: ${origen}`,
+    `Hora: ${horaEstimada}`,
+    `Tiempo: ${tiempoRestante}`,
+    `Distancia: ${distanciaRestante}`,
+    `Transportista: ${transportistaNombre}`,
+    `TelTransportista: ${transportistaTelefono}`,
+    `Proceso: ${proceso}`,
+  ].join(" | ");
+}
+
+function normalizarFechaApi(fecha) {
+  if (!fecha) return null;
+  const texto = String(fecha).trim();
+  if (!texto) return null;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(texto)) return texto;
+
+  const partes = texto.split(/[/-]/);
+  if (partes.length !== 3) return null;
+
+  const a = Number(partes[0]);
+  const b = Number(partes[1]);
+  const c = Number(partes[2]);
+
+  // yyyy-mm-dd ya cubierto; aquí dd/mm/yyyy o mm/dd/yyyy
+  if (String(partes[2]).length === 4) {
+    const anio = partes[2];
+    const mes = String(b).padStart(2, "0");
+    const dia = String(a).padStart(2, "0");
+    return `${anio}-${mes}-${dia}`;
+  }
+
+  if (String(partes[0]).length === 4) {
+    return `${partes[0]}-${String(b).padStart(2, "0")}-${String(c).padStart(2, "0")}`;
+  }
+
+  return null;
 }
 
 function formatearFechaSolicitud(fechaRegistro) {
@@ -198,7 +269,14 @@ export function solicitudFromApi(dto, mascotaUi = null, entregaDto = null) {
       id: entregaDto?.id ?? null,
       modalidad: obs.modalidad,
       direccion: obs.direccion || dto.direccion || "",
-      fechaEntrega: entregaDto?.fechaProgramada || entregaDto?.fechaEntrega || "",
+      origen: obs.origen || "",
+      fechaEntrega:
+        entregaDto?.fechaProgramada || entregaDto?.fechaEntrega || "",
+      horaEstimada: obs.horaEstimada || "",
+      tiempoRestante: obs.tiempoRestante || 0,
+      distanciaRestante: obs.distanciaRestante || 0,
+      transportistaNombre: obs.transportistaNombre || "Hogar Amigo Peludo",
+      transportistaTelefono: obs.transportistaTelefono || "",
       estadoEntrega: estadoEntregaUi,
       estadoProceso: obs.estadoProceso,
     },
@@ -233,15 +311,15 @@ export function solicitudToApi(solicitud) {
 }
 
 export function entregaToApi(solicitudId, envio, entregaId = null) {
-  const fecha = envio.fechaEntrega || null;
+  const fecha = normalizarFechaApi(envio.fechaEntrega);
+  const entregado = esEntregaFinalizada(envio.estadoEntrega);
+
   return {
     id: entregaId,
     solicitudId: Number(solicitudId),
-    transportistaId: null,
-    fechaProgramada: fecha || null,
-    fechaEntrega: envio.estadoEntrega === "Recibido" || envio.estadoEntrega === "Entregado"
-      ? fecha || null
-      : null,
+    transportistaId: envio.transportistaId ?? null,
+    fechaProgramada: fecha,
+    fechaEntrega: entregado ? fecha : null,
     observaciones: buildObservacionesEntrega(envio),
     estado: estadoEntregaToApi(envio.estadoEntrega),
   };

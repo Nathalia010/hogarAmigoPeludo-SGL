@@ -1,3 +1,4 @@
+@import url("./theme.css");
 :root {
   --orange: #ff6a1c;
   --pink-soft: #f6f7fb;
@@ -9,7 +10,19 @@
 
 
 /*----------------------------------------*/
+.section-badge {
+  display: inline-block;
+  background: rgba(255, 106, 28, 0.12);
+  color: var(--orange);
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase; /*mayus*/
+  padding: 8px 18px;
 
+  border-radius: 18px;
+  margin-bottom: 15px;
+}
 
 /* HOME HOGAR PELUDO */
 
@@ -136,7 +149,7 @@
 .home-message-section,
 .adoption-section,
 .process-section {
-  padding: 80px 0;
+  padding: 40px 0;
 }
 
 .home-info-card,
@@ -221,6 +234,20 @@
   font-weight: 800;
   font-size: 13px;
   margin-bottom: 12px;
+}
+
+.pet-card .pet-status.is-adoptado,
+.pet-content .pet-status.is-adoptado,
+span.pet-status.is-adoptado {
+  background: rgba(34, 160, 83, 0.16) !important;
+  color: #1b7a3c !important;
+}
+
+.btn-pet.is-adoptado,
+.btn-pet:disabled {
+  background: #9aa3ad !important;
+  cursor: not-allowed;
+  opacity: 0.9;
 }
 
 .pet-content ul {

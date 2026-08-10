@@ -1,37 +1,66 @@
-import { obtenerSolicitudes } from "../../31.2Dashboard/scripts/solicitudes.js";
+﻿import {
+  obtenerSolicitudes,
+  eliminarSolicitud,
+} from "../../31.2Dashboard/scripts/solicitudes.js";
+import {
+  actualizarMascota,
+} from "../../31.2Dashboard/scripts/mascotas.js";
 
 const contenedor = document.getElementById("contenedorSolicitudes");
 
-async function mostrarSolicitudes() {
-  let solicitudes = [];
+mostrarEstadoInicial();
+const inputDocumento = document.getElementById("buscarDocumento");
+const btnBuscar = document.getElementById("btnBuscar");
 
-  try {
-    solicitudes = await obtenerSolicitudes();
-  } catch (error) {
-    console.error(error);
-    contenedor.innerHTML = `
-      <div class="col-12 text-center py-5">
-        <div class="alert alert-danger">
-          No se pudieron cargar las solicitudes. Verifica el backend en :8080.
-        </div>
-      </div>
-    `;
-    return;
+btnBuscar?.addEventListener("click", buscarSolicitudes);
+
+inputDocumento?.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") {
+        buscarSolicitudes();
+    }
+});
+
+function buscarSolicitudes() {
+
+    const documento = inputDocumento.value.trim();
+
+    if (!documento) {
+        mostrarEstadoInicial();
+        return;
+    }
+
+    const solicitudes = obtenerSolicitudes().filter(
+        solicitud => solicitud.propietario.documento === documento
+    );
+
+    mostrarSolicitudes(solicitudes);
+}
+
+function mostrarSolicitudes(solicitudes = obtenerSolicitudes()) {
+  const contadorSolicitudes = document.getElementById("navRequestCount");
+
+  if (contadorSolicitudes) {
+    contadorSolicitudes.textContent = solicitudes.length;
   }
 
   contenedor.innerHTML = "";
+  contenedor.classList.remove("vacio");
 
   if (solicitudes.length === 0) {
-    contenedor.innerHTML = `
-            <div class="col-12 text-center py-5">
-                <i class="fa-solid fa-paw fa-4x text-secondary mb-3"></i>
-                <h3>No tienes solicitudes de adopción.</h3>
-                <p class="text-muted">
-                    Cuando envíes una solicitud aparecerá aquí.
-                </p>
-            </div>
-        `;
+    contenedor.classList.add("vacio");
 
+    contenedor.innerHTML = `
+        <div class="estado-vacio">
+            <i class="bi bi-search"></i>
+
+            <h3>No se encontraron solicitudes</h3>
+
+            <p>
+                No existen solicitudes asociadas al n├║mero de documento ingresado.
+                Verifica la informaci├│n e int├®ntalo nuevamente.
+            </p>
+        </div>
+    `;
     return;
   }
 
@@ -43,7 +72,7 @@ async function mostrarSolicitudes() {
         colorEstado = "primary";
         break;
 
-      case "En revisión":
+      case "En revisi├│n":
         colorEstado = "warning";
         break;
 
@@ -58,11 +87,15 @@ async function mostrarSolicitudes() {
       case "Coordinando entrega":
         colorEstado = "info";
         break;
+
+      case "Adoptada":
+        colorEstado = "success";
+        break;
     }
 
     contenedor.innerHTML += `
-<div class="row g-4" id="contenedorMascotas">
-      <div class="col-md-6 col-lg-4">
+
+     
       
         <div class="pet-card">
 
@@ -94,7 +127,7 @@ async function mostrarSolicitudes() {
                     </p>
 
                     <p>
-                        <strong>Género:</strong>
+                        <strong>G├®nero:</strong>
                         ${solicitud.mascota.sexo}
                     </p>
 
@@ -104,7 +137,7 @@ async function mostrarSolicitudes() {
                     </p>
 
                     <p>
-                        <strong>Tamaño:</strong>
+                        <strong>Tama├▒o:</strong>
                         ${solicitud.mascota.tamano}
                     </p>
 
@@ -123,17 +156,17 @@ async function mostrarSolicitudes() {
                         data-bs-toggle="collapse"
                         data-bs-target="#detalle${index}">
 
-                        Ver información
+                        Ver informaci├│n
 
                     </button>
 
                     ${
-                      solicitud.estadoSolicitud === "Coordinando entrega"
+                      ["Coordinando entrega", "Adoptada"].includes(solicitud.estadoSolicitud)
                         ? `<a
                             href="../Proceso-Entrega/proceso-entrega.html?id=${solicitud.idSolicitud}"
                             class="btn btn-success mt-2">
 
-                            Ver envío
+                            Ver env├¡o
 
                         </a>`
                         : ""
@@ -145,7 +178,7 @@ async function mostrarSolicitudes() {
 
                         <hr>
 
-                        <h5>Información del solicitante</h5>
+                        <h5>Informaci├│n del solicitante</h5>
 
                         <p>
                             <strong>Nombre:</strong>
@@ -164,7 +197,7 @@ async function mostrarSolicitudes() {
                         </p>
 
                         <p>
-                            <strong>Teléfono:</strong>
+                            <strong>Tel├®fono:</strong>
                             ${solicitud.propietario.telefono}
                         </p>
 
@@ -186,11 +219,17 @@ async function mostrarSolicitudes() {
                             ${solicitud.propietario.motivo}
                         </p>
 
+                        <button
+                            type="button"
+                            class="btn btn-outline-danger mt-3 w-100"
+                            data-eliminar-solicitud="${solicitud.idSolicitud}">
+                            <i class="fa-regular fa-trash-can"></i>
+                            Eliminar solicitud
+                        </button>
+
                     </div>
 
-                </div>
-
-            </div>
+             </div>
             </div>
 
         </div>
@@ -199,4 +238,64 @@ async function mostrarSolicitudes() {
   });
 }
 
-mostrarSolicitudes();
+
+
+contenedor?.addEventListener("click", (event) => {
+  const botonEliminar = event.target.closest("[data-eliminar-solicitud]");
+  if (!botonEliminar) return;
+
+  const idSolicitud = botonEliminar.dataset.eliminarSolicitud;
+  const solicitud = obtenerSolicitudes().find(
+    (item) => Number(item.idSolicitud) === Number(idSolicitud),
+  );
+
+  if (!solicitud) {
+    mostrarSolicitudes();
+    return;
+  }
+
+  const nombreMascota = solicitud.mascota?.nombre || "esta mascota";
+  const confirmar = window.confirm(
+    `┬┐Deseas eliminar la solicitud de ${nombreMascota}? Esta acci├│n no se puede deshacer.`,
+  );
+
+  if (!confirmar) return;
+
+  const adopcionFinalizada =
+    solicitud.estadoSolicitud === "Adoptada" ||
+    solicitud.envio?.estadoEntrega === "Recibido";
+
+  if (!adopcionFinalizada) {
+    const idMascota = solicitud.mascota?.id ?? solicitud.mascota?.idMascota;
+    if (idMascota != null) {
+      actualizarMascota(idMascota, {
+        estado: "Disponible",
+        fechaAdopcion: null,
+        solicitudAdopcionId: null,
+      });
+    }
+  }
+
+  eliminarSolicitud(idSolicitud);
+  mostrarSolicitudes();
+});
+
+function mostrarEstadoInicial() {
+    contenedor.classList.add("vacio");
+
+    contenedor.innerHTML = `
+        <div class="estado-vacio">
+            <i class="bi bi-search"></i>
+
+            <h3>Busca una solicitud</h3>
+
+            <p>
+                Ingresa el n├║mero de documento del solicitante en el buscador
+                para visualizar las mascotas asociadas a la solicitud de adopci├│n.
+            </p>
+        </div>
+    `;
+}
+
+
+

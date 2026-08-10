@@ -10,14 +10,30 @@ function renderMascotas(lista) {
   });
 }
 
+function esAdoptado(estado) {
+  const valor = String(estado || "").trim().toLowerCase();
+  return valor === "adoptado" || valor === "adoptada";
+}
+
 function crearCardMascota(mascota) {
+  const adoptado = esAdoptado(mascota.estado);
+  const estadoTexto = adoptado ? "Adoptado" : mascota.estado || "Disponible";
+  const estadoClase = adoptado ? "pet-status is-adoptado" : "pet-status";
+  const boton = adoptado
+    ? `<button type="button" class="btn-pet is-adoptado" disabled>Adoptado</button>`
+    : `<button type="button" class="btn-pet" onclick="verMascota(${mascota.id})">Quiero adoptarlo</button>`;
+
   return `
     <div class="col-md-6 col-lg-4">
       <div class="pet-card">
         <img src="${mascota.imagen}" alt="${mascota.nombre}">
 
         <div class="pet-content">
-          <span class="pet-status">${mascota.estado}</span>
+          <span class="${estadoClase}"${
+            adoptado
+              ? ' style="background:rgba(34,160,83,0.16);color:#1b7a3c;"'
+              : ""
+          }>${estadoTexto}</span>
 
           <h3>${mascota.nombre}</h3>
 
@@ -30,10 +46,7 @@ function crearCardMascota(mascota) {
             <li><strong>Tamaño:</strong> ${mascota.tamano}</li>
           </ul>
 
-          <button class="btn-pet" onclick="verMascota(${mascota.id})">
-
-            Quiero adoptarlo
-          </button>
+          ${boton}
         </div>
       </div>
     </div>
