@@ -7,14 +7,34 @@
       name="description"
       content="Centro de documentación de la plataforma Hogar Amigo Peludo"
     />
-    <link rel="stylesheet" href="components/components.css" />
-    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="../components/components.css" />
+    <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="documentacion.css" />
     <title>Documentación | Hogar Amigo Peludo</title>
   </head>
 
   <body>
-    <nav-bar></nav-bar>
+    <nav-bar>
+      <!-- Respaldo visible cuando el archivo se abre sin servidor local. -->
+      <nav class="nav-bar">
+        <a class="brand" href="../index.html">
+          <img src="../assets/logo.png" alt="Logo Hogar Amigo Peludo" />
+          <p class="navbar-logo">Hogar <span>Amigo</span> Peludo</p>
+        </a>
+        <input type="checkbox" id="navbar-menu-toggle" class="navbar-hidden-checkbox" />
+        <label for="navbar-menu-toggle" class="navbar-hamburger-icon" aria-label="Abrir menú">
+          <span></span><span></span><span></span>
+        </label>
+        <ul id="ul-navbar">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../32.4Catalogo/catalogo.html">Adoptar</a></li>
+          <li><a href="../Donaciones/donaciones.html">Donaciones</a></li>
+          <li><a href="../25.3SobreNosotro/sobre-nosotros-index.html">Sobre Nosotros</a></li>
+          <li><a href="../26.2Contactenos/contactenos.html">Contáctenos</a></li>
+          <li><a href="../login/login.html">Login</a></li>
+        </ul>
+      </nav>
+    </nav-bar>
 
     <main>
       <header class="docs-hero">
@@ -195,9 +215,49 @@
       </div>
     </main>
 
-    <page-footer></page-footer>
+    <page-footer>
+      <!-- Respaldo visible cuando los módulos del navegador están bloqueados. -->
+      <footer>
+        <div class="footer-top">
+          <div>
+            <h3>Hogar amigo peludo</h3>
+            <p>
+              Plataforma para conectar mascotas que buscan hogar con familias
+              responsables y comprometidas con una adopción segura.
+            </p>
+          </div>
+          <div class="footer-menu">
+            <h3>Menú principal</h3>
+            <ul id="ul-navbar">
+              <li><a href="../index.html">Inicio</a></li>
+              <li><a href="../32.4Catalogo/catalogo.html">Adoptar</a></li>
+              <li><a href="../Donaciones/donaciones.html">Donaciones</a></li>
+              <li><a href="../25.3SobreNosotro/sobre-nosotros-index.html">Sobre Nosotros</a></li>
+              <li><a href="../26.2Contactenos/contactenos.html">Contáctenos</a></li>
+              <li><a href="documentacion.html">Documentación</a></li>
+              <li><a href="../login/login.html">Login</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>Contáctenos</h3>
+            <p>contacto@hogaramigopeludo.com</p>
+            <p>+57 333 222 1111</p>
+          </div>
+          <div class="social-media">
+            <h3>Síguenos</h3>
+            <div class="social-media-icons">
+              <a href="#" aria-label="Facebook"><img src="../assets/icons/icono-facebook.jpg" alt="Facebook" /></a>
+              <a href="#" aria-label="Instagram"><img src="../assets/icons/icono-instagram.jpg" alt="Instagram" /></a>
+              <a href="#" aria-label="TikTok"><img src="../assets/icons/icono-tiktok.jpg" alt="TikTok" /></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>2026 - Hogar amigo peludo, derechos reservados</p>
+        </div>
+      </footer>
+    </page-footer>
 
-    <script src="../components/components.js" type="module"></script>
-    <script src="documentacion.js" type="module"></script>
+    <script src="documentacion.js"></script>
   </body>
 </html>
