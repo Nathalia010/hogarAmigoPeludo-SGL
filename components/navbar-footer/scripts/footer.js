@@ -43,6 +43,7 @@ export class footer extends HTMLElement {
               <li><a href="${projectUrl("Donaciones/donaciones.html")}">Donaciones</a></li>
               <li><a href="${projectUrl("25.3SobreNosotro/sobre-nosotros-index.html")}">Sobre Nosotros</a></li>
               <li><a href="${projectUrl("26.2Contactenos/contactenos.html")}">Contáctenos</a></li>
+              <li><a href="${projectUrl("documentacion/documentacion.html")}">Documentación</a></li>
               <li><a href="${projectUrl("login/login.html")}">Login</a></li>
             </ul>
           </div>
