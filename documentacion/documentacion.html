@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Centro de documentación de la plataforma Hogar Amigo Peludo"
+    />
+    <link rel="stylesheet" href="../components/components.css" />
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="documentacion.css" />
+    <title>Documentación | Hogar Amigo Peludo</title>
+  </head>
+
+  <body>
+    <nav-bar></nav-bar>
+
+    <main>
+      <header class="docs-hero">
+        <div class="docs-shell docs-hero__content">
+          <div>
+            <span class="eyebrow">Centro de ayuda</span>
+            <h1>Documentación del proyecto</h1>
+            <p>
+              Aprende a usar la plataforma, consulta el manual y conoce cómo está
+              organizado el código de Hogar Amigo Peludo.
+            </p>
+          </div>
+          <div class="docs-hero__mark" aria-hidden="true">&lt;/&gt;</div>
+        </div>
+      </header>
+
+      <div class="docs-shell docs-layout">
+        <aside class="docs-menu" aria-label="Secciones de documentación">
+          <p class="docs-menu__title">Documentación</p>
+          <button class="docs-menu__item is-active" data-section="manual" type="button">
+            <span aria-hidden="true">📄</span> Manual en PDF
+          </button>
+          <button class="docs-menu__item" data-section="guia" type="button">
+            <span aria-hidden="true">🧭</span> Cómo usar la página
+          </button>
+          <button class="docs-menu__item" data-section="codigo" type="button">
+            <span aria-hidden="true">🗂️</span> Organización del código
+          </button>
+        </aside>
+
+        <div class="docs-content">
+          <section class="docs-section is-active" id="manual" aria-labelledby="manual-title">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">Manual del proyecto</span>
+                <h2 id="manual-title">Consulta la documentación en PDF</h2>
+                <p>
+                  Guarda tu archivo con el nombre <code>documentacionHAP.pdf</code> dentro de
+                  esta carpeta para que se cargue automáticamente.
+                </p>
+              </div>
+              <a class="button button--secondary" id="open-pdf" href="documentacionHAP.pdf" target="_blank" rel="noopener">
+                Abrir en otra pestaña
+              </a>
+            </div>
+
+            <div class="pdf-viewer" id="pdf-viewer">
+              <div class="pdf-empty" id="pdf-empty">
+                <span class="pdf-empty__icon" aria-hidden="true">PDF</span>
+                <h3>Aún no se encontró el manual</h3>
+                <p>
+                  Añade <code>documentacion/documentacionHAP.pdf</code> para
+                  previsualizarlo automáticamente.
+                </p>
+              </div>
+              <iframe id="pdf-frame" title="Visor del manual en PDF"></iframe>
+            </div>
+          </section>
+
+          <section class="docs-section" id="guia" aria-labelledby="guia-title" hidden>
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">Guía rápida</span>
+                <h2 id="guia-title">Cómo usar Hogar Amigo Peludo</h2>
+                <p>Un recorrido por las acciones principales de la plataforma.</p>
+              </div>
+            </div>
+
+            <div class="guide-flow" aria-label="Flujo general de adopción">
+              <article class="flow-card">
+                <span>01</span>
+                <div class="flow-card__image"><span>Imagen: explorar mascotas</span></div>
+                <h3>Explora</h3>
+                <p>Visita el catálogo y conoce las mascotas disponibles.</p>
+              </article>
+              <article class="flow-card">
+                <span>02</span>
+                <div class="flow-card__image"><span>Imagen: solicitud de adopción</span></div>
+                <h3>Solicita</h3>
+                <p>Elige una mascota y completa el formulario de adopción.</p>
+              </article>
+              <article class="flow-card">
+                <span>03</span>
+                <div class="flow-card__image"><span>Imagen: registro de usuario</span></div>
+                <h3>Regístrate</h3>
+                <p>Crea una cuenta o inicia sesión para enviar y consultar la solicitud.</p>
+              </article>
+              <article class="flow-card">
+                <span>04</span>
+                <div class="flow-card__image"><span>Imagen: seguimiento del adoptante</span></div>
+                <h3>Haz seguimiento <small>(adoptante)</small></h3>
+                <p>Consulta el estado de tu solicitud y los datos del proceso de entrega.</p>
+              </article>
+              <article class="flow-card">
+                <span>05</span>
+                <div class="flow-card__image"><span>Imagen: panel administrativo</span></div>
+                <h3>Seguimiento <small>(administrador)</small></h3>
+                <p>Revisa solicitudes, actualiza estados y coordina las entregas.</p>
+              </article>
+            </div>
+
+            <div class="role-grid">
+              <article class="role-card">
+                <div class="role-card__header">
+                  <span aria-hidden="true">🐾</span>
+                  <div><small>Perfil</small><h3>Adoptante</h3></div>
+                </div>
+                <ol>
+                  <li><strong>Buscar mascotas:</strong> usa el catálogo para revisar sus datos.</li>
+                  <li><strong>Enviar solicitud:</strong> abre la mascota elegida y completa el formulario.</li>
+                  <li><strong>Consultar perfil:</strong> revisa tus datos y solicitudes activas.</li>
+                  <li><strong>Ver entrega:</strong> consulta fecha, dirección y estado del proceso.</li>
+                </ol>
+              </article>
+
+              <article class="role-card role-card--dark">
+                <div class="role-card__header">
+                  <span aria-hidden="true">⚙️</span>
+                  <div><small>Perfil</small><h3>Administrador</h3></div>
+                </div>
+                <ol>
+                  <li><strong>Gestionar mascotas:</strong> crea, actualiza y cambia su disponibilidad.</li>
+                  <li><strong>Revisar solicitudes:</strong> acepta, rechaza o actualiza cada proceso.</li>
+                  <li><strong>Coordinar entregas:</strong> registra transportista, fecha y novedades.</li>
+                  <li><strong>Supervisar datos:</strong> consulta la información desde el panel.</li>
+                </ol>
+              </article>
+            </div>
+
+            <div class="help-note">
+              <span aria-hidden="true">💡</span>
+              <p><strong>Consejo:</strong> ejecuta el frontend con Live Server y el backend Spring Boot en <code>localhost:8080</code> para probar todas las funciones localmente.</p>
+            </div>
+          </section>
+
+          <section class="docs-section" id="codigo" aria-labelledby="codigo-title" hidden>
+            <div class="section-heading section-heading--code">
+              <div>
+                <span class="section-kicker">Referencia técnica</span>
+                <h2 id="codigo-title">Organización del código</h2>
+                <p>Selecciona una carpeta o archivo para conocer su responsabilidad.</p>
+              </div>
+            </div>
+
+            <label class="code-search" for="code-search">
+              <span aria-hidden="true">⌕</span>
+              <input
+                id="code-search"
+                type="search"
+                placeholder="Buscar carpeta, archivo o función…"
+                autocomplete="off"
+              />
+              <kbd>Ctrl K</kbd>
+            </label>
+            <p class="search-summary" id="search-summary" aria-live="polite"></p>
+
+            <div class="code-browser">
+              <div class="code-tree-panel">
+                <div class="panel-heading">
+                  <span>Explorador</span>
+                  <button id="expand-all" type="button">Expandir todo</button>
+                </div>
+                <div class="code-tree" id="code-tree" role="tree" aria-label="Árbol del proyecto"></div>
+              </div>
+
+              <article class="file-detail" id="file-detail" aria-live="polite">
+                <span class="detail-badge">Vista general</span>
+                <h3>Selecciona un elemento</h3>
+                <p>Haz clic en una carpeta o archivo del explorador para ver aquí su descripción.</p>
+                <div class="detail-meta">
+                  <span>Frontend: HTML, CSS y JavaScript</span>
+                  <span>Backend: Java, Spring Boot y MySQL</span>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <page-footer></page-footer>
+
+    <script src="../components/components.js" type="module"></script>
+    <script src="documentacion.js" type="module"></script>
+  </body>
+</html>
