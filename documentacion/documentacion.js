@@ -1,7 +1,7 @@
 // Los Web Components necesitan HTTP; al abrir con file:// se conserva el
 // navbar/footer de respaldo incluidos directamente en el HTML.
 if (window.location.protocol !== "file:") {
-  import("../components/components.js").catch((error) => {
+  import("../components/navbar-footer/navbar-footer.js").catch((error) => {
     console.warn("No fue posible cargar los componentes compartidos.", error);
   });
 }

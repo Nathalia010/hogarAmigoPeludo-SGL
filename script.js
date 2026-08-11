@@ -26,7 +26,7 @@ function crearCardMascota(mascota) {
   return `
     <div class="col-md-6 col-lg-4">
       <div class="pet-card">
-        <img src="${mascota.imagen}" alt="${mascota.nombre}">
+        <img src="${mascota.imagen}" alt="${mascota.nombre}" referrerpolicy="no-referrer">
 
         <div class="pet-content">
           <span class="${estadoClase}"${

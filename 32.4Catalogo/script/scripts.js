@@ -44,7 +44,7 @@ async function renderCatalogo() {
         return `
       <div class="col-md-6 col-lg-4">
         <div class="pet-card">
-          <img src="${mascota.imagen}" alt="${mascota.nombre}" loading="lazy">
+          <img src="${mascota.imagen}" alt="${mascota.nombre}" loading="lazy" referrerpolicy="no-referrer">
           <div class="pet-content">
             <span class="pet-status${adoptado ? " is-adoptado" : ""}"${
               adoptado

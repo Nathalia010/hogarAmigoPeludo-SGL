@@ -1,103 +1,65 @@
 import { obtenerMascotaPorId } from "../31.2Dashboard/scripts/mascotas.js";
 import { agregarSolicitud } from "../31.2Dashboard/scripts/solicitudes.js";
-import { existeUsuario, registrarUsuario } from "../registro/scripts/usuarios.js";
 
 const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
+const mascotaId = Number(params.get("id") || params.get("mascotaId"));
 
-let mascota = null;
-
-if (!mascota) {
-    alert("No se encontró la mascota.");
-} else {
-    document.getElementById("imagenMascota").src = mascota.imagen;
-    document.getElementById("imagenMascota").alt = mascota.nombre;
-
-    document.getElementById("nombreMascota").textContent = mascota.nombre;
-    document.getElementById("estadoMascota").textContent = mascota.estado;
-
-    document.getElementById("edadSexoMascota").textContent =
-        `${mascota.edad} • ${mascota.sexo}`;
-
-    document.getElementById("tamanoMascota").textContent = mascota.tamano;
-    document.getElementById("ciudadMascota").textContent = mascota.ciudad || "Sin registrar";
-    document.getElementById("especieMascota").textContent = mascota.especie;
-    document.getElementById("sexoMascota").textContent = mascota.sexo;
-    document.getElementById("descripcionMascota").textContent =
-        mascota.descripcion;
-}
-
-// Formulario
 const formulario = document.getElementById("formContacto");
 const modalCuentaEl = document.getElementById("modalCuenta");
 const modalCuentaBody = document.getElementById("modalCuentaBody");
-const modalCuenta = new bootstrap.Modal(modalCuentaEl);
 
-let solicitudPendiente = null;
-let cuentaCreada = false;
+let mascota = null;
 
-formulario.addEventListener("submit", (e) => {
-
-    e.preventDefault();
-
-    const nuevaSolicitud = {
-
-        mascota: {
-            id: mascota.id,
-            nombre: mascota.nombre,
-            imagen: mascota.imagen,
-            especie: mascota.especie,
-            sexo: mascota.sexo,
-            edad: mascota.edad,
-            tamano: mascota.tamano,
-            ciudad: mascota.ciudad,
-            estado: mascota.estado,
-            descripcion: mascota.descripcion
-        },
-
-        propietario: {
-
-            nombre: document.getElementById("nombre").value,
-
-            apellido: document.getElementById("apellidos").value,
-
-  if (!mascota) {
-    alert("No se encontró la mascota.");
-    return;
-  }
-
-  document.getElementById("imagenMascota").src = mascota.imagen;
-  document.getElementById("imagenMascota").alt = mascota.nombre;
-
-  document.getElementById("nombreMascota").textContent = mascota.nombre;
-  document.getElementById("estadoMascota").textContent = mascota.estado;
-
-  document.getElementById("edadSexoMascota").textContent =
-    `${mascota.edad} • ${mascota.sexo}`;
-
-  document.getElementById("tamanoMascota").textContent = mascota.tamano;
-  document.getElementById("especieMascota").textContent = mascota.especie;
-  document.getElementById("sexoMascota").textContent = mascota.sexo;
-  document.getElementById("descripcionMascota").textContent =
-    mascota.descripcion;
+function setText(id, value, fallback = "Sin registrar") {
+  const element = document.getElementById(id);
+  if (element) element.textContent = value || fallback;
 }
 
-cargarMascota().catch((error) => {
-  console.error(error);
-  alert(
-    "No se pudo cargar la mascota. Verifica que el backend esté en http://localhost:8080"
-  );
-});
+function mostrarMascota() {
+  const imagen = document.getElementById("imagenMascota");
+  imagen.src = mascota.imagen;
+  imagen.alt = mascota.nombre;
 
-formulario.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  setText("nombreMascota", mascota.nombre);
+  setText("estadoMascota", mascota.estado);
+  setText("edadSexoMascota", `${mascota.edad || "Edad sin registrar"} • ${mascota.sexo || "Sexo sin registrar"}`);
+  setText("tamanoMascota", mascota.tamano);
+  setText("ciudadMascota", mascota.ciudad);
+  setText("especieMascota", mascota.especie);
+  setText("sexoMascota", mascota.sexo);
+  setText("descripcionMascota", mascota.descripcion);
+}
 
-  if (!mascota) {
-    alert("La mascota aún no está cargada. Intenta de nuevo.");
-    return;
+function mostrarErrorMascota(mensaje) {
+  const imagen = document.getElementById("imagenMascota");
+  imagen.removeAttribute("src");
+  imagen.alt = "No se pudo cargar la mascota";
+
+  setText("nombreMascota", mensaje);
+  setText("estadoMascota", "");
+  setText("edadSexoMascota", "");
+  setText("tamanoMascota", "");
+  setText("ciudadMascota", "");
+  setText("especieMascota", "");
+  setText("sexoMascota", "");
+  setText("descripcionMascota", "");
+}
+
+async function cargarMascota() {
+  if (!Number.isInteger(mascotaId) || mascotaId <= 0) {
+    throw new Error("El enlace de adopción no contiene un ID de mascota válido.");
   }
 
-  const nuevaSolicitud = {
+  mascota = await obtenerMascotaPorId(mascotaId);
+  if (!mascota) {
+    throw new Error(`No se encontró la mascota con ID ${mascotaId}.`);
+  }
+
+  mostrarMascota();
+}
+
+function obtenerDatosSolicitud() {
+  return {
     mascota: {
       id: mascota.id,
       nombre: mascota.nombre,
@@ -106,264 +68,83 @@ formulario.addEventListener("submit", async (e) => {
       sexo: mascota.sexo,
       edad: mascota.edad,
       tamano: mascota.tamano,
+      ciudad: mascota.ciudad,
       estado: mascota.estado,
       descripcion: mascota.descripcion,
     },
     propietario: {
-      nombre: document.getElementById("nombre").value,
-      apellido: document.getElementById("apellidos").value,
-      documento: document.getElementById("documento").value,
+      nombre: document.getElementById("nombre").value.trim(),
+      apellido: document.getElementById("apellidos").value.trim(),
+      documento: document.getElementById("documento").value.trim(),
       edad: document.getElementById("edad").value,
-      correo: document.getElementById("email").value,
-      telefono: document.getElementById("telefono").value,
+      correo: document.getElementById("email").value.trim(),
+      telefono: document.getElementById("telefono").value.trim(),
       pais: document.getElementById("pais").value,
       ciudad: document.getElementById("estado").value,
+      direccion: "",
       tipoVivienda: document.getElementById("tipo_vivienda").value,
       regimenVivienda: document.getElementById("regimen_vivienda").value,
       horasSola: document.getElementById("horas_sola").value,
       otrasMascotas: document.getElementById("otras_mascotas").value,
-      motivo: document.getElementById("motivo").value,
+      motivo: document.getElementById("motivo").value.trim(),
     },
   };
+}
 
-  const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogueado"));
+function mostrarSolicitudEnviada() {
+  const mensaje = `La solicitud para adoptar a ${mascota.nombre} fue enviada correctamente.`;
 
-  if (usuarioLogueado) {
-    await enviarYRedirigir(nuevaSolicitud);
+  if (!modalCuentaEl || !modalCuentaBody || !window.bootstrap?.Modal) {
+    alert(mensaje);
     return;
   }
 
+  modalCuentaBody.innerHTML = `
+    <div class="text-center">
+      <div class="popup-icon"><i class="bi bi-check-circle-fill"></i></div>
+      <h4>¡Solicitud enviada!</h4>
+      <p class="text-muted">${mensaje}</p>
+      <button type="button" class="btn-submit w-100" id="btnVolverCatalogo">
+        Volver al catálogo
+      </button>
+    </div>`;
+
+  const modal = window.bootstrap.Modal.getOrCreateInstance(modalCuentaEl);
+  modal.show();
+  document.getElementById("btnVolverCatalogo").addEventListener("click", () => {
+    window.location.href = "../32.4Catalogo/catalogo.html";
+  });
+}
+
+formulario?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (!mascota) {
+    alert("La mascota aún no está cargada. Intenta nuevamente.");
+    return;
+  }
+
+  const submitButton = formulario.querySelector('[type="submit"]');
+  if (submitButton) submitButton.disabled = true;
+
   try {
-    const yaExiste = await existeUsuario(nuevaSolicitud.propietario.correo);
-
-    if (yaExiste) {
-      const guardado = await agregarSolicitud(nuevaSolicitud);
-
-      if (!guardado) {
-        alert(
-          `Ya tienes una solicitud registrada para adoptar a ${mascota.nombre}.`
-        );
-        return;
-      }
-
-      mostrarPopupYaRegistrado();
+    const guardada = await agregarSolicitud(obtenerDatosSolicitud());
+    if (!guardada) {
+      alert(`Ya existe una solicitud con este correo para adoptar a ${mascota.nombre}.`);
       return;
     }
 
-    mostrarPopupCrearCuenta(nuevaSolicitud);
+    formulario.reset();
+    mostrarSolicitudEnviada();
   } catch (error) {
-    console.error(error);
-    // Si el chequeo de correo falla (p. ej. tabla usuarios), igual se permite crear cuenta.
-    alert(
-      "No se pudo verificar el correo en el servidor. Puedes crear la cuenta para continuar."
-    );
-    mostrarPopupCrearCuenta(nuevaSolicitud);
+    console.error("No se pudo guardar la solicitud:", error);
+    alert("No se pudo enviar la solicitud. Verifica la conexión con el backend.");
+  } finally {
+    if (submitButton) submitButton.disabled = false;
   }
 });
 
-function enviarYRedirigir(nuevaSolicitud) {
-    const guardado = agregarSolicitud(nuevaSolicitud);
-
-    if (!guardado) {
-      alert(
-        `Ya tienes una solicitud registrada para adoptar a ${mascota.nombre}.`
-      );
-      return;
-    }
-
-    formulario.reset();
-
-    mostrarPopupSolicitudEnviada(
-        `La solicitud para adoptar a ${mascota.nombre} fue enviada correctamente.`
-    );
-}
-
-
-function mostrarPopupSolicitudEnviada(mensaje) {
-    modalCuentaBody.innerHTML = `
-        <div class="text-center">
-            <div class="popup-icon">
-                <i class="bi bi-check-circle-fill"></i>
-            </div>
-
-            <h4>¡Solicitud enviada!</h4>
-
-            <p class="text-muted">
-                ${mensaje}
-            </p>
-
-            <p class="small text-muted mb-4">
-                Ahora puedes consultar el estado de tu solicitud.
-            </p>
-
-            <button
-                type="button"
-                class="btn-submit w-100"
-                id="btnVerSolicitud"
-            >
-                Ver mis solicitudes
-            </button>
-        </div>
-    `;
-
-    modalCuenta.show();
-
-    document
-        .getElementById("btnVerSolicitud")
-        .addEventListener("click", () => {
-            window.location.href =
-                "../Usuario/solicitudes/solicitudes-usuario.html";
-        });
-}
-
-
-
-
-
-function mostrarPopupCrearCuenta(nuevaSolicitud) {
-  solicitudPendiente = nuevaSolicitud;
-  cuentaCreada = false;
-
-  modalCuentaBody.innerHTML = `
-        <div class="text-center mb-3">
-            <div class="popup-icon">
-                <i class="bi bi-lock-fill"></i>
-            </div>
-            <h4>Crea una cuenta para ver el estado de tu adopción</h4>
-            <p class="text-muted">
-                Usaremos el nombre y correo que ya escribiste. Solo falta una contraseña.
-            </p>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label" for="popupPassword">Contraseña</label>
-            <input
-                type="password"
-                id="popupPassword"
-                class="form-control"
-                placeholder="Mínimo 6 caracteres"
-            >
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label" for="popupPasswordConfirm">Confirmar contraseña</label>
-            <input
-                type="password"
-                id="popupPasswordConfirm"
-                class="form-control"
-                placeholder="Repite la contraseña"
-            >
-        </div>
-
-        <p id="popupError" class="text-danger small mb-3"></p>
-
-        <div class="d-flex gap-2">
-            <button type="button" class="btn-submit flex-fill" id="btnCrearCuenta">
-                Crear cuenta y enviar solicitud
-            </button>
-            <button type="button" class="btn btn-outline-secondary" id="btnCancelarRegistro">
-                Cancelar
-            </button>
-        </div>
-    `;
-
-  document
-    .getElementById("btnCrearCuenta")
-    .addEventListener("click", confirmarCreacionCuenta);
-
-  document
-    .getElementById("btnCancelarRegistro")
-    .addEventListener("click", () => modalCuenta.hide());
-
-  modalCuenta.show();
-}
-
-async function confirmarCreacionCuenta() {
-  const password = document.getElementById("popupPassword").value;
-  const passwordConfirm = document.getElementById(
-    "popupPasswordConfirm"
-  ).value;
-  const popupError = document.getElementById("popupError");
-
-  if (password.length < 6) {
-    popupError.textContent = "La contraseña debe tener mínimo 6 caracteres.";
-    return;
-  }
-
-  if (password !== passwordConfirm) {
-    popupError.textContent = "Las contraseñas no coinciden.";
-    return;
-  }
-
-  const propietario = solicitudPendiente.propietario;
-
-  try {
-    const creado = await registrarUsuario({
-      email: propietario.correo,
-      password,
-      nombre: propietario.nombre,
-      apellido: propietario.apellido,
-      telefono: propietario.telefono,
-    });
-
-    if (!creado) {
-      popupError.textContent = "Ya existe una cuenta con este correo.";
-      return;
-    }
-
-    cuentaCreada = true;
-
-    const guardado = await agregarSolicitud(solicitudPendiente);
-
-    modalCuenta.hide();
-
-    if (!guardado) {
-    alert(`Ya tienes una solicitud registrada para adoptar a ${solicitudPendiente.mascota.nombre}.`);
-    return;
-    }
-
-    formulario.reset();
-
-    mostrarPopupSolicitudEnviada(
-        `Cuenta creada correctamente. La solicitud para adoptar a ${solicitudPendiente.mascota.nombre} fue enviada correctamente.`
-    );
-}
-
-function mostrarPopupYaRegistrado() {
-  solicitudPendiente = null;
-
-  modalCuentaBody.innerHTML = `
-        <div class="text-center mb-3">
-            <div class="popup-icon">
-                <i class="bi bi-check-circle-fill"></i>
-            </div>
-            <h4>Usuario ya registrado</h4>
-            <p class="text-muted">
-                Ya existe una cuenta con este correo. Tu solicitud para adoptar a
-                ${mascota.nombre} fue enviada. Inicia sesión para ver el estado de tu adopción.
-            </p>
-        </div>
-
-        <div class="d-flex gap-2">
-            <a href="../../login/login.html" class="btn-submit flex-fill text-center">
-                Iniciar sesión
-            </a>
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                Cerrar
-            </button>
-        </div>
-    `;
-
-  modalCuenta.show();
-}
-
-modalCuentaEl.addEventListener("hidden.bs.modal", () => {
-  if (solicitudPendiente && !cuentaCreada) {
-    alert(
-      `Tu solicitud para adoptar a ${solicitudPendiente.mascota.nombre} fue cancelada porque no creaste una cuenta.`
-    );
-  }
-
-  solicitudPendiente = null;
-  cuentaCreada = false;
+cargarMascota().catch((error) => {
+  console.error("No se pudo cargar la mascota:", error);
+  mostrarErrorMascota(error.message);
 });
