@@ -1,3 +1,11 @@
+// Los Web Components necesitan HTTP; al abrir con file:// se conserva el
+// navbar/footer de respaldo incluidos directamente en el HTML.
+if (window.location.protocol !== "file:") {
+  import("../components/components.js").catch((error) => {
+    console.warn("No fue posible cargar los componentes compartidos.", error);
+  });
+}
+
 const PROJECT_TREE = [
   {
     name: "hogarAmigoPeludo-SGL",
@@ -486,6 +494,11 @@ function displayPdf(url, name = "documentacionHAP.pdf") {
 }
 
 async function loadDefaultPdf() {
+  if (window.location.protocol === "file:") {
+    displayPdf("documentacionHAP.pdf");
+    return;
+  }
+
   try {
     const response = await fetch("documentacionHAP.pdf", { method: "HEAD", cache: "no-store" });
     if (response.ok) return displayPdf("documentacionHAP.pdf");
